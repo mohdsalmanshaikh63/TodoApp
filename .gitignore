@@ -6,8 +6,8 @@ Servers
 Servers/*
 
 #RemoteSystemolder
-RemoteSystemsTempFiles
-RemoteSystemsTempFiles/*
+#RemoteSystemsTempFiles
+#RemoteSystemsTempFiles/*
 
 # Log file
 *.log
