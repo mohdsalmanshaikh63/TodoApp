@@ -6,41 +6,93 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
+import com.bridgelabz.restApiDemo.customAnnotation.PasswordsEqualConstraint;
+
+/**
+ * @author Salman
+ *
+ */
 @Entity
-@Table(name="user")
+@Table(name = "user")
+@PasswordsEqualConstraint(message= "passwords do not match")
 public class User {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="user_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "user_id")
 	private int userId;
-	
-	@Column(name="first_name")
+
+	@Column(name = "first_name")
+	@NotNull(message="*required")
+	@NotEmpty(message="*required")
 	private String firstName;
-	
-	@Column(name="last_name")
+
+	@Column(name = "last_name")
+	@NotNull(message="*required")
+	@NotEmpty(message="*required")
 	private String lastName;
-	
-	@Column(name="email")
+
+	@Column(name = "email", unique = true)
+	@Email(message="*please enter correct email address")
+	@NotNull(message="*required")
 	private String email;
-	
-	@Column(name="password")
+
+	@Column(name = "password")
+	@NotNull(message="*required")
+	@NotEmpty(message="*required")
 	private String password;
-		
-	@Column(name="valid")
+
+	@Transient
+	@NotNull(message="*required")
+	@NotEmpty(message="*required")
+	private String confirmPassword;
+
+	@Column(name = "valid")
 	private boolean isValid;
-		
-		
-	public User(String firstName, String lastName, String email, String password, boolean isValid) {
-		super();
+
+	public User() {
+
+	}
+
+	// these might be used for Spring remove these if not needed
+
+	public User(String firstName, String lastName, String email, String password, String confirmPasssword,
+			boolean isValid) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
+		this.confirmPassword = confirmPasssword;
 		this.isValid = isValid;
 	}
 
+	public User(int userId, String firstName, String lastName, String email, String password, String confirmPassword,
+			boolean isValid) {
+		super();
+		this.userId = userId;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.password = password;
+		this.confirmPassword = confirmPassword;
+		this.isValid = isValid;
+	}
+
+	/*
+	 * public User(String firstName, String lastName, String email, String password,
+	 * boolean isValid) { this.firstName = firstName; this.lastName = lastName;
+	 * this.email = email; this.password = password; this.isValid = isValid; }
+	 * 
+	 * public User(int userId, String firstName, String lastName, String email,
+	 * String password, boolean isValid) { super(); this.userId = userId;
+	 * this.firstName = firstName; this.lastName = lastName; this.email = email;
+	 * this.password = password; this.isValid = isValid; }
+	 */
 	public int getUserId() {
 		return userId;
 	}
@@ -89,11 +141,18 @@ public class User {
 		this.isValid = isValid;
 	}
 
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
+
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", password=" + password + ", isValid=" + isValid + "]";
+				+ ", password=" + password + ", confirmPassword=" + confirmPassword + ", isValid=" + isValid + "]";
 	}
-	
 
 }
