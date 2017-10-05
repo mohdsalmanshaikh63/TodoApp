@@ -15,7 +15,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public boolean register(User user) {
+	public boolean createUser(User user) {
 		
 		return userDao.registerUser(user);
 	}
@@ -25,6 +25,24 @@ public class UserServiceImpl implements UserService {
 	public boolean login(String userName, String password) {
 		
 		return userDao.login(userName, password);
+	}
+
+	@Override
+	@Transactional
+	public boolean activate(int id) {
+		
+		return userDao.activate(id);
+	}
+
+	@Override
+	public User getUser(int id) {
+		
+		return userDao.getUser(id);
+	}
+
+	@Override
+	public int getUserId(String email) {
+		return userDao.getUserId(email);
 	}
 
 }

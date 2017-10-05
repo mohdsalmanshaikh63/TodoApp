@@ -21,4 +21,10 @@ public interface UserDao {
 	 */
 	public boolean login(String email, String password);
 
+	public boolean activate(int id);
+
+	public User getUser(int id);
+
+	public int getUserId(String email);
+
 }

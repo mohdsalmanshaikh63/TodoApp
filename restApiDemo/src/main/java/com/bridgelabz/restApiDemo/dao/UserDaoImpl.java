@@ -2,6 +2,7 @@ package com.bridgelabz.restApiDemo.dao;
 
 import javax.persistence.Query;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,59 +12,101 @@ import com.bridgelabz.restApiDemo.entity.User;
 
 @Repository
 public class UserDaoImpl implements UserDao {
-	
+
 	@Autowired
 	private SessionFactory sessionFactory;
 
+	private static Logger logger = Logger.getLogger(UserDaoImpl.class);
+
 	@Override
 	public boolean registerUser(User user) {
-		
-		/*// since our annotations will take care of the remaining fields
-		// check password and confirm password
-		
-		String password = user.getPassword();
-		String confirmPassword = user.getConfirmPassword();
-		
-		// if both are same then register the user
-		if(password.equals(confirmPassword)) {*/
-			user.setValid(true);
-			
-			Session session = sessionFactory.getCurrentSession();
-			
-			session.save(user);
-			
-			return true;
-			
-		//}
-		
-		
+
+		Session session = sessionFactory.getCurrentSession();
+
+		session.save(user);
+
+		return true;
+
 	}
 
 	@Override
-	public boolean login(String email, String password) {		
-		
+	public boolean login(String email, String password) {
+
 		// hibernate code here;
-		
+
 		Session session = sessionFactory.getCurrentSession();
-		
+
 		// get user object from db
 		Query query = session.createQuery("from User where email= :email and password=:password", User.class)
-						.setParameter("email", email)
-						.setParameter("password", password);
-						
+				.setParameter("email", email).setParameter("password", password);
+
 		// check this what it returns or throws an exception
 		// handle this properly later if any problem
-		
+
 		User user = (User) query.getSingleResult();
-		
-		if(user != null) {
-			if(user.isValid()) {
-				return true;
-			}
-			
+
+		if (user != null) {
+			return true;
 		}
-				
+
 		return false;
+	}
+
+	@Override
+	public boolean activate(int id) {
+
+		User theUser = getUser(id);
+
+		if (theUser != null) {
+
+			// change the isValid field
+			theUser.setValid(true);
+
+			// get current hibernate session
+			Session currentSession = sessionFactory.getCurrentSession();
+
+			// save/upate the User
+			currentSession.saveOrUpdate(theUser);
+			
+			return true;
+		}
+
+		logger.debug("No such user exists. Failed to activate");
+
+		return false;
+	}
+
+	@Override
+	public User getUser(int id) {
+
+		// get the current hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
+
+		// now retrieve/read from database using the primary key
+		User theUser = currentSession.get(User.class, id);
+		
+		logger.debug("Got user "+theUser);
+		
+
+		return theUser;
+
+	}
+
+	@Override
+	public int getUserId(String email) {
+
+		Session session = sessionFactory.getCurrentSession();
+
+		// get user object from db
+		Query query = session.createQuery("from User where email= :email", User.class)
+				.setParameter("email", email);
+
+		// check this what it returns or throws an exception
+		// handle this properly later if any problem
+
+		User user = (User) query.getSingleResult();
+
+		return user.getUserId();
 	}
 
 }

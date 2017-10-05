@@ -21,7 +21,7 @@ public class TLSEmail {
 		// TODO Auto-generated method stub
 
 		final String fromEmail = "shaikhuiqbal@gmail.com";
-		final String password = "23721215";
+		final String password = "";
 		final String toMail = "mohdsalmanshaikh63@gmail.com";
 
 		logger.debug("Starting TLS");

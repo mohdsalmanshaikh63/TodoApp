@@ -19,7 +19,7 @@ import com.bridgelabz.restApiDemo.customAnnotation.PasswordsEqualConstraint;
  */
 @Entity
 @Table(name = "user")
-@PasswordsEqualConstraint(message= "passwords do not match")
+//@PasswordsEqualConstraint(message= "passwords do not match")
 public class User {
 
 	@Id

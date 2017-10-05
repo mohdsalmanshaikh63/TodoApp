@@ -15,7 +15,7 @@ public class PasswordsEqualConstraintValidator implements ConstraintValidator<Pa
 	public boolean isValid(Object aUser, ConstraintValidatorContext arg1) {
 		
 		User user = (User)aUser;
-		
+		System.out.println("Inside constraint validator");
 		return user.getPassword().equals(user.getConfirmPassword());
 	}
 
