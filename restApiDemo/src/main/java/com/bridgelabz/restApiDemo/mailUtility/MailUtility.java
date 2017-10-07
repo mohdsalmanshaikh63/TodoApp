@@ -1,5 +1,7 @@
 package com.bridgelabz.restApiDemo.mailUtility;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Date;
 import java.util.Properties;
 
@@ -16,12 +18,14 @@ import org.jboss.logging.Logger;
 public class MailUtility {
 
 	private static Logger logger = Logger.getLogger(MailUtility.class);
-	private static final String fromMail = "shaikhuiqbal@gmail.com";
-	private static String password = "23721215";
 
-	public static void sendMail(String toMail, String subject, String messageBody) {
+	public static void sendMail(String toMail, String subject, String messageBody) throws FileNotFoundException, ClassNotFoundException, IOException {
 		logger.debug("Starting TLS");
 
+		EmailInfo emailInfo = EmailCredentialSerializer.getEmailInfo();
+		String fromMail = emailInfo.getEmail();
+		String password = emailInfo.getPassword();
+		
 		Properties properties = new Properties();
 		properties.put("mail.smtp.host", "smtp.gmail.com"); // SMTP Host
 		properties.put("mail.smtp.port", "587"); // TLS Port
@@ -31,6 +35,7 @@ public class MailUtility {
 		Authenticator authenticator = new Authenticator() {
 			@Override
 			protected PasswordAuthentication getPasswordAuthentication() {
+
 				return new PasswordAuthentication(fromMail, password);
 			}
 		};
@@ -63,6 +68,9 @@ public class MailUtility {
 			e.printStackTrace();
 		}
 
+	}
+	 public static void main(String[] args) throws FileNotFoundException, ClassNotFoundException, IOException {
+		sendMail("mohdsalmanshaikh63@gmail.com", "test", "This is a test.");
 	}
 
 }

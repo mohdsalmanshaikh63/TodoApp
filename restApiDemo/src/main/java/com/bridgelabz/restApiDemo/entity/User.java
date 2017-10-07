@@ -7,11 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
-import com.bridgelabz.restApiDemo.customAnnotation.PasswordsEqualConstraint;
 
 /**
  * @author Salman
@@ -19,7 +15,6 @@ import com.bridgelabz.restApiDemo.customAnnotation.PasswordsEqualConstraint;
  */
 @Entity
 @Table(name = "user")
-//@PasswordsEqualConstraint(message= "passwords do not match")
 public class User {
 
 	@Id
@@ -27,29 +22,19 @@ public class User {
 	@Column(name = "user_id")
 	private int userId;
 
-	@Column(name = "first_name")
-	@NotNull(message="*required")
-	@NotEmpty(message="*required")
+	@Column(name = "first_name")	
 	private String firstName;
 
-	@Column(name = "last_name")
-	@NotNull(message="*required")
-	@NotEmpty(message="*required")
+	@Column(name = "last_name")	
 	private String lastName;
 
-	@Column(name = "email", unique = true)
-	@Email(message="*please enter correct email address")
-	@NotNull(message="*required")
+	@Column(name = "email", unique = true)	
 	private String email;
 
 	@Column(name = "password")
-	@NotNull(message="*required")
-	@NotEmpty(message="*required")
 	private String password;
 
 	@Transient
-	@NotNull(message="*required")
-	@NotEmpty(message="*required")
 	private String confirmPassword;
 
 	@Column(name = "valid")

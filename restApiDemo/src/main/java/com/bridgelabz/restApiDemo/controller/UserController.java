@@ -1,5 +1,7 @@
 package com.bridgelabz.restApiDemo.controller;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,7 +50,7 @@ public class UserController {
 
 	@PostMapping(value = "/create")
 	public ResponseEntity<String> create(@Valid @RequestBody User user, BindingResult bindingResult,
-			HttpServletRequest request) {
+			HttpServletRequest request) throws FileNotFoundException, ClassNotFoundException, IOException {
 
 		// add code later for checking if email already exists
 
