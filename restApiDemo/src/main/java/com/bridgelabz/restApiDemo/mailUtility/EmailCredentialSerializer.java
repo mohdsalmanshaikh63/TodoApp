@@ -9,11 +9,11 @@ import java.io.ObjectOutputStream;
 
 public class EmailCredentialSerializer {
 	
-	public static final String credentialFilePath = "src/main/resources/myEmail.dat";
+	public static final String credentialFilePath = "/home/bridgeit/SALMAN/GitRepos/EclipseWorkspace/TodoApp/myEmail.dat";
 
 	public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException {
 		
-		serializeCredentials("somasingh1701@gmail.com", "soma@123");		
+		serializeCredentials("abc@xyz.com", "password");		
 		EmailInfo emailInfo = getEmailInfo();
 		System.out.println(emailInfo);
 	}
@@ -28,7 +28,8 @@ public class EmailCredentialSerializer {
 	public static EmailInfo getEmailInfo() throws FileNotFoundException, IOException, ClassNotFoundException {
 		
 		try(ObjectInputStream input = new ObjectInputStream(new FileInputStream(credentialFilePath))) {
-			
+			System.out.println("Inside getEmailInfo() method");
+			System.out.println("*****Working directory is ");
 			EmailInfo emailInfo = (EmailInfo)input.readObject();
 			return emailInfo;
 		}

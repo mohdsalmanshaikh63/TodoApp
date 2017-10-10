@@ -2,16 +2,8 @@ package com.bridgelabz.restApiDemo.controller;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Configuration;
-import javax.validation.ConstraintViolation;
-import javax.validation.Valid;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,81 +15,54 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bridgelabz.restApiDemo.entity.Token;
 import com.bridgelabz.restApiDemo.entity.User;
 import com.bridgelabz.restApiDemo.mailUtility.MailUtility;
+import com.bridgelabz.restApiDemo.service.TokenService;
 import com.bridgelabz.restApiDemo.service.UserService;
 
-@RestController
+@RestController(value="user")
 public class UserController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private TokenService tokenService;
 
 	private static Logger logger = Logger.getLogger(UserController.class);
 
-	/*
-	 * private static final Validator validator;
-	 * 
-	 * static { Configuration<?> config =
-	 * Validation.byDefaultProvider().configure(); ValidatorFactory factory =
-	 * config.buildValidatorFactory(); validator = factory.getValidator();
-	 * factory.close(); }
-	 * 
-	 * private static void printError(ConstraintViolation<User> violation) {
-	 * System.out.println(violation.getPropertyPath() + " " +
-	 * violation.getMessage()); }
-	 */
-
 	@PostMapping(value = "/create")
-	public ResponseEntity<String> create(@Valid @RequestBody User user, BindingResult bindingResult,
+	public ResponseEntity<String> create(@RequestBody User user, BindingResult bindingResult,
 			HttpServletRequest request) throws FileNotFoundException, ClassNotFoundException, IOException {
 
 		// add code later for checking if email already exists
 
-		if (bindingResult.hasErrors()) {
-			logger.debug("Following errors were returned" + bindingResult.getAllErrors());
-			return new ResponseEntity<String>("Failed to create record", HttpStatus.NOT_ACCEPTABLE);
+		boolean created = userService.createUser(user);
+		if (created) {
+			logger.debug("Created user");
 
+			logger.debug("User id of saved user is" + user.getUserId());
+
+			// prepare the url for sending activation mail
+
+			String scheme = request.getScheme();
+			String host = request.getHeader("Host"); // includes server name and server port
+			String contextPath = request.getContextPath(); // includes leading forward slash
+
+			String resultPath = scheme + "://" + host + contextPath + "user/activate/" + user.getUserId();
+			logger.debug("Result path: " + resultPath);
+
+			String messageBody = "Click on this link to activate your account /n" + resultPath;
+
+			// Finally send the mail!
+			MailUtility.sendMail(user.getEmail(), "Activate your account", messageBody);
+
+			return new ResponseEntity<String>("Record created", HttpStatus.OK);
 		} else {
-
-			/*
-			 * Set<ConstraintViolation<User>> constraintViolations =
-			 * validator.validate(user);
-			 * 
-			 * if (constraintViolations.size() > 0) {
-			 * System.out.println("Passwords do not match");
-			 * constraintViolations.stream().forEach(UserController::printError); return new
-			 * ResponseEntity<String>("Failed to create record", HttpStatus.NOT_ACCEPTABLE);
-			 * } else {
-			 */
-			boolean created = userService.createUser(user);
-			if (created) {
-				logger.debug("Created user");
-				
-				logger.debug("User id of saved user is"+user.getUserId());
-
-				// prepare the url for sending activation mail
-
-				String scheme = request.getScheme();
-				String host = request.getHeader("Host"); // includes server name and server port
-				String contextPath = request.getContextPath(); // includes leading forward slash
-
-				String resultPath = scheme + "://" + host + contextPath+"user/activate/"+user.getUserId();
-				logger.debug("Result path: " + resultPath);
-				
-				String messageBody = "Click on this link to activate your account /n"+resultPath;
-				
-				// Finally send the mail!
-				MailUtility.sendMail(user.getEmail(), "Activate your account", messageBody);
-				
-
-				return new ResponseEntity<String>("Record created", HttpStatus.OK);
-			} else {
-				logger.debug("Error while creating user record");
-				return new ResponseEntity<String>("Record could not be created", HttpStatus.INTERNAL_SERVER_ERROR);
-				// }
-
-			}
+			logger.debug("Error while creating user record");
+			return new ResponseEntity<String>("Record could not be created", HttpStatus.INTERNAL_SERVER_ERROR);
+			// }
 
 		}
 
@@ -113,6 +78,45 @@ public class UserController {
 			logger.debug("Could not activate user");
 			return new ResponseEntity<Void>(HttpStatus.UNPROCESSABLE_ENTITY);
 		}
+
+	}
+
+	@PostMapping(value = "/login")
+	public ResponseEntity<String> login(@RequestBody User user, HttpServletRequest request) throws FileNotFoundException, ClassNotFoundException, IOException {
+
+		// send the user to the service
+		boolean result = userService.login(user);
+
+		if (result == false) {
+			logger.debug("Invalid Credentials");
+			return new ResponseEntity<String>("Invalid Credentials", HttpStatus.BAD_REQUEST);
+		} else {
+
+			// generate the token
+			// save the token in the redis cache
+			Token token = tokenService.generateToken();
+						
+			// send the email the user with the token in the url
+			
+			// prepare the url for sending activation mail
+
+						String scheme = request.getScheme();
+						String host = request.getHeader("Host"); // includes server name and server port
+						String contextPath = request.getContextPath(); // includes leading forward slash
+
+						String resultPath = scheme + "://" + host + contextPath + "user/authenticate/" + user.getUserId()+"/"+token.getAccessToken();
+						logger.debug("Result path: " + resultPath);
+
+						String messageBody = "Click here to login /n" + resultPath;
+
+						// Finally send the mail!
+						String workingDir = System.getProperty("user.dir");
+						System.out.println("Working directory is: "+workingDir);
+						MailUtility.sendMail(user.getEmail(), "Token Login", messageBody);
+						return new ResponseEntity<String>("Login success!", HttpStatus.OK);
+
+		}
+
 
 	}
 }

@@ -6,7 +6,7 @@ public interface UserService {
 
 	public boolean createUser(User user);
 	
-	public boolean login(String userName, String password);
+	public boolean login(User user);
 
 	public boolean activate(int id);
 	

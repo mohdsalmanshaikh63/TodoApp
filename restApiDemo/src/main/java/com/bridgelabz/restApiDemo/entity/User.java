@@ -1,13 +1,15 @@
 package com.bridgelabz.restApiDemo.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
 
 /**
  * @author Salman
@@ -22,13 +24,13 @@ public class User {
 	@Column(name = "user_id")
 	private int userId;
 
-	@Column(name = "first_name")	
+	@Column(name = "first_name")
 	private String firstName;
 
-	@Column(name = "last_name")	
+	@Column(name = "last_name")
 	private String lastName;
 
-	@Column(name = "email", unique = true)	
+	@Column(name = "email", unique = true)
 	private String email;
 
 	@Column(name = "password")
@@ -39,6 +41,13 @@ public class User {
 
 	@Column(name = "valid")
 	private boolean isValid;
+
+	// one to one unidirectional relationship with token
+	// having cascadeType of ALL
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "token_id")
+	private Token token;
 
 	public User() {
 
@@ -68,16 +77,6 @@ public class User {
 		this.isValid = isValid;
 	}
 
-	/*
-	 * public User(String firstName, String lastName, String email, String password,
-	 * boolean isValid) { this.firstName = firstName; this.lastName = lastName;
-	 * this.email = email; this.password = password; this.isValid = isValid; }
-	 * 
-	 * public User(int userId, String firstName, String lastName, String email,
-	 * String password, boolean isValid) { super(); this.userId = userId;
-	 * this.firstName = firstName; this.lastName = lastName; this.email = email;
-	 * this.password = password; this.isValid = isValid; }
-	 */
 	public int getUserId() {
 		return userId;
 	}

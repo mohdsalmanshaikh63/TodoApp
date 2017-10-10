@@ -30,7 +30,12 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public boolean login(String email, String password) {
+	public boolean login(User user) {
+		
+		// basic checks
+		if(user.getEmail() == null || user.getEmail() == "" || user.getPassword() == null || user.getPassword() == "") {
+			return false;
+		}
 
 		// hibernate code here;
 
@@ -38,14 +43,14 @@ public class UserDaoImpl implements UserDao {
 
 		// get user object from db
 		Query query = session.createQuery("from User where email= :email and password=:password", User.class)
-				.setParameter("email", email).setParameter("password", password);
+				.setParameter("email", user.getEmail()).setParameter("password", user.getPassword());
 
 		// check this what it returns or throws an exception
 		// handle this properly later if any problem
 
-		User user = (User) query.getSingleResult();
+		User aUser = (User) query.getSingleResult();
 
-		if (user != null) {
+		if (aUser != null && aUser.isValid()) {
 			return true;
 		}
 

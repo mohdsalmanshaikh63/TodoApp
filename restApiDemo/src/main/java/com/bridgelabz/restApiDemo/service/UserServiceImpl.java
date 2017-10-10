@@ -22,9 +22,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public boolean login(String userName, String password) {
+	public boolean login(User user) {
 		
-		return userDao.login(userName, password);
+		return userDao.login(user);
 	}
 
 	@Override
