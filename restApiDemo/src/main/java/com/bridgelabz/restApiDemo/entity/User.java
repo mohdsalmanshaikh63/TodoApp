@@ -45,9 +45,9 @@ public class User {
 	// one to one unidirectional relationship with token
 	// having cascadeType of ALL
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "token_id")
-	private Token token;
+	// @OneToOne(cascade = CascadeType.ALL)
+	// @JoinColumn(name = "token_id")
+	// private Token token;
 
 	public User() {
 

@@ -21,12 +21,12 @@ import com.bridgelabz.restApiDemo.mailUtility.MailUtility;
 import com.bridgelabz.restApiDemo.service.TokenService;
 import com.bridgelabz.restApiDemo.service.UserService;
 
-@RestController(value="user")
+@RestController
 public class UserController {
 
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private TokenService tokenService;
 
@@ -50,7 +50,7 @@ public class UserController {
 			String host = request.getHeader("Host"); // includes server name and server port
 			String contextPath = request.getContextPath(); // includes leading forward slash
 
-			String resultPath = scheme + "://" + host + contextPath + "user/activate/" + user.getUserId();
+			String resultPath = scheme + "://" + host + contextPath + "/activate/" + user.getUserId();
 			logger.debug("Result path: " + resultPath);
 
 			String messageBody = "Click on this link to activate your account /n" + resultPath;
@@ -62,7 +62,6 @@ public class UserController {
 		} else {
 			logger.debug("Error while creating user record");
 			return new ResponseEntity<String>("Record could not be created", HttpStatus.INTERNAL_SERVER_ERROR);
-			// }
 
 		}
 
@@ -82,7 +81,8 @@ public class UserController {
 	}
 
 	@PostMapping(value = "/login")
-	public ResponseEntity<String> login(@RequestBody User user, HttpServletRequest request) throws FileNotFoundException, ClassNotFoundException, IOException {
+	public ResponseEntity<String> login(@RequestBody User user, HttpServletRequest request)
+			throws FileNotFoundException, ClassNotFoundException, IOException {
 
 		// send the user to the service
 		boolean result = userService.login(user);
@@ -95,28 +95,44 @@ public class UserController {
 			// generate the token
 			// save the token in the redis cache
 			Token token = tokenService.generateToken();
-						
+
 			// send the email the user with the token in the url
-			
+
 			// prepare the url for sending activation mail
 
-						String scheme = request.getScheme();
-						String host = request.getHeader("Host"); // includes server name and server port
-						String contextPath = request.getContextPath(); // includes leading forward slash
+			String scheme = request.getScheme();
+			String host = request.getHeader("Host"); // includes server name and server port
+			String contextPath = request.getContextPath(); // includes leading forward slash
 
-						String resultPath = scheme + "://" + host + contextPath + "user/authenticate/" + user.getUserId()+"/"+token.getAccessToken();
-						logger.debug("Result path: " + resultPath);
+			String resultPath = scheme + "://" + host + contextPath + "/authenticate/" + user.getUserId() + "/"
+					+ token.getAccessToken();
+			logger.debug("Result path: " + resultPath);
 
-						String messageBody = "Click here to login /n" + resultPath;
+			String messageBody = "Click here to login /n" + resultPath;
 
-						// Finally send the mail!
-						String workingDir = System.getProperty("user.dir");
-						System.out.println("Working directory is: "+workingDir);
-						MailUtility.sendMail(user.getEmail(), "Token Login", messageBody);
-						return new ResponseEntity<String>("Login success!", HttpStatus.OK);
+			// Finally send the mail!
+			String workingDir = System.getProperty("user.dir");
+			logger.debug("*******Working directory is: " + workingDir);
+			MailUtility.sendMail(user.getEmail(), "Token Login", messageBody);
+			return new ResponseEntity<String>("*******Login success!", HttpStatus.OK);
 
 		}
 
+	}
 
+	@GetMapping(value = "/authenticate/{id}/{accessToken}")
+	public ResponseEntity<String> authenticate(@PathVariable("id") int id,
+			@PathVariable("accessToken") String accessToken) {
+
+		logger.info("*******User with id:" + id + " is being Authenticated");
+
+		boolean result = tokenService.verifyToken(accessToken);
+
+		if (result) {
+
+			return new ResponseEntity<String>("Authentication Success!", HttpStatus.OK);
+		}
+
+		return new ResponseEntity<String>("Authentication failed", HttpStatus.BAD_REQUEST);
 	}
 }

@@ -15,7 +15,7 @@ import com.bridgelabz.restApiDemo.entity.Token;
 @Repository
 public class TokenDaoImpl implements TokenDao {
 	
-	private final String key = "token"; 
+	private final String key = "token:"; 
 	
 	Logger logger = Logger.getLogger(TokenDaoImpl.class);
 
@@ -48,7 +48,7 @@ public class TokenDaoImpl implements TokenDao {
 		hashOps = redisTemplate.opsForHash();
 		Token token = hashOps.get(key, accessToken);
 		
-		logger.info(token);
+		logger.info("******Token from redis for verification"+token);
 		
 		if(token != null) {
 			return true;

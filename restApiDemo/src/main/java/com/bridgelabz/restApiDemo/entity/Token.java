@@ -12,8 +12,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @SuppressWarnings("serial")
-@Entity
-@Table(name = "token")
+//@Entity
 public class Token implements Serializable {
 
 	/*@Id
@@ -21,10 +20,10 @@ public class Token implements Serializable {
 	@Column(name = "token_id")
 	private int tokenId;*/
 
-	@Column(name = "access_token")
+	//@Column(name = "access_token")
 	private String accessToken;
 
-	@Column(name = "refresh_token")
+	//@Column(name = "refresh_token")
 	private String refreshToken;
 	
 	/*@OneToOne(mappedBy="token",
