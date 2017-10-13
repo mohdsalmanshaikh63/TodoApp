@@ -45,4 +45,10 @@ public class UserServiceImpl implements UserService {
 		return userDao.getUserId(email);
 	}
 
+	@Override
+	public boolean checkUser(String email) {
+		
+		return userDao.checkUser(email);
+	}
+
 }

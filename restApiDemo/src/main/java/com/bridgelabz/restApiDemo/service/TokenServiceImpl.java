@@ -14,7 +14,6 @@ public class TokenServiceImpl implements TokenService {
 	private TokenDao tokenDao;
 
 	@Override
-	@Transactional
 	public Token generateToken() {
 		
 		return tokenDao.generateToken();

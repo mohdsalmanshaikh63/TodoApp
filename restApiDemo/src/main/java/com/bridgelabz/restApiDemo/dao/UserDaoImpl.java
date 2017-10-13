@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bridgelabz.restApiDemo.entity.User;
 
@@ -31,9 +32,10 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public boolean login(User user) {
-		
+
 		// basic checks
-		if(user.getEmail() == null || user.getEmail() == "" || user.getPassword() == null || user.getPassword() == "") {
+		if (user.getEmail() == null || user.getEmail() == "" || user.getPassword() == null
+				|| user.getPassword() == "") {
 			return false;
 		}
 
@@ -72,7 +74,7 @@ public class UserDaoImpl implements UserDao {
 
 			// save/upate the User
 			currentSession.saveOrUpdate(theUser);
-			
+
 			return true;
 		}
 
@@ -89,9 +91,8 @@ public class UserDaoImpl implements UserDao {
 
 		// now retrieve/read from database using the primary key
 		User theUser = currentSession.get(User.class, id);
-		
-		logger.debug("Got user "+theUser);
-		
+
+		logger.debug("Got user " + theUser);
 
 		return theUser;
 
@@ -103,8 +104,7 @@ public class UserDaoImpl implements UserDao {
 		Session session = sessionFactory.getCurrentSession();
 
 		// get user object from db
-		Query query = session.createQuery("from User where email= :email", User.class)
-				.setParameter("email", email);
+		Query query = session.createQuery("from User where email= :email", User.class).setParameter("email", email);
 
 		// check this what it returns or throws an exception
 		// handle this properly later if any problem
@@ -112,6 +112,31 @@ public class UserDaoImpl implements UserDao {
 		User user = (User) query.getSingleResult();
 
 		return user.getUserId();
+	}
+
+	@Override
+	@Transactional
+	public boolean checkUser(String email) {
+
+		Session session = sessionFactory.getCurrentSession();
+
+		// get user object from db
+		Query query = session.createQuery("from User where email= :email", User.class).setParameter("email", email);
+		
+		User user = null;
+		
+		try {
+		user = (User) query.getSingleResult();
+		} catch (Exception e) {
+			// do nothing here
+		}
+		
+		if(user != null) {
+			
+			return true;
+		}
+
+		return false;
 	}
 
 }

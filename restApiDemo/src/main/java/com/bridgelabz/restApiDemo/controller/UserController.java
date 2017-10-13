@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bridgelabz.restApiDemo.entity.Token;
@@ -22,6 +23,7 @@ import com.bridgelabz.restApiDemo.service.TokenService;
 import com.bridgelabz.restApiDemo.service.UserService;
 
 @RestController
+// @RequestMapping(value="UserController")
 public class UserController {
 
 	@Autowired
@@ -135,4 +137,61 @@ public class UserController {
 
 		return new ResponseEntity<String>("Authentication failed", HttpStatus.BAD_REQUEST);
 	}
+
+	@PostMapping(value = "/forgotpassword")
+	public ResponseEntity<String> forgotPassword(@RequestBody User user, HttpServletRequest request)
+			throws FileNotFoundException, ClassNotFoundException, IOException {
+
+		// first check whether the user exists in the database
+		String email = user.getEmail();
+		// String email = request.getParameter("email");
+
+		logger.info("Got the email" + email);
+
+		boolean result = userService.checkUser(email);
+
+		// send email if the user exists
+		if (result) {
+
+			// Generate a token and send in the email
+			Token token = tokenService.generateToken();
+
+			logger.info("********Token Generated: " + token + "for email: " + email);
+
+			// send the email the user with the token in the url
+
+			// prepare the url for sending activation mail
+
+			String scheme = request.getScheme();
+			String host = request.getHeader("Host"); // includes server name and server port
+			String contextPath = request.getContextPath(); // includes leading forward slash
+
+			String resultPath = scheme + "://" + host + contextPath + "/reset/" + token.getAccessToken();
+			logger.info("Result path: " + resultPath);
+
+			String messageBody = "Click here to reset ur password /n" + resultPath;
+
+			// Finally send the mail!
+			MailUtility.sendMail(email, "Token Login", messageBody);
+			return new ResponseEntity<String>("*******Reset link sent!", HttpStatus.OK);
+
+		}
+
+		return new ResponseEntity<String>("User doesn't exist", HttpStatus.NOT_FOUND);
+	}
+
+	@RequestMapping(value = "/reset/{accessToken}")
+	public ResponseEntity<String> reset(@PathVariable("accessToken") String accessToken) {
+
+		boolean result = tokenService.verifyToken(accessToken);
+
+		if (result) {
+
+			return new ResponseEntity<String>("Reset Success!", HttpStatus.OK);
+		}
+
+		return new ResponseEntity<String>("Authentication failed", HttpStatus.BAD_REQUEST);
+
+	}
+
 }

@@ -26,5 +26,7 @@ public interface UserDao {
 	public User getUser(int id);
 
 	public int getUserId(String email);
+	
+	public boolean checkUser(String email);
 
 }
