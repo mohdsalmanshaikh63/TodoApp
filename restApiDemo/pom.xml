@@ -124,7 +124,14 @@
 			<artifactId>jedis</artifactId>
 			<version>2.5.1</version>
 		</dependency>
-		
+
+		<!-- Redisson Dependencies -->
+		<dependency>
+			<groupId>org.redisson</groupId>
+			<artifactId>redisson</artifactId>
+			<version>2.10.3</version>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -157,6 +164,13 @@
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
+
+			<!-- Bower plugin for Maven! -->
+			<!--<plugin> <groupId>com.github.eirslett</groupId> <artifactId>frontend-maven-plugin</artifactId> 
+				<version>0.0.20</version> <executions> <execution> <id>bower install</id> 
+				<goals> <goal>bower</goal> </goals> <configuration> <arguments>install</arguments> 
+				</configuration> </execution> </executions> </plugin> -->
+
 
 		</plugins>
 

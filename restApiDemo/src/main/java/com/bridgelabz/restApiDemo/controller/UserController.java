@@ -55,7 +55,7 @@ public class UserController {
 			String resultPath = scheme + "://" + host + contextPath + "/activate/" + user.getUserId();
 			logger.debug("Result path: " + resultPath);
 
-			String messageBody = "Click on this link to activate your account /n" + resultPath;
+			String messageBody = "Click on this link to activate your account \n" + resultPath;
 
 			// Finally send the mail!
 			MailUtility.sendMail(user.getEmail(), "Activate your account", messageBody);
@@ -169,7 +169,7 @@ public class UserController {
 			String resultPath = scheme + "://" + host + contextPath + "/reset/" + token.getAccessToken();
 			logger.info("Result path: " + resultPath);
 
-			String messageBody = "Click here to reset ur password /n" + resultPath;
+			String messageBody = "Click here to reset ur password \n" + resultPath;
 
 			// Finally send the mail!
 			MailUtility.sendMail(email, "Token Login", messageBody);
