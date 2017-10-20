@@ -31,12 +31,12 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public boolean login(User user) {
+	public int login(User user) {
 
 		// basic checks
 		if (user.getEmail() == null || user.getEmail() == "" || user.getPassword() == null
 				|| user.getPassword() == "") {
-			return false;
+			return -1;
 		}
 
 		// hibernate code here;
@@ -53,10 +53,10 @@ public class UserDaoImpl implements UserDao {
 		User aUser = (User) query.getSingleResult();
 
 		if (aUser != null && aUser.isValid()) {
-			return true;
+			return aUser.getUserId();
 		}
 
-		return false;
+		return -1;
 	}
 
 	@Override
@@ -116,7 +116,7 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	@Transactional
-	public boolean checkUser(String email) {
+	public int checkUser(String email) {
 
 		Session session = sessionFactory.getCurrentSession();
 
@@ -133,10 +133,10 @@ public class UserDaoImpl implements UserDao {
 		
 		if(user != null) {
 			
-			return true;
+			return user.getUserId();
 		}
 
-		return false;
+		return -1;
 	}
 
 }

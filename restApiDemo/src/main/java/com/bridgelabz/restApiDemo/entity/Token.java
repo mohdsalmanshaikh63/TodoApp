@@ -1,66 +1,53 @@
 package com.bridgelabz.restApiDemo.entity;
 
-import java.io.Serializable;
+/**
+ * @author Salman
+ *
+ */
+public class Token {
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+	private String tokenType;
 
-@SuppressWarnings("serial")
-//@Entity
-public class Token implements Serializable {
+	private String value;
 
-	/*@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "token_id")
-	private int tokenId;*/
-
-	//@Column(name = "access_token")
-	private String accessToken;
-
-	//@Column(name = "refresh_token")
-	private String refreshToken;
-	
-	/*@OneToOne(mappedBy="token",
-			  cascade= {CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH,CascadeType.PERSIST})
-	private User user;*/
+	private Integer uid;
 
 	public Token() {
 	}
 
-	/*public int getTokenId() {
-		return tokenId;
+	public Token(String tokenType, String value, Integer uid) {
+		this.tokenType = tokenType;
+		this.value = value;
+		this.uid = uid;
 	}
 
-	public void setTokenId(int tokenId) {
-		this.tokenId = tokenId;
-	}*/
-
-	public String getAccessToken() {
-		return accessToken;
+	public String getTokenType() {
+		return tokenType;
 	}
 
-	public void setAccessToken(String accessToken) {
-		this.accessToken = accessToken;
+	public void setTokenType(String tokenType) {
+		this.tokenType = tokenType;
 	}
 
-	public String getRefreshToken() {
-		return refreshToken;
+	public Integer getUid() {
+		return uid;
 	}
 
-	public void setRefreshToken(String refreshToken) {
-		this.refreshToken = refreshToken;
+	public void setUid(Integer uid) {
+		this.uid = uid;
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
 	}
 
 	@Override
 	public String toString() {
-		return "Token [accessToken=" + accessToken + ", refreshToken=" + refreshToken + "]";
+		return "Token [tokenType=" + tokenType + ", value=" + value + ", uid=" + uid + "]";
 	}
-	
 
 }

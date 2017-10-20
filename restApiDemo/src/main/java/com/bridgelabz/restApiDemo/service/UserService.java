@@ -6,7 +6,7 @@ public interface UserService {
 
 	public boolean createUser(User user);
 	
-	public boolean login(User user);
+	public int login(User user);
 
 	public boolean activate(int id);
 	
@@ -14,6 +14,6 @@ public interface UserService {
 	
 	public int getUserId(String email);
 	
-	public boolean checkUser(String email);
+	public int checkUser(String email);
 
 }

@@ -19,7 +19,7 @@ public interface UserDao {
 	 * @param password
 	 * @return
 	 */
-	public boolean login(User user);
+	public int login(User user);
 
 	public boolean activate(int id);
 
@@ -27,6 +27,6 @@ public interface UserDao {
 
 	public int getUserId(String email);
 	
-	public boolean checkUser(String email);
+	public int checkUser(String email);
 
 }

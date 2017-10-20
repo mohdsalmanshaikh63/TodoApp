@@ -4,8 +4,8 @@ import com.bridgelabz.restApiDemo.entity.Token;
 
 public interface TokenService {
 	
-	public Token generateToken();
+	public Token generateToken(String tokenType, int uid);
 	
-	public boolean verifyToken(String token);
+	public boolean verifyToken(String tokenValue);
 
 }

@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public boolean login(User user) {
+	public int login(User user) {
 		
 		return userDao.login(user);
 	}
@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean checkUser(String email) {
+	public int checkUser(String email) {
 		
 		return userDao.checkUser(email);
 	}
