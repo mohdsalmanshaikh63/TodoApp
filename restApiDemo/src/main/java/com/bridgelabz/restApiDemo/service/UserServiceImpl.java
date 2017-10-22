@@ -35,17 +35,20 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional
 	public User getUser(int id) {
 		
 		return userDao.getUser(id);
 	}
 
 	@Override
+	@Transactional
 	public int getUserId(String email) {
 		return userDao.getUserId(email);
 	}
 
 	@Override
+	@Transactional
 	public int checkUser(String email) {
 		
 		return userDao.checkUser(email);

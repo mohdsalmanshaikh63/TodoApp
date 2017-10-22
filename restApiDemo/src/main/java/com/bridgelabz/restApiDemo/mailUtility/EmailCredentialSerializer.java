@@ -7,15 +7,20 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import org.apache.log4j.Logger;
+
 public class EmailCredentialSerializer {
 	
-	public static final String credentialFilePath = "/home/bridgeit/SALMAN/GitRepos/EclipseWorkspace/TodoApp/myEmail.dat";
+	public static Logger logger = Logger.getLogger(EmailCredentialSerializer.class);
+	
+	public static final String credentialFilePath = "/home/salman/Salman/GitRepos/EclipseWorkspace/TodoApp/restApiDemo/src/main/resources/myEmail.dat";
 
 	public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException {
-		
-		serializeCredentials("abc@xyz.com", "password");		
+		String workingDirectory = System.getProperty("user.dir");
+		logger.info("*****Working directory is "+workingDirectory);
+		serializeCredentials("shaikhuiqbal@gmail.com", "786Start!");		
 		EmailInfo emailInfo = getEmailInfo();
-		System.out.println(emailInfo);
+		logger.info(emailInfo);
 	}
 	
 	public static void serializeCredentials(String email, String password) throws FileNotFoundException, IOException {
@@ -28,8 +33,7 @@ public class EmailCredentialSerializer {
 	public static EmailInfo getEmailInfo() throws FileNotFoundException, IOException, ClassNotFoundException {
 		
 		try(ObjectInputStream input = new ObjectInputStream(new FileInputStream(credentialFilePath))) {
-			System.out.println("Inside getEmailInfo() method");
-			System.out.println("*****Working directory is ");
+			System.out.println("Inside getEmailInfo() method");			
 			EmailInfo emailInfo = (EmailInfo)input.readObject();
 			return emailInfo;
 		}

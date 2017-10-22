@@ -21,12 +21,19 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public boolean registerUser(User user) {
+		
+		// first check if the user already exists
+		if(checkUser(user.getEmail()) != -1) {
+			return false;
+		} else {
 
 		Session session = sessionFactory.getCurrentSession();
 
 		session.save(user);
 
 		return true;
+		
+		}
 
 	}
 
@@ -115,7 +122,6 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	@Transactional
 	public int checkUser(String email) {
 
 		Session session = sessionFactory.getCurrentSession();

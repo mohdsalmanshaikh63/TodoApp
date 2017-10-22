@@ -54,7 +54,7 @@ public class UserController {
 			String host = request.getHeader("Host"); // includes server name and server port
 			String contextPath = request.getContextPath(); // includes leading forward slash
 
-			String resultPath = scheme + "://" + host + contextPath + "/activate/" + user.getUserId();
+			String resultPath = scheme + "://" + host + contextPath + "/user/activate/" + user.getUserId();
 			logger.debug("Result path: " + resultPath);
 
 			String messageBody = "Click on this link to activate your account " + resultPath;
@@ -111,7 +111,7 @@ public class UserController {
 			String host = request.getHeader("Host"); // includes server name and server port
 			String contextPath = request.getContextPath(); // includes leading forward slash
 
-			String resultPath = scheme + "://" + host + contextPath + "/authenticate/" + uid + "/"
+			String resultPath = scheme + "://" + host + contextPath + "/user/authenticate/" + uid + "/"
 					+ accessToken.getValue();
 			logger.debug("Result path: " + resultPath);
 
@@ -152,12 +152,12 @@ public class UserController {
 		String email = user.getEmail();
 		// String email = request.getParameter("email");
 
-		logger.info("Got the email" + email);
+		logger.info("Got the email: " + email);
 
 		int uid = userService.checkUser(email);
 
 		// send email if the user exists
-		if (uid == -1) {
+		if (uid != -1) {
 
 			// Generate a token and send in the email
 			Token token = tokenService.generateToken("forgotToken", uid);
@@ -172,7 +172,7 @@ public class UserController {
 			String host = request.getHeader("Host"); // includes server name and server port
 			String contextPath = request.getContextPath(); // includes leading forward slash
 
-			String resultPath = scheme + "://" + host + contextPath + "/reset/" + token.getValue();
+			String resultPath = scheme + "://" + host + contextPath + "/user/reset/" + token.getValue();
 			logger.info("Result path: " + resultPath);
 
 			String messageBody = "Click here to reset ur password \n" + resultPath;

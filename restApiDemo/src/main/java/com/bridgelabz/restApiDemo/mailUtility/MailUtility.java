@@ -22,6 +22,7 @@ public class MailUtility {
 	public static void sendMail(String toMail, String subject, String messageBody) throws FileNotFoundException, ClassNotFoundException, IOException {
 		logger.debug("Starting TLS");
 
+		// add relative path to the java class later we have used hardcoded path
 		EmailInfo emailInfo = EmailCredentialSerializer.getEmailInfo();
 		String fromMail = emailInfo.getEmail();
 		String password = emailInfo.getPassword();
