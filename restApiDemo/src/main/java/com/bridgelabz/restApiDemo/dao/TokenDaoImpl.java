@@ -12,9 +12,6 @@ import org.redisson.Redisson;
 import org.redisson.api.RMapCache;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
-import org.springframework.data.redis.core.BoundValueOperations;
-import org.springframework.data.redis.core.HashOperations;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.bridgelabz.restApiDemo.entity.Token;
@@ -22,17 +19,11 @@ import com.bridgelabz.restApiDemo.entity.Token;
 @Repository
 public class TokenDaoImpl implements TokenDao {
 
-	// private final String key = "token:";
-
 	Logger logger = Logger.getLogger(TokenDaoImpl.class);
-
-	// private RedisTemplate<String, Object> redisTemplate;
 
 	RedissonClient redissonClient;
 
 	RMapCache<String, Token> tokenMap;
-
-	// private HashOperations<String, String, Token> hashOps;
 
 	@PostConstruct
 	public void initRedisson() {
@@ -63,14 +54,8 @@ public class TokenDaoImpl implements TokenDao {
 
 		tokenMap = redissonClient.getMapCache("tokenMap");
 
-		/*
-		 * finally {
-		 * 
-		 * redissonClient.shutdown(); }
-		 */
-
 	}
-	
+
 	@PreDestroy
 	public void redissonShutdown() {
 		redissonClient.shutdown();

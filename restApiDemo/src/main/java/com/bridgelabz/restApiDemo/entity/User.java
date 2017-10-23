@@ -1,5 +1,7 @@
 package com.bridgelabz.restApiDemo.entity;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -43,20 +46,17 @@ public class User {
 	@Column(name = "valid")
 	private boolean isValid;
 
-	// one to one unidirectional relationship with token
-	// having cascadeType of ALL
-
-	// @OneToOne(cascade = CascadeType.ALL)
-	// @JoinColumn(name = "token_id")
-	// private Token token;
-
+	@OneToMany(cascade= {CascadeType.ALL}, mappedBy="user")
+	private List<Note> notes;
+	
+	
 	public User() {
 
 	}
 
 	// these might be used for Spring remove these if not needed
 
-	public User(String firstName, String lastName, String email, String password, String confirmPasssword,
+	/*public User(String firstName, String lastName, String email, String password, String confirmPasssword,
 			boolean isValid) {
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -67,8 +67,7 @@ public class User {
 	}
 
 	public User(int userId, String firstName, String lastName, String email, String password, String confirmPassword,
-			boolean isValid) {
-		super();
+			boolean isValid) {		
 		this.userId = userId;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -77,7 +76,7 @@ public class User {
 		this.confirmPassword = confirmPassword;
 		this.isValid = isValid;
 	}
-
+*/
 	public int getUserId() {
 		return userId;
 	}
