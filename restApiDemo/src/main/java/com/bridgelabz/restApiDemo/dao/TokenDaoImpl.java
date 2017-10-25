@@ -77,15 +77,15 @@ public class TokenDaoImpl implements TokenDao {
 		// save the token in redis cache with expiration depending upon tokenType
 		switch (tokenType) {
 		case "accessToken":
-			tokenMap.put(tokenValue, token, 15, TimeUnit.MINUTES);
+			tokenMap.put(tokenValue, token, 2, TimeUnit.MINUTES);
 			break;
 
 		case "refreshToken":
-			tokenMap.put(tokenValue, token, 30, TimeUnit.MINUTES);
+			tokenMap.put(tokenValue, token, 5, TimeUnit.MINUTES);
 			break;
 
 		case "forgotToken":
-			tokenMap.put(tokenValue, token, 30, TimeUnit.MINUTES);
+			tokenMap.put(tokenValue, token, 5, TimeUnit.MINUTES);
 			break;
 
 		default:
