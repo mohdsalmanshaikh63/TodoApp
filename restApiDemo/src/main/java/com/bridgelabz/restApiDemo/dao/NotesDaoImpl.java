@@ -1,16 +1,20 @@
 package com.bridgelabz.restApiDemo.dao;
 
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.bridgelabz.restApiDemo.entity.Note;
 import com.bridgelabz.restApiDemo.entity.User;
 
+@Repository
 public class NotesDaoImpl implements NotesDao {
 	
 	@Autowired
@@ -20,6 +24,8 @@ public class NotesDaoImpl implements NotesDao {
 
 	@Override
 	public void createNote(Note note, int uId) {
+		
+		note.setCreateTime(getLocalDateTime());
 		
 		Session session = sessionFactory.getCurrentSession();
 		
@@ -36,6 +42,8 @@ public class NotesDaoImpl implements NotesDao {
 
 	@Override
 	public void updateNote(Note note) {
+		
+		note.setCreateTime(getLocalDateTime());
 		
 		Session session = sessionFactory.getCurrentSession();
 		
@@ -65,6 +73,10 @@ public class NotesDaoImpl implements NotesDao {
 		Note note = session.get(Note.class, noteId);
 		
 		return note;
+	}
+	
+	public LocalDateTime getLocalDateTime() {
+		return LocalDateTime.now();
 	}
 
 }
