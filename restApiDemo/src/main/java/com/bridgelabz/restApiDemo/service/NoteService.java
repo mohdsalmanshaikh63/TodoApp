@@ -1,5 +1,7 @@
 package com.bridgelabz.restApiDemo.service;
 
+import java.util.List;
+
 import com.bridgelabz.restApiDemo.entity.Note;
 
 public interface NoteService {
@@ -11,5 +13,7 @@ public interface NoteService {
 	public void deleteNote(int noteId);
 	
 	public Note getNote(int noteId);
+	
+	public List<Note> getAllNotes(int uId);
 
 }

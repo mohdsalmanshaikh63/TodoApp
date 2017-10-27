@@ -1,5 +1,7 @@
 package com.bridgelabz.restApiDemo.controller;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -71,6 +73,24 @@ public class NotesController {
 			
 		} catch (Exception e) {
 			return new ResponseEntity<Note>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping(value="/getAllNotes/{userId}")
+	public ResponseEntity<List<Note>> getAllNotes(@PathVariable("userId") int userId) {
+		
+		try {
+			logger.info("Got the userId "+userId);
+			List<Note> notesList = noteService.getAllNotes(userId);
+			
+			System.out.println();
+			return new ResponseEntity<List<Note>>(notesList,HttpStatus.OK);
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			return new ResponseEntity<List<Note>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			
 		}
 	}
 
