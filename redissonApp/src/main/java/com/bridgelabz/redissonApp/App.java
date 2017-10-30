@@ -3,12 +3,9 @@ package com.bridgelabz.redissonApp;
 import java.util.concurrent.TimeUnit;
 
 import org.redisson.Redisson;
-import org.redisson.api.LocalCachedMapOptions;
 import org.redisson.api.RMapCache;
 import org.redisson.api.RedissonClient;
-import org.redisson.api.LocalCachedMapOptions.EvictionPolicy;
 import org.redisson.config.Config;
-import org.redisson.eviction.EvictionScheduler;
 
 public class App {
 	public static void main(String[] args) {
@@ -24,15 +21,13 @@ public class App {
 
 		try {
 
-			 RMapCache<Integer, Token> map = redisson.getMapCache("TestMap");
+			RMapCache<Integer, Token> map = redisson.getMapCache("TestMap");
 
-			 Token myToken = new Token("iqbal", 2);
+			Token myToken = new Token("iqbal", 2);
 
-			 map.put(2, myToken, 30, TimeUnit.SECONDS);
+			map.put(2, myToken, 30, TimeUnit.SECONDS);
 
-			 System.out.println("Stored value with key 1 is: " + map.get(2));
-			
-			
+			System.out.println("Stored value with key 1 is: " + map.get(2));
 
 		}
 
