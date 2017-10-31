@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,7 +26,7 @@ import com.bridgelabz.todoApp.service.TokenService;
 import com.bridgelabz.todoApp.service.UserService;
 
 @RestController
-@RequestMapping(value="user")
+@RequestMapping(value = "user")
 public class UserController {
 
 	@Autowired
@@ -73,7 +74,7 @@ public class UserController {
 
 	@GetMapping(value = "/activate/{id}")
 	public ResponseEntity<Void> activate(@PathVariable("id") int id) {
-		
+
 		// add activation token to the url later for more security
 
 		if (userService.activate(id)) {
@@ -91,7 +92,7 @@ public class UserController {
 			throws FileNotFoundException, ClassNotFoundException, IOException {
 
 		// send the user to the service
-		int uid  = userService.login(user);
+		int uid = userService.login(user);
 
 		if (uid == -1) {
 			logger.debug("Invalid Credentials");
@@ -117,7 +118,7 @@ public class UserController {
 
 			String messageBody = "Click here to login /n" + resultPath;
 
-			// Finally send the mail!			
+			// Finally send the mail!
 			MailUtility.sendMail(user.getEmail(), "Token Login", messageBody);
 			Map<String, Token> tokenMap = new HashMap<>();
 			tokenMap.put("accessToken", accessToken);

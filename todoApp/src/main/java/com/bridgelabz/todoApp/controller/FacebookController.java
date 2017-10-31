@@ -5,7 +5,6 @@ import java.util.UUID;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bridgelabz.todoApp.entity.Token;
 import com.bridgelabz.todoApp.entity.User;
 import com.bridgelabz.todoApp.service.TokenService;
 import com.bridgelabz.todoApp.service.UserService;

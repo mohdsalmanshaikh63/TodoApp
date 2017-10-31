@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import com.bridgelabz.todoApp.entity.User;
 
+import jodd.util.BCrypt;
+
 @Repository
 public class UserDaoImpl implements UserDao {
 
@@ -24,6 +26,12 @@ public class UserDaoImpl implements UserDao {
 		if (checkUser(user.getEmail()) != -1) {
 			return -1;
 		} else {
+			
+			String password = user.getPassword();
+			
+			String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+			
+			user.setPassword(hashedPassword);
 
 			Session session = sessionFactory.getCurrentSession();
 
@@ -37,10 +45,13 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public int login(User user) {
+		
+		String email = user.getEmail();
+		String password = user.getPassword();
 
 		// basic checks
-		if (user.getEmail() == null || user.getEmail() == "" || user.getPassword() == null
-				|| user.getPassword() == "") {
+		if (email == null || email == "" || password == null
+				|| password == "") {
 			return -1;
 		}
 
@@ -49,19 +60,30 @@ public class UserDaoImpl implements UserDao {
 		Session session = sessionFactory.getCurrentSession();
 
 		// get user object from db
-		Query query = session.createQuery("from User where email= :email and password=:password", User.class)
-				.setParameter("email", user.getEmail()).setParameter("password", user.getPassword());
+		Query<User> query = session.createQuery("from User where email= :email and password=:password", User.class)
+				.setParameter("email", user.getEmail());
 
 		// check this what it returns or throws an exception
-		// handle this properly later if any problem
+		// handle this properly later if any problem DONE!
 
+		try {
 		User aUser = (User) query.getSingleResult();
-
-		if (aUser != null && aUser.isValid()) {
+		String hashedPassword = aUser.getPassword();
+		
+		if(BCrypt.checkpw(password, hashedPassword) ) {
+			logger.info("Passwords match!");
 			return aUser.getUserId();
+		} else {
+			logger.info("Passwords do not match");
+			return -1;
 		}
-
-		return -1;
+		
+		} catch (Exception e) {
+			
+			logger.info("No such user exists");
+			return -1;
+			
+		}
 	}
 
 	@Override
@@ -131,7 +153,7 @@ public class UserDaoImpl implements UserDao {
 		Session session = sessionFactory.getCurrentSession();
 
 		// get user object from db
-		Query query = session.createQuery("from User where email= :email", User.class).setParameter("email", email);
+		Query<User> query = session.createQuery("from User where email= :email", User.class).setParameter("email", email);
 
 		User user = null;
 

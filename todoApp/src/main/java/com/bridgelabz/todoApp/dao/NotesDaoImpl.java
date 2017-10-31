@@ -4,7 +4,7 @@ package com.bridgelabz.todoApp.dao;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import javax.persistence.Query;
+import org.hibernate.query.Query;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
@@ -60,7 +60,7 @@ public class NotesDaoImpl implements NotesDao {
 		
 		Session session = sessionFactory.getCurrentSession();
 		
-		Query deleteNote = session.createQuery("delete from Note where noteId=:noteId");
+		Query<Note> deleteNote = session.createQuery("delete from Note where noteId=:noteId",Note.class);
 		
 		deleteNote.setParameter("noteId", noteId);
 		
@@ -90,7 +90,7 @@ public class NotesDaoImpl implements NotesDao {
 		
 		Session session = sessionFactory.getCurrentSession();				
 		
-		Query getAllNotes = session.createQuery("from Note where user_id=:userId");
+		Query<Note> getAllNotes = session.createQuery("from Note where user_id=:userId",Note.class);
 					
 		getAllNotes.setParameter("userId",userId);
 		
