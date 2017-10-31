@@ -13,7 +13,7 @@ public class EmailCredentialSerializer {
 	
 	public static Logger logger = Logger.getLogger(EmailCredentialSerializer.class);
 	
-	public static final String credentialFilePath = "/home/bridgeit/SALMAN/GitRepos/EclipseWorkspace/TodoApp/restApiDemo/myEmail.dat";
+	public static final String credentialFilePath = "/home/bridgeit/SALMAN/GitRepos/EclipseWorkspace/TodoApp/todoApp/myEmail.dat";
 
 	public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException {
 		String workingDirectory = System.getProperty("user.dir");

@@ -42,8 +42,8 @@ public class UserController {
 
 		// add code later for checking if email already exists
 
-		boolean created = userService.createUser(user);
-		if (created) {
+		int created = userService.createUser(user);
+		if (created != -1) {
 			logger.debug("Created user");
 
 			logger.debug("User id of saved user is" + user.getUserId());

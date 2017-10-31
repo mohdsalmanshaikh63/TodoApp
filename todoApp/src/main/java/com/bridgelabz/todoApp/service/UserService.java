@@ -4,7 +4,7 @@ import com.bridgelabz.todoApp.entity.User;
 
 public interface UserService {
 
-	public boolean createUser(User user);
+	public int createUser(User user);
 	
 	public int login(User user);
 

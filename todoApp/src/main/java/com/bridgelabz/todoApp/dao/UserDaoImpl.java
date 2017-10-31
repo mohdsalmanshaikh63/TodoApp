@@ -1,13 +1,11 @@
 package com.bridgelabz.todoApp.dao;
 
-import javax.persistence.Query;
-
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.bridgelabz.todoApp.entity.User;
 
@@ -20,19 +18,19 @@ public class UserDaoImpl implements UserDao {
 	private static Logger logger = Logger.getLogger(UserDaoImpl.class);
 
 	@Override
-	public boolean registerUser(User user) {
-		
+	public int registerUser(User user) {
+
 		// first check if the user already exists
-		if(checkUser(user.getEmail()) != -1) {
-			return false;
+		if (checkUser(user.getEmail()) != -1) {
+			return -1;
 		} else {
 
-		Session session = sessionFactory.getCurrentSession();
+			Session session = sessionFactory.getCurrentSession();
 
-		session.save(user);
+			session.save(user);
 
-		return true;
-		
+			return user.getUserId();
+
 		}
 
 	}
@@ -111,14 +109,20 @@ public class UserDaoImpl implements UserDao {
 		Session session = sessionFactory.getCurrentSession();
 
 		// get user object from db
-		Query query = session.createQuery("from User where email= :email", User.class).setParameter("email", email);
+		org.hibernate.query.Query<User> query = session.createQuery("from User where email= :email", User.class)
+				.setParameter("email", email);
 
 		// check this what it returns or throws an exception
 		// handle this properly later if any problem
+		User user;
 
-		User user = (User) query.getSingleResult();
+		try {
+			user = query.getSingleResult();
+			return user.getUserId();
+		} catch (Exception e) {
+			return -1;
+		}
 
-		return user.getUserId();
 	}
 
 	@Override
@@ -128,17 +132,17 @@ public class UserDaoImpl implements UserDao {
 
 		// get user object from db
 		Query query = session.createQuery("from User where email= :email", User.class).setParameter("email", email);
-		
+
 		User user = null;
-		
+
 		try {
-		user = (User) query.getSingleResult();
+			user = (User) query.getSingleResult();
 		} catch (Exception e) {
 			// do nothing here
 		}
-		
-		if(user != null) {
-			
+
+		if (user != null) {
+
 			return user.getUserId();
 		}
 

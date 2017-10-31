@@ -40,7 +40,7 @@ public class FacebookConnection {
 	}
 
 	public String getAccessToken(String authCode) throws UnsupportedEncodingException {
-		String fbaccessTokenURL = "https://graph.facebook.com/v2.9/oauth/access_token?" + "client_id=" + App_Id
+		String fbaccessTokenURL = "https://graph.facebook.com/v2.10/oauth/access_token?" + "client_id=" + App_Id
 				+ "&redirect_uri=" + URLEncoder.encode(Redirect_URI, "UTF-8") + "&client_secret=" + Secret_Id + "&code="
 				+ authCode;
 
@@ -72,7 +72,7 @@ public class FacebookConnection {
 
 	public JsonNode getUserProfile(String fbaccessToken) {
 
-		String fbgetUserURL = "https://graph.facebook.com/v2.9/me?access_token=" + fbaccessToken
+		String fbgetUserURL = "https://graph.facebook.com/v2.10/me?access_token=" + fbaccessToken
 				+ "&fields=id,name,email,picture";
 		System.out.println("fb get user details " + fbgetUserURL);
 		ResteasyClient restCall = new ResteasyClientBuilder().build();

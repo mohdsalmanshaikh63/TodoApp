@@ -15,6 +15,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @author Salman
  *
@@ -23,7 +25,6 @@ import javax.persistence.Transient;
 @Table(name = "user")
 public class User {
 
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
@@ -38,46 +39,24 @@ public class User {
 	@Column(name = "email", unique = true)
 	private String email;
 
+	@JsonIgnore
 	@Column(name = "password")
 	private String password;
 
+	@JsonIgnore
 	@Transient
 	private String confirmPassword;
 
 	@Column(name = "valid")
 	private boolean isValid;
 
-	@OneToMany(fetch=FetchType.EAGER,cascade= {CascadeType.ALL}, mappedBy="user")
+	@OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL }, mappedBy = "user")
 	private List<Note> notes;
-	
-	
+
 	public User() {
 
 	}
 
-	// these might be used for Spring remove these if not needed
-
-	/*public User(String firstName, String lastName, String email, String password, String confirmPasssword,
-			boolean isValid) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		this.password = password;
-		this.confirmPassword = confirmPasssword;
-		this.isValid = isValid;
-	}
-
-	public User(int userId, String firstName, String lastName, String email, String password, String confirmPassword,
-			boolean isValid) {		
-		this.userId = userId;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		this.password = password;
-		this.confirmPassword = confirmPassword;
-		this.isValid = isValid;
-	}
-*/
 	public int getUserId() {
 		return userId;
 	}

@@ -12,7 +12,7 @@ public interface UserDao {
 	 * @param user
 	 * @return whether the user was successfully registered or not
 	 */
-	public boolean registerUser(User user);
+	public int registerUser(User user);
 	
 	/**
 	 * @param email
