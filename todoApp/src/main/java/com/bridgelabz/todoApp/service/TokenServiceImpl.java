@@ -19,7 +19,7 @@ public class TokenServiceImpl implements TokenService {
 	}
 
 	@Override
-	public boolean verifyToken(String token) {
+	public int verifyToken(String token) {
 
 		return tokenDao.verifyToken(token);
 	}

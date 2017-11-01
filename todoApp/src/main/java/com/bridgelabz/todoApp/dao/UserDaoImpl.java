@@ -60,7 +60,7 @@ public class UserDaoImpl implements UserDao {
 		Session session = sessionFactory.getCurrentSession();
 
 		// get user object from db
-		Query<User> query = session.createQuery("from User where email= :email and password=:password", User.class)
+		Query<User> query = session.createQuery("from User where email= :email", User.class)
 				.setParameter("email", user.getEmail());
 
 		// check this what it returns or throws an exception

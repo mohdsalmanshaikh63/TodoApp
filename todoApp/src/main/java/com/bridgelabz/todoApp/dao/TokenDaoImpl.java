@@ -97,17 +97,17 @@ public class TokenDaoImpl implements TokenDao {
 	}
 
 	@Override
-	public boolean verifyToken(String tokenValue) {
+	public int verifyToken(String tokenValue) {
 
 		Token token = tokenMap.get(tokenValue);
 
 		logger.info("******Token from redis for verification" + token);
 
 		if (token != null) {
-			return true;
+			return token.getUid();
 		}
 
-		return false;
+		return -1;
 	}
 
 }

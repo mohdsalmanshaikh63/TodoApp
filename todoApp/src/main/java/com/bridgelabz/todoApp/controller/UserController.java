@@ -135,9 +135,9 @@ public class UserController {
 
 		logger.info("*******User with id:" + id + " is being Authenticated");
 
-		boolean result = tokenService.verifyToken(accessToken);
+		int result = tokenService.verifyToken(accessToken);
 
-		if (result) {
+		if (result == -1) {
 
 			return new ResponseEntity<String>("Authentication Success!", HttpStatus.OK);
 		}
@@ -190,9 +190,9 @@ public class UserController {
 	@RequestMapping(value = "/reset/{forgotToken}")
 	public ResponseEntity<String> reset(@PathVariable("forgotToken") String forgotToken) {
 
-		boolean result = tokenService.verifyToken(forgotToken);
+		int result = tokenService.verifyToken(forgotToken);
 
-		if (result) {
+		if (result == -1) {
 
 			return new ResponseEntity<String>("Reset Success!", HttpStatus.OK);
 		}

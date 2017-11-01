@@ -65,6 +65,18 @@
 	<!-- Add support for reading web resources: css, images, js, etc ... -->
 	<!-- <mvc:resources location="/resources/" mapping="/resources/**"></mvc:resources> -->
 
+	<!-- Adding interceptors -->
+	<!-- <bean
+		class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"
+		p:interceptors-ref="menuInterceptor" /> -->
+
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/notes/**" />
+			<bean class="com.bridgelabz.todoApp.interceptor.LoginInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+
 
 </beans>
 

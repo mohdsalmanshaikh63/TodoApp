@@ -37,11 +37,9 @@ public class User {
 	@Column(name = "email", unique = true)
 	private String email;
 
-	@JsonIgnore
 	@Column(name = "password")
 	private String password;
 
-	@JsonIgnore
 	@Transient
 	private String confirmPassword;
 

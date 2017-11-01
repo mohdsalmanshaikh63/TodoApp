@@ -18,7 +18,7 @@ public class EmailCredentialSerializer {
 	public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException {
 		String workingDirectory = System.getProperty("user.dir");
 		logger.info("*****Working directory is "+workingDirectory);
-		serializeCredentials("username", "password");		
+		serializeCredentials("shaikhuiqbal@gmail.com", "786Start!");		
 		EmailInfo emailInfo = getEmailInfo();
 		logger.info(emailInfo);
 	}
