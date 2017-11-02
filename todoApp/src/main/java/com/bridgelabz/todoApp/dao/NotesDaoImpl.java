@@ -4,11 +4,16 @@ package com.bridgelabz.todoApp.dao;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.hibernate.query.Query;
+import javax.persistence.criteria.CriteriaBuilder;
 
+import org.hibernate.query.Query;
+import org.hibernate.transform.Transformers;
 import org.apache.log4j.Logger;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -60,7 +65,8 @@ public class NotesDaoImpl implements NotesDao {
 		
 		Session session = sessionFactory.getCurrentSession();
 		
-		Query<Note> deleteNote = session.createQuery("delete from Note where noteId=:noteId",Note.class);
+		@SuppressWarnings("rawtypes")
+		Query deleteNote = session.createQuery("delete from Note where noteId= :noteId");
 		
 		deleteNote.setParameter("noteId", noteId);
 		
@@ -90,11 +96,21 @@ public class NotesDaoImpl implements NotesDao {
 		
 		Session session = sessionFactory.getCurrentSession();				
 		
-		Query<Note> getAllNotes = session.createQuery("from Note where user_id=:userId",Note.class);
+		/*Query<Note> getAllNotes = session.createQuery("from Note where user_id=:userId",Note.class);
 					
 		getAllNotes.setParameter("userId",userId);
 		
-		List<Note> notesList = getAllNotes.getResultList();
+		List<Note> notesList = getAllNotes.getResultList();*/
+		
+		Criteria criteria = session.createCriteria(Note.class)
+							.setProjection(Projections.projectionList()
+							.add(Projections.property("noteId"), "noteId")
+							.add(Projections.property("title"), "title")
+							.add(Projections.property("description"), "description")
+							.add(Projections.property("createTime"), "createTime"))
+							.setResultTransformer(Transformers.aliasToBean(Note.class));
+		List<Note> notesList = criteria.list();
+							
 		
 		logger.info("*****Getting Notes List:"+notesList);
 		
