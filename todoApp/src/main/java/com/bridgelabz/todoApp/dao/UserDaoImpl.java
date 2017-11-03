@@ -29,9 +29,13 @@ public class UserDaoImpl implements UserDao {
 			
 			String password = user.getPassword();
 			
+			if(password != null) {
+			
 			String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 			
 			user.setPassword(hashedPassword);
+			
+			}
 
 			Session session = sessionFactory.getCurrentSession();
 

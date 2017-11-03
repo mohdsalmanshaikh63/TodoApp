@@ -102,6 +102,7 @@ public class NotesDaoImpl implements NotesDao {
 		
 		List<Note> notesList = getAllNotes.getResultList();*/
 		
+		@SuppressWarnings("deprecation")
 		Criteria criteria = session.createCriteria(Note.class)
 							.setProjection(Projections.projectionList()
 							.add(Projections.property("noteId"), "noteId")
@@ -109,6 +110,8 @@ public class NotesDaoImpl implements NotesDao {
 							.add(Projections.property("description"), "description")
 							.add(Projections.property("createTime"), "createTime"))
 							.setResultTransformer(Transformers.aliasToBean(Note.class));
+		
+		@SuppressWarnings("unchecked")
 		List<Note> notesList = criteria.list();
 							
 		
