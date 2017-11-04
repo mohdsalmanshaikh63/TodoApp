@@ -4,16 +4,14 @@ package com.bridgelabz.todoApp.dao;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import javax.persistence.criteria.CriteriaBuilder;
-
 import org.hibernate.query.Query;
 import org.hibernate.transform.Transformers;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -90,9 +88,9 @@ public class NotesDaoImpl implements NotesDao {
 	
 	public List<Note> getAllNotes(int userId) {
 		
-		/*User user = userService.getUser(userId);
+		User user = userService.getUser(userId);
 		
-		logger.debug("Got the user: "+ user);*/		
+		logger.debug("Got the user: "+ user);		
 		
 		Session session = sessionFactory.getCurrentSession();				
 		
@@ -102,6 +100,8 @@ public class NotesDaoImpl implements NotesDao {
 		
 		List<Note> notesList = getAllNotes.getResultList();*/
 		
+		
+		// used transformer for setting user object to null
 		@SuppressWarnings("deprecation")
 		Criteria criteria = session.createCriteria(Note.class)
 							.setProjection(Projections.projectionList()
@@ -109,6 +109,7 @@ public class NotesDaoImpl implements NotesDao {
 							.add(Projections.property("title"), "title")
 							.add(Projections.property("description"), "description")
 							.add(Projections.property("createTime"), "createTime"))
+							.add(Restrictions.eq("user", user))
 							.setResultTransformer(Transformers.aliasToBean(Note.class));
 		
 		@SuppressWarnings("unchecked")

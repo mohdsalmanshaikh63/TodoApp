@@ -88,7 +88,6 @@ public class GoogleController {
 			//user.setPassword("");
 			user.setValid(true);
 
-			// add isValid logic here later
 			userId = userService.createUser(user);
 
 			logger.info("********User Created");

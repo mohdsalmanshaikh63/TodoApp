@@ -80,7 +80,7 @@ public class NotesController {
 		}
 	}
 
-	@GetMapping(value = "/getAllNotes/")
+	@GetMapping(value = "/getAllNotes")
 	public ResponseEntity<List<Note>> getAllNotes(HttpServletRequest request) {
 		
 

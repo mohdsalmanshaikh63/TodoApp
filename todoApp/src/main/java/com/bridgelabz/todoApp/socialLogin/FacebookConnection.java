@@ -20,9 +20,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Component
 public class FacebookConnection {
 
-	public static final String App_Id = "876789189147877";
-	public static final String Secret_Id = "541fede0105b637db41c560b3548e7b9";
-	public static final String Redirect_URI = "http://localhost:8080/todoApp/connectFB";
+	private final String App_Id = "876789189147877";
+	private final String Secret_Id = "541fede0105b637db41c560b3548e7b9";
+	private final String Redirect_URI = "http://localhost:8080/todoApp/connectFB";
+	private final String BINDING = "&fields=id,name,email,first_name,last_name,picture";
 
 	public String getFacebookAuthURL(String unid) {
 
@@ -72,8 +73,7 @@ public class FacebookConnection {
 
 	public JsonNode getUserProfile(String fbaccessToken) {
 
-		String fbgetUserURL = "https://graph.facebook.com/v2.10/me?access_token=" + fbaccessToken
-				+ "&fields=id,name,email,picture";
+		String fbgetUserURL = "https://graph.facebook.com/v2.10/me?access_token=" + fbaccessToken + BINDING;
 		System.out.println("fb get user details " + fbgetUserURL);
 		ResteasyClient restCall = new ResteasyClientBuilder().build();
 		ResteasyWebTarget target = restCall.target(fbgetUserURL);

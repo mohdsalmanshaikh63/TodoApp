@@ -45,6 +45,7 @@ public class UserController {
 			HttpServletRequest request) throws FileNotFoundException, ClassNotFoundException, IOException {
 
 		// add code later for checking if email already exists
+		logger.info("*********Got user :"+user);
 
 		int created = userService.createUser(user);
 		if (created != -1) {

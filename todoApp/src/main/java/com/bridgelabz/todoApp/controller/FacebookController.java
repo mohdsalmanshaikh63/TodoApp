@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -81,16 +80,11 @@ public class FacebookController {
 		if (userId == -1) {
 			logger.info(" user is new to our db");
 			user = new User();
-			user.setFirstName(profile.get("name").asText());
-			/*
-			 * user.setFirstName(profile.get("first_name").asText());
-			 * user.setLastName(profile.get("last_name").asText());
-			 */
-			user.setEmail(profile.get("email").asText());
-			user.setPassword("");
-			user.setValid(true);
 
-			// add isValid logic here later
+			user.setFirstName(profile.get("first_name").asText());
+			user.setLastName(profile.get("last_name").asText());
+			user.setEmail(profile.get("email").asText());
+			user.setValid(true);
 			userId = userService.createUser(user);
 
 			System.out.println("******User Created");
