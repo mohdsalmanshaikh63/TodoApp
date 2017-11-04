@@ -8,29 +8,31 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
 
+@Component
 public class EmailCredentialSerializer {
 	
-	public static Logger logger = Logger.getLogger(EmailCredentialSerializer.class);
+	private static Logger logger = Logger.getLogger(EmailCredentialSerializer.class);
 	
-	public static final String credentialFilePath = "/home/bridgeit/SALMAN/GitRepos/EclipseWorkspace/TodoApp/todoApp/myEmail.dat";
+	private final String credentialFilePath = "/home/bridgeit/SALMAN/GitRepos/EclipseWorkspace/TodoApp/todoApp/myEmail.dat";
 
 	public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException {
 		String workingDirectory = System.getProperty("user.dir");
 		logger.info("*****Working directory is "+workingDirectory);
-		serializeCredentials("shaikhuiqbal@gmail.com", "786Start!");		
-		EmailInfo emailInfo = getEmailInfo();
-		logger.info(emailInfo);
+		//serializeCredentials("", "");		
+		//EmailInfo emailInfo = getEmailInfo();
+		//logger.info(emailInfo);
 	}
 	
-	public static void serializeCredentials(String email, String password) throws FileNotFoundException, IOException {
+	public void serializeCredentials(String email, String password) throws FileNotFoundException, IOException {
 		EmailInfo emailInfo = new EmailInfo(email, password);
 		try(ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(credentialFilePath))) {
 			output.writeObject(emailInfo);
 		}
 	}
 	
-	public static EmailInfo getEmailInfo() throws FileNotFoundException, IOException, ClassNotFoundException {
+	public EmailInfo getEmailInfo() throws FileNotFoundException, IOException, ClassNotFoundException {
 		
 		try(ObjectInputStream input = new ObjectInputStream(new FileInputStream(credentialFilePath))) {
 			System.out.println("Inside getEmailInfo() method");			

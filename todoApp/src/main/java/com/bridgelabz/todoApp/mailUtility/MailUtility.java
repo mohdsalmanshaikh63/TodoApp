@@ -14,16 +14,22 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.jboss.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class MailUtility {
 
 	private static Logger logger = Logger.getLogger(MailUtility.class);
+	
+	@Autowired
+	private EmailCredentialSerializer emailCredentialSerializer;
 
-	public static void sendMail(String toMail, String subject, String messageBody) throws FileNotFoundException, ClassNotFoundException, IOException {
+	public void sendMail(String toMail, String subject, String messageBody) throws FileNotFoundException, ClassNotFoundException, IOException {
 		logger.debug("Starting TLS");
 
 		// add relative path to the java class later we have used hardcoded path
-		EmailInfo emailInfo = EmailCredentialSerializer.getEmailInfo();
+		EmailInfo emailInfo = emailCredentialSerializer.getEmailInfo();
 		String fromMail = emailInfo.getEmail();
 		String password = emailInfo.getPassword();
 		
@@ -71,7 +77,7 @@ public class MailUtility {
 
 	}
 	 public static void main(String[] args) throws FileNotFoundException, ClassNotFoundException, IOException {
-		sendMail("mohdsalmanshaikh63@gmail.com", "test", "This is a test.");
+		//sendMail("mohdsalmanshaikh63@gmail.com", "test", "This is a test.");
 	}
 
 }

@@ -34,6 +34,9 @@ public class UserController {
 
 	@Autowired
 	private TokenService tokenService;
+	
+	@Autowired
+	private MailUtility mailUtility;
 
 	private static Logger logger = Logger.getLogger(UserController.class);
 
@@ -61,7 +64,7 @@ public class UserController {
 			String messageBody = "Click on this link to activate your account " + resultPath;
 
 			// Finally send the mail!
-			MailUtility.sendMail(user.getEmail(), "Activate your account", messageBody);
+			mailUtility.sendMail(user.getEmail(), "Activate your account", messageBody);
 
 			return new ResponseEntity<String>("Record created", HttpStatus.OK);
 		} else {
@@ -119,7 +122,7 @@ public class UserController {
 			String messageBody = "Click here to login /n" + resultPath;
 
 			// Finally send the mail!
-			MailUtility.sendMail(user.getEmail(), "Token Login", messageBody);
+			mailUtility.sendMail(user.getEmail(), "Token Login", messageBody);
 			Map<String, Token> tokenMap = new HashMap<>();
 			tokenMap.put("accessToken", accessToken);
 			tokenMap.put("refreshToken", refreshToken);
@@ -179,7 +182,7 @@ public class UserController {
 			String messageBody = "Click here to reset ur password \n" + resultPath;
 
 			// Finally send the mail!
-			MailUtility.sendMail(email, "Token Login", messageBody);
+			mailUtility.sendMail(email, "Token Login", messageBody);
 			return new ResponseEntity<String>("*******Reset link sent!", HttpStatus.OK);
 
 		}
