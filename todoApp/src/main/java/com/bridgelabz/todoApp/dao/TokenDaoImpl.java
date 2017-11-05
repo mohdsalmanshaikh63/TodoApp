@@ -87,6 +87,10 @@ public class TokenDaoImpl implements TokenDao {
 		case "forgotToken":
 			tokenMap.put(tokenValue, token, 30, TimeUnit.MINUTES);
 			break;
+			
+		case "activateToken":
+			tokenMap.put(tokenValue, token, 1, TimeUnit.DAYS);
+			break;
 
 		default:
 			logger.info("**********Please specify correct token type!");

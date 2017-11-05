@@ -1,6 +1,7 @@
 package com.bridgelabz.todoApp.controller;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -50,58 +51,64 @@ public class FacebookController {
 
 	@RequestMapping(value = "/connectFB")
 	public ResponseEntity<List<Token>> redirectFromFacebook(HttpServletRequest request, HttpServletResponse response)
-			throws IOException, ServletException {
-		String sessionState = (String) request.getSession().getAttribute("STATE");
-		String faceBookState = request.getParameter("state");
+			throws IOException, ServletException, ClassNotFoundException, URISyntaxException {
 
-		logger.info("******in connect facebook");
+		try {
+			String sessionState = (String) request.getSession().getAttribute("STATE");
+			String faceBookState = request.getParameter("state");
 
-		if (sessionState == null || !sessionState.equals(faceBookState)) {
-			response.sendRedirect("loginWithFacebook");
+			logger.info("******in connect facebook");
+
+			if (sessionState == null || !sessionState.equals(faceBookState)) {
+				response.sendRedirect("loginWithFacebook");
+			}
+
+			String error = request.getParameter("error");
+
+			// change this to the front end homepage address
+			if (error != null && error.trim().isEmpty()) {
+				response.sendRedirect("userlogin");
+			}
+
+			String authCode = request.getParameter("code");
+			String fbaccessToken = facebookConnection.getAccessToken(authCode);
+			logger.info("******fbaccessToken " + fbaccessToken);
+
+			JsonNode profile = facebookConnection.getUserProfile(fbaccessToken);
+			logger.info("*******Fb profile :" + profile);
+			int userId = userService.getUserId(profile.get("email").asText());
+			User user = null;
+
+			// get user profile
+			if (userId == -1) {
+				logger.info(" user is new to our db");
+				user = new User();
+
+				user.setFirstName(profile.get("first_name").asText());
+				user.setLastName(profile.get("last_name").asText());
+				user.setEmail(profile.get("email").asText());
+				user.setValid(true);
+				userId = userService.createUser(user, null);
+
+				logger.info("******User Created");
+
+			}
+
+			logger.info(" user is not new to our db ,it is there in our db");
+			Token acessToken = tokenService.generateToken("accessToken", userId);
+			Token refreshToken = tokenService.generateToken("refreshToken", userId);
+
+			List<Token> tokenList = new ArrayList<>();
+			tokenList.add(acessToken);
+			tokenList.add(refreshToken);
+
+			logger.info("TokenList " + tokenList);
+
+			return new ResponseEntity<List<Token>>(tokenList, HttpStatus.OK);
+		} catch (Exception e) {
+			logger.info(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
-		String error = request.getParameter("error");
-
-		// change this to the front end homepage address
-		if (error != null && error.trim().isEmpty()) {
-			response.sendRedirect("userlogin");
-		}
-
-		String authCode = request.getParameter("code");
-		String fbaccessToken = facebookConnection.getAccessToken(authCode);
-		logger.info("******fbaccessToken " + fbaccessToken);
-
-		JsonNode profile = facebookConnection.getUserProfile(fbaccessToken);
-		logger.info("*******Fb profile :" + profile);
-		int userId = userService.getUserId(profile.get("email").asText());
-		User user = null;
-
-		// get user profile
-		if (userId == -1) {
-			logger.info(" user is new to our db");
-			user = new User();
-
-			user.setFirstName(profile.get("first_name").asText());
-			user.setLastName(profile.get("last_name").asText());
-			user.setEmail(profile.get("email").asText());
-			user.setValid(true);
-			userId = userService.createUser(user);
-
-			System.out.println("******User Created");
-
-		}
-
-		logger.info(" user is not new to our db ,it is there in our db");
-		Token acessToken = tokenService.generateToken("accessToken", userId);
-		Token refreshToken = tokenService.generateToken("refreshToken", userId);
-
-		List<Token> tokenList = new ArrayList<>();
-		tokenList.add(acessToken);
-		tokenList.add(refreshToken);
-
-		logger.info("TokenList " + tokenList);
-
-		return new ResponseEntity<List<Token>>(tokenList, HttpStatus.OK);
 
 		/*
 		 * request.setAttribute("user", user); RequestDispatcher dispatcher =

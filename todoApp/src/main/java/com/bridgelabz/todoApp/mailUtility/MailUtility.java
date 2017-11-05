@@ -2,6 +2,7 @@ package com.bridgelabz.todoApp.mailUtility;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Date;
 import java.util.Properties;
 
@@ -25,7 +26,7 @@ public class MailUtility {
 	@Autowired
 	private EmailCredentialSerializer emailCredentialSerializer;
 
-	public void sendMail(String toMail, String subject, String messageBody) throws FileNotFoundException, ClassNotFoundException, IOException {
+	public void sendMail(String toMail, String subject, String messageBody) throws FileNotFoundException, ClassNotFoundException, IOException, URISyntaxException {
 		logger.debug("Starting TLS");
 
 		// add relative path to the java class later we have used hardcoded path

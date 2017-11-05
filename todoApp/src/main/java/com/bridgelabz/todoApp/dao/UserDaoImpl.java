@@ -26,7 +26,7 @@ public class UserDaoImpl implements UserDao {
 		if (checkUser(user.getEmail()) != -1) {
 			return -1;
 		} else {
-			
+						
 			String password = user.getPassword();
 			
 			if(password != null) {
@@ -34,6 +34,8 @@ public class UserDaoImpl implements UserDao {
 			String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 			
 			user.setPassword(hashedPassword);
+			
+			user.setValid(false);
 			
 			}
 

@@ -90,7 +90,7 @@ public class User {
 		this.password = password;
 	}
 
-	public boolean isValid() {
+	public boolean getValid() {
 		return isValid;
 	}
 

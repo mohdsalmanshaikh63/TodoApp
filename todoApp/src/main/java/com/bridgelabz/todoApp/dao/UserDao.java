@@ -21,7 +21,7 @@ public interface UserDao {
 	 */
 	public int login(User user);
 
-	public boolean activate(int id);
+	public boolean activate(int userId);
 
 	public User getUser(int id);
 

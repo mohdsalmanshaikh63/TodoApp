@@ -2,6 +2,7 @@ package com.bridgelabz.todoApp.controller;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,7 +35,7 @@ public class UserController {
 
 	@Autowired
 	private TokenService tokenService;
-	
+
 	@Autowired
 	private MailUtility mailUtility;
 
@@ -42,64 +43,71 @@ public class UserController {
 
 	@PostMapping(value = "/create")
 	public ResponseEntity<String> create(@RequestBody User user, BindingResult bindingResult,
-			HttpServletRequest request) throws FileNotFoundException, ClassNotFoundException, IOException {
+			HttpServletRequest request)
+			throws FileNotFoundException, ClassNotFoundException, IOException, URISyntaxException {
 
 		// add code later for checking if email already exists
-		logger.info("*********Got user :"+user);
+		logger.info("*********Got user :" + user);
 
-		int created = userService.createUser(user);
-		if (created != -1) {
-			logger.debug("Created user");
+		// prepare the url for sending activation mail
+		String scheme = request.getScheme();
+		String host = request.getHeader("Host"); // includes server name and server port
+		String contextPath = request.getContextPath(); // includes leading forward slash
 
-			logger.debug("User id of saved user is" + user.getUserId());
+		String activationLink = scheme + "://" + host + contextPath + "/user/activate/";
 
-			// prepare the url for sending activation mail
+		String messageBody = "Click on this link to activate your account " + activationLink;
 
-			String scheme = request.getScheme();
-			String host = request.getHeader("Host"); // includes server name and server port
-			String contextPath = request.getContextPath(); // includes leading forward slash
+		try {
+			int created = userService.createUser(user, messageBody);
+			if (created != -1) {
 
-			String resultPath = scheme + "://" + host + contextPath + "/user/activate/" + user.getUserId();
-			logger.debug("Result path: " + resultPath);
+				logger.debug("*********Created user");
+				logger.debug("*********User id of saved user is" + user.getUserId());
 
-			String messageBody = "Click on this link to activate your account " + resultPath;
-
-			// Finally send the mail!
-			mailUtility.sendMail(user.getEmail(), "Activate your account", messageBody);
-
-			return new ResponseEntity<String>("Record created", HttpStatus.OK);
-		} else {
-			logger.debug("Error while creating user record");
-			return new ResponseEntity<String>("Record could not be created", HttpStatus.INTERNAL_SERVER_ERROR);
-
+				return new ResponseEntity<String>("Record created", HttpStatus.OK);
+			} else {
+				logger.debug("**********User already exists");
+				return new ResponseEntity<String>("User already exists", HttpStatus.CONFLICT);
+			}
+		} catch (Exception e) {
+			logger.info("*******Error while creating user record");
+			logger.debug(e.getMessage());
+			return new ResponseEntity<String>("Error while creating user record", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}
 
-	@GetMapping(value = "/activate/{id}")
-	public ResponseEntity<Void> activate(@PathVariable("id") int id) {
+	@GetMapping(value = "/activate/{activateToken}")
+	public ResponseEntity<Void> activate(@PathVariable("activateToken") String activateToken) {
 
 		// add activation token to the url later for more security
 
-		if (userService.activate(id)) {
-			logger.debug("Activation for id " + id + " successful!");
+		if (userService.activate(activateToken)) {
+			logger.debug("**********Activation with token " + activateToken + " successful!");
+
+			// redirect to login page
+			// response.sendRedirect
+
 			return new ResponseEntity<Void>(HttpStatus.OK);
 		} else {
 			logger.debug("Could not activate user");
 			return new ResponseEntity<Void>(HttpStatus.UNPROCESSABLE_ENTITY);
+
+			// redirect to appropiate error page later
 		}
 
 	}
 
 	@PostMapping(value = "/login")
 	public ResponseEntity<Map<String, Token>> login(@RequestBody User user, HttpServletRequest request)
-			throws FileNotFoundException, ClassNotFoundException, IOException {
+			throws FileNotFoundException, ClassNotFoundException, IOException, URISyntaxException {
 
 		// send the user to the service
 		int uid = userService.login(user);
 
 		if (uid == -1) {
-			logger.debug("Invalid Credentials");
+			logger.debug("******Invalid Credentials");
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		} else {
 
@@ -108,22 +116,6 @@ public class UserController {
 			Token accessToken = tokenService.generateToken("accessToken", uid);
 			Token refreshToken = tokenService.generateToken("refreshToken", uid);
 
-			// send the email the user with the token in the url
-
-			// prepare the url for sending activation mail
-
-			String scheme = request.getScheme();
-			String host = request.getHeader("Host"); // includes server name and server port
-			String contextPath = request.getContextPath(); // includes leading forward slash
-
-			String resultPath = scheme + "://" + host + contextPath + "/user/authenticate/" + uid + "/"
-					+ accessToken.getValue();
-			logger.debug("Result path: " + resultPath);
-
-			String messageBody = "Click here to login /n" + resultPath;
-
-			// Finally send the mail!
-			mailUtility.sendMail(user.getEmail(), "Token Login", messageBody);
 			Map<String, Token> tokenMap = new HashMap<>();
 			tokenMap.put("accessToken", accessToken);
 			tokenMap.put("refreshToken", refreshToken);
@@ -133,25 +125,9 @@ public class UserController {
 
 	}
 
-	@GetMapping(value = "/authenticate/{id}/{accessToken}")
-	public ResponseEntity<String> authenticate(@PathVariable("id") int id,
-			@PathVariable("accessToken") String accessToken) {
-
-		logger.info("*******User with id:" + id + " is being Authenticated");
-
-		int result = tokenService.verifyToken(accessToken);
-
-		if (result == -1) {
-
-			return new ResponseEntity<String>("Authentication Success!", HttpStatus.OK);
-		}
-
-		return new ResponseEntity<String>("Authentication failed", HttpStatus.BAD_REQUEST);
-	}
-
 	@PostMapping(value = "/forgotpassword")
 	public ResponseEntity<String> forgotPassword(@RequestBody User user, HttpServletRequest request)
-			throws FileNotFoundException, ClassNotFoundException, IOException {
+			throws FileNotFoundException, ClassNotFoundException, IOException, URISyntaxException {
 
 		// first check whether the user exists in the database
 		String email = user.getEmail();
@@ -159,36 +135,42 @@ public class UserController {
 
 		logger.info("Got the email: " + email);
 
-		int uid = userService.checkUser(email);
+		try {
+			int uid = userService.checkUser(email);
 
-		// send email if the user exists
-		if (uid != -1) {
+			// send email if the user exists
+			if (uid != -1) {
 
-			// Generate a token and send in the email
-			Token token = tokenService.generateToken("forgotToken", uid);
+				// Generate a token and send in the email
+				Token token = tokenService.generateToken("forgotToken", uid);
 
-			logger.info("********Token Generated: " + token + "for email: " + email);
+				logger.info("********Token Generated: " + token + "for email: " + email);
 
-			// send the email the user with the token in the url
+				// send the email the user with the token in the url
 
-			// prepare the url for sending activation mail
+				// prepare the url for sending activation mail
 
-			String scheme = request.getScheme();
-			String host = request.getHeader("Host"); // includes server name and server port
-			String contextPath = request.getContextPath(); // includes leading forward slash
+				String scheme = request.getScheme();
+				String host = request.getHeader("Host"); // includes server name and server port
+				String contextPath = request.getContextPath(); // includes leading forward slash
 
-			String resultPath = scheme + "://" + host + contextPath + "/user/reset/" + token.getValue();
-			logger.info("Result path: " + resultPath);
+				String resultPath = scheme + "://" + host + contextPath + "/user/reset/" + token.getValue();
+				logger.info("Result path: " + resultPath);
 
-			String messageBody = "Click here to reset ur password \n" + resultPath;
+				String messageBody = "Click here to reset ur password " + resultPath;
 
-			// Finally send the mail!
-			mailUtility.sendMail(email, "Token Login", messageBody);
-			return new ResponseEntity<String>("*******Reset link sent!", HttpStatus.OK);
+				// Finally send the mail!
+				mailUtility.sendMail(email, "Token Login", messageBody);
+				return new ResponseEntity<String>("*******Reset link sent!", HttpStatus.OK);
 
+			}
+
+			return new ResponseEntity<String>("*******User doesn't exist", HttpStatus.NOT_FOUND);
+		} catch (Exception e) {
+			logger.debug(e.getMessage());
+			return new ResponseEntity<String>("*******Error while processing forgotPassword request",
+					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
-		return new ResponseEntity<String>("User doesn't exist", HttpStatus.NOT_FOUND);
 	}
 
 	@RequestMapping(value = "/reset/{forgotToken}")
@@ -196,7 +178,7 @@ public class UserController {
 
 		int result = tokenService.verifyToken(forgotToken);
 
-		if (result == -1) {
+		if (result != -1) {
 
 			return new ResponseEntity<String>("Reset Success!", HttpStatus.OK);
 		}
