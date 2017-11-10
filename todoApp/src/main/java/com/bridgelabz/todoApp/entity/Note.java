@@ -34,7 +34,6 @@ public class Note {
 
 	// on deletion of notes a user should not be deleted
 	// also fetch type lazy since we don't want to get user object with notes
-	@JsonIgnore
 	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST,
 			CascadeType.REFRESH })
 	@JoinColumn(name = "user_id")

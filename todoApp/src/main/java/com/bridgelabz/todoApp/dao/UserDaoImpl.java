@@ -26,17 +26,17 @@ public class UserDaoImpl implements UserDao {
 		if (checkUser(user.getEmail()) != -1) {
 			return -1;
 		} else {
-						
+
 			String password = user.getPassword();
-			
-			if(password != null) {
-			
-			String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
-			
-			user.setPassword(hashedPassword);
-			
-			user.setValid(false);
-			
+
+			if (password != null) {
+
+				String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+
+				user.setPassword(hashedPassword);
+
+				user.setValid(false);
+
 			}
 
 			Session session = sessionFactory.getCurrentSession();
@@ -51,13 +51,12 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public int login(User user) {
-		
+
 		String email = user.getEmail();
 		String password = user.getPassword();
 
 		// basic checks
-		if (email == null || email == "" || password == null
-				|| password == "") {
+		if (email == null || email == "" || password == null || password == "") {
 			return -1;
 		}
 
@@ -66,29 +65,35 @@ public class UserDaoImpl implements UserDao {
 		Session session = sessionFactory.getCurrentSession();
 
 		// get user object from db
-		Query<User> query = session.createQuery("from User where email= :email", User.class)
-				.setParameter("email", user.getEmail());
+		Query<User> query = session.createQuery("from User where email= :email", User.class).setParameter("email",
+				user.getEmail());
 
 		// check this what it returns or throws an exception
 		// handle this properly later if any problem DONE!
 
 		try {
-		User aUser = (User) query.getSingleResult();
-		String hashedPassword = aUser.getPassword();
-		
-		if(BCrypt.checkpw(password, hashedPassword) ) {
-			logger.info("Passwords match!");
-			return aUser.getUserId();
-		} else {
-			logger.info("Passwords do not match");
-			return -1;
-		}
-		
+			User aUser = (User) query.getSingleResult();
+
+			if (aUser.getValid() == false) {
+				return -1;
+			} else {
+
+				String hashedPassword = aUser.getPassword();
+
+				if (BCrypt.checkpw(password, hashedPassword)) {
+					logger.info("Passwords match!");
+					return aUser.getUserId();
+				} else {
+					logger.info("Passwords do not match");
+					return -1;
+				}
+			}
+
 		} catch (Exception e) {
-			
+
 			logger.info("No such user exists");
 			return -1;
-			
+
 		}
 	}
 
@@ -159,7 +164,8 @@ public class UserDaoImpl implements UserDao {
 		Session session = sessionFactory.getCurrentSession();
 
 		// get user object from db
-		Query<User> query = session.createQuery("from User where email= :email", User.class).setParameter("email", email);
+		Query<User> query = session.createQuery("from User where email= :email", User.class).setParameter("email",
+				email);
 
 		User user = null;
 
