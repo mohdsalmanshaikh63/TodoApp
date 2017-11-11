@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,7 +29,6 @@ import com.bridgelabz.todoApp.service.TokenService;
 import com.bridgelabz.todoApp.service.UserService;
 
 @RestController
-@CrossOrigin(origins="http://localhost:8000")
 @RequestMapping(value = "user")
 public class UserController {
 
@@ -44,7 +44,8 @@ public class UserController {
 	private static Logger logger = Logger.getLogger(UserController.class);
 
 	@PostMapping(value = "/create")
-	public ResponseEntity<String> create(@RequestBody User user, BindingResult bindingResult,
+	@CrossOrigin(origins = "http://localhost:8000")
+	public ResponseEntity<Void> create(@RequestBody User user, BindingResult bindingResult,
 			HttpServletRequest request)
 			throws FileNotFoundException, ClassNotFoundException, IOException, URISyntaxException {
 
@@ -67,15 +68,15 @@ public class UserController {
 				logger.debug("*********Created user");
 				logger.debug("*********User id of saved user is" + user.getUserId());
 
-				return new ResponseEntity<String>("Record created", HttpStatus.OK);
+				return new ResponseEntity<Void>(HttpStatus.OK);
 			} else {
 				logger.debug("**********User already exists");
-				return new ResponseEntity<String>("User already exists", HttpStatus.CONFLICT);
+				return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 			}
 		} catch (Exception e) {
 			logger.info("*******Error while creating user record");
 			logger.debug(e.getMessage());
-			return new ResponseEntity<String>("Error while creating user record", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}
@@ -102,8 +103,11 @@ public class UserController {
 	}
 
 	@PostMapping(value = "/login")
-	public ResponseEntity<Map<String, Token>> login(@RequestBody User user, HttpServletRequest request)
+	public ResponseEntity<Map<String, Token>> login(@RequestHeader(value = "uId") int uId, @RequestBody User user,
+			HttpServletRequest request)
 			throws FileNotFoundException, ClassNotFoundException, IOException, URISyntaxException {
+
+		logger.info("******Got the header as: " + uId);
 
 		// send the user to the service
 		int uid = userService.login(user);
@@ -128,7 +132,7 @@ public class UserController {
 	}
 
 	@PostMapping(value = "/forgotpassword")
-	public ResponseEntity<String> forgotPassword(@RequestBody User user, HttpServletRequest request)
+	public ResponseEntity<Void> forgotPassword(@RequestBody User user, HttpServletRequest request)
 			throws FileNotFoundException, ClassNotFoundException, IOException, URISyntaxException {
 
 		// first check whether the user exists in the database
@@ -163,15 +167,14 @@ public class UserController {
 
 				// Finally send the mail!
 				mailUtility.sendMail(email, "Token Login", messageBody);
-				return new ResponseEntity<String>("*******Reset link sent!", HttpStatus.OK);
+				return new ResponseEntity<Void>(HttpStatus.OK);
 
 			}
 
-			return new ResponseEntity<String>("*******User doesn't exist", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
 		} catch (Exception e) {
 			logger.debug(e.getMessage());
-			return new ResponseEntity<String>("*******Error while processing forgotPassword request",
-					HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 

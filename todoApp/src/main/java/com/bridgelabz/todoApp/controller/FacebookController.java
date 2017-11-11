@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +15,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,6 +28,7 @@ import com.bridgelabz.todoApp.socialLogin.FacebookConnection;
 import com.fasterxml.jackson.databind.JsonNode;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:8000")
 public class FacebookController {
 
 	@Autowired
@@ -81,7 +84,7 @@ public class FacebookController {
 
 			// get user profile
 			if (userId == -1) {
-				logger.info(" user is new to our db");
+				logger.info("**********user is new to our db");
 				user = new User();
 
 				user.setFirstName(profile.get("first_name").asText());
@@ -94,7 +97,7 @@ public class FacebookController {
 
 			}
 
-			logger.info(" user is not new to our db ,it is there in our db");
+			logger.info("***********user is not new to our db ,it is there in our db");
 			Token acessToken = tokenService.generateToken("accessToken", userId);
 			Token refreshToken = tokenService.generateToken("refreshToken", userId);
 
@@ -102,19 +105,19 @@ public class FacebookController {
 			tokenList.add(acessToken);
 			tokenList.add(refreshToken);
 
+			request.setAttribute("user", user);
+			System.out.println("********** The user is "+user);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("fbsucess.jsp");
+			dispatcher.forward(request, response);
+
 			logger.info("TokenList " + tokenList);
 
-			return new ResponseEntity<List<Token>>(tokenList, HttpStatus.OK);
+			return null;
 		} catch (Exception e) {
 			logger.info(e.getMessage());
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		/*
-		 * request.setAttribute("user", user); RequestDispatcher dispatcher =
-		 * request.getRequestDispatcher("fbsucess.jsp"); dispatcher.forward(request,
-		 * response);
-		 */
 		// response.sendRedirect("http://localhost:8080/todoApp/fbsucess.jsp");
 
 	}
