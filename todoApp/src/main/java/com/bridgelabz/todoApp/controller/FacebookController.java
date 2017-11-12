@@ -2,8 +2,8 @@ package com.bridgelabz.todoApp.controller;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.RequestDispatcher;
@@ -53,7 +53,7 @@ public class FacebookController {
 	}
 
 	@RequestMapping(value = "/connectFB")
-	public ResponseEntity<List<Token>> redirectFromFacebook(HttpServletRequest request, HttpServletResponse response)
+	public ResponseEntity<Map<String, Token>> redirectFromFacebook(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException, ClassNotFoundException, URISyntaxException {
 
 		try {
@@ -98,21 +98,21 @@ public class FacebookController {
 			}
 
 			logger.info("***********user is not new to our db ,it is there in our db");
-			Token acessToken = tokenService.generateToken("accessToken", userId);
+			Token accessToken = tokenService.generateToken("accessToken", userId);
 			Token refreshToken = tokenService.generateToken("refreshToken", userId);
 
-			List<Token> tokenList = new ArrayList<>();
-			tokenList.add(acessToken);
-			tokenList.add(refreshToken);
+			Map<String, Token> tokenMap = new HashMap<>();
+			tokenMap.put("accessToken", accessToken);
+			tokenMap.put("refreshToken", refreshToken);
+			logger.info("*********TokenMap" + tokenMap);
+
 
 			request.setAttribute("user", user);
 			System.out.println("********** The user is "+user);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("fbsucess.jsp");
 			dispatcher.forward(request, response);
 
-			logger.info("TokenList " + tokenList);
-
-			return null;
+			return new ResponseEntity<Map<String, Token>>(tokenMap, HttpStatus.OK);
 		} catch (Exception e) {
 			logger.info(e.getMessage());
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

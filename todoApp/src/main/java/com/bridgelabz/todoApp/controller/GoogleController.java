@@ -2,8 +2,8 @@ package com.bridgelabz.todoApp.controller;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +25,7 @@ import com.bridgelabz.todoApp.socialLogin.GoogleConnection;
 import com.fasterxml.jackson.databind.JsonNode;
 
 @RestController
-@CrossOrigin(origins="http://localhost:8000")
+@CrossOrigin(origins = "http://localhost:8000")
 public class GoogleController {
 
 	@Autowired
@@ -43,25 +43,25 @@ public class GoogleController {
 	public void googleConnection(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 		logger.info("*******Inside loginWithGoogle");
-		
+
 		try {
-			
+
 			String unid = UUID.randomUUID().toString();
 			request.getSession().setAttribute("STATE", unid);
 			String googleLoginURL = googleConnection.getGoogleAuthURL(unid);
 			logger.info("*******GoogleLoginURL " + googleLoginURL);
 			response.sendRedirect(googleLoginURL);
 		} catch (Exception e) {
-			logger.info("******Error while logging in with Google \n"+e.getMessage());
-			
+			logger.info("******Error while logging in with Google \n" + e.getMessage());
+
 			// redirect to appropiate error page later
 		}
 
 	}
 
 	@GetMapping(value = "/connectGoogle")
-	public ResponseEntity<List<Token>> redirectFromGoogle(HttpServletRequest request, HttpServletResponse response)
-			throws IOException, ClassNotFoundException, URISyntaxException {
+	public ResponseEntity<Map<String, Token>> redirectFromGoogle(HttpServletRequest request,
+			HttpServletResponse response) throws IOException, ClassNotFoundException, URISyntaxException {
 
 		logger.info("*******Inside connectGoogle");
 
@@ -77,7 +77,9 @@ public class GoogleController {
 
 			// change this to the front end homepage address
 			if (error != null && error.trim().isEmpty()) {
-				response.sendRedirect("userlogin");
+
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+				// response.sendRedirect("userlogin");
 			}
 
 			String authCode = request.getParameter("code");
@@ -94,10 +96,10 @@ public class GoogleController {
 			if (userId == -1) {
 				logger.info("******User is new to our db");
 				user = new User();
-				user.setFirstName(profile.get("name").get("givenName").asText());			
-				user.setLastName(profile.get("name").get("familyName").asText());			
+				user.setFirstName(profile.get("name").get("givenName").asText());
+				user.setLastName(profile.get("name").get("familyName").asText());
 				user.setEmail(profile.get("emails").get(0).get("value").asText());
-				//user.setPassword("");
+				// user.setPassword("");
 				user.setValid(true);
 
 				userId = userService.createUser(user, null);
@@ -107,24 +109,23 @@ public class GoogleController {
 			}
 
 			logger.info("**********User is not new to our db ,it is there in our db");
-			Token acessToken = tokenService.generateToken("accessToken", userId);
+			Token accessToken = tokenService.generateToken("accessToken", userId);
 			Token refreshToken = tokenService.generateToken("refreshToken", userId);
 
-			
 			// request.setAttribute("user", user);
 			// RequestDispatcher dispatcher = request.getRequestDispatcher("fbsucess.jsp");
 			// dispatcher.forward(request, response);
 
-			List<Token> tokenList = new ArrayList<>();
-			tokenList.add(acessToken);
-			tokenList.add(refreshToken);
+			Map<String, Token> tokenMap = new HashMap<>();
+			tokenMap.put("accessToken", accessToken);
+			tokenMap.put("refreshToken", refreshToken);
 
-			logger.info("TokenList " + tokenList);
+			logger.info("*********TokenMap" + tokenMap);
 
-			return new ResponseEntity<List<Token>>(tokenList, HttpStatus.OK);
+			return new ResponseEntity<Map<String, Token>>(tokenMap, HttpStatus.OK);
 		} catch (Exception e) {
-			logger.info("*****Error while connecting with Google. "+e.getMessage());
-			return new ResponseEntity<List<Token>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			logger.info("*****Error while connecting with Google. " + e.getMessage());
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 

@@ -1,22 +1,19 @@
 {
-  "name": "webapp",
-  "homepage": "https://github.com/mohdsalmanshaikh63/TodoApp",
-  "authors": [
-    "salman <mohdsalmanshaikh63@gmail.com>"
-  ],
-  "description": "",
-  "main": "",
+  "name": "angular-seed",
+  "description": "A starter project for AngularJS",
+  "version": "0.0.0",
+  "homepage": "https://github.com/angular/angular-seed",
   "license": "MIT",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
+  "private": true,
   "dependencies": {
-    "angular": "^1.6.6",
+    "angular": "1.5.x",
+    "angular-animate": "1.5.x",
+    "angular-mocks": "1.5.x",
+    "angular-resource": "1.5.x",
     "bootstrap": "4.0.0-alpha.6",
-    "jquery": "^3.2.1"
+    "jquery": "^3.2.1",
+    "angular-ui-router": "^1.0.10",
+    "angular-password": "^1.0.3",
+    "angular-local-storage": "^0.7.1"
   }
 }

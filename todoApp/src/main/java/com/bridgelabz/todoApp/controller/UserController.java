@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,7 @@ import com.bridgelabz.todoApp.service.TokenService;
 import com.bridgelabz.todoApp.service.UserService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:8000")
 @RequestMapping(value = "user")
 public class UserController {
 
@@ -44,13 +46,18 @@ public class UserController {
 	private static Logger logger = Logger.getLogger(UserController.class);
 
 	@PostMapping(value = "/create")
-	@CrossOrigin(origins = "http://localhost:8000")
+
 	public ResponseEntity<Void> create(@RequestBody User user, BindingResult bindingResult,
-			HttpServletRequest request)
+			HttpServletRequest request, HttpServletResponse response)
 			throws FileNotFoundException, ClassNotFoundException, IOException, URISyntaxException {
 
 		// add code later for checking if email already exists
 		logger.info("*********Got user :" + user);
+		
+		/* this is needed when returing void response since angular gives xml parsing
+		 * error in firefox
+		 */
+		response.setContentType("text/plain");
 
 		// prepare the url for sending activation mail
 		String scheme = request.getScheme();

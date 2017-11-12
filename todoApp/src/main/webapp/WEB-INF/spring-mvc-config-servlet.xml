@@ -63,12 +63,8 @@
 	<tx:annotation-driven transaction-manager="myTransactionManager" />
 
 	<!-- Add support for reading web resources: css, images, js, etc ... -->
-	<!-- <mvc:resources location="/resources/" mapping="/resources/**"></mvc:resources> -->
-
-	<!-- Adding interceptors -->
-	<!-- <bean
-		class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"
-		p:interceptors-ref="menuInterceptor" /> -->
+	<mvc:resources location="/app/" mapping="/app/**"></mvc:resources>
+	
 
 	<mvc:interceptors>
 		<mvc:interceptor>
