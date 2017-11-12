@@ -111,6 +111,7 @@ public class FacebookController {
 			System.out.println("********** The user is "+user);
 			
 			// redirect to the dummy page for getting logins
+			// and also save to session for retrieval
 			RequestDispatcher dispatcher = request.getRequestDispatcher("fbsucess.jsp");
 			dispatcher.forward(request, response);
 
