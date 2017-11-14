@@ -163,11 +163,16 @@ public class UserController {
 
 				// prepare the url for sending activation mail
 
-				String scheme = request.getScheme();
-				String host = request.getHeader("Host"); // includes server name and server port
-				String contextPath = request.getContextPath(); // includes leading forward slash
-
-				String resultPath = scheme + "://" + host + contextPath + "/user/reset/" + token.getValue();
+				/*
+				 * String scheme = request.getScheme(); String host = request.getHeader("Host");
+				 * // includes server name and server port String contextPath =
+				 * request.getContextPath(); // includes leading forward slash
+				 * 
+				 * String resultPath = scheme + "://" + host + contextPath + "/user/reset/" +
+				 * token.getValue();
+				 */
+				
+				String resultPath = "http://localhost:8000/#/resetpassword"+token.getValue();
 				logger.info("Result path: " + resultPath);
 
 				String messageBody = "Click here to reset ur password " + resultPath;
