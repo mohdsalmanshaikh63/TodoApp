@@ -46,15 +46,15 @@ public class UserController {
 	private static Logger logger = Logger.getLogger(UserController.class);
 
 	@PostMapping(value = "/create")
-
-	public ResponseEntity<Void> create(@RequestBody User user, BindingResult bindingResult,
-			HttpServletRequest request, HttpServletResponse response)
+	public ResponseEntity<Void> create(@RequestBody User user, BindingResult bindingResult, HttpServletRequest request,
+			HttpServletResponse response)
 			throws FileNotFoundException, ClassNotFoundException, IOException, URISyntaxException {
 
 		// add code later for checking if email already exists
 		logger.info("*********Got user :" + user);
-		
-		/* this is needed when returing void response since angular gives xml parsing
+
+		/*
+		 * this is needed when returing void response since angular gives xml parsing
 		 * error in firefox
 		 */
 		response.setContentType("text/plain");
@@ -139,7 +139,7 @@ public class UserController {
 	}
 
 	@PostMapping(value = "/forgotpassword")
-	public ResponseEntity<Void> forgotPassword(@RequestBody User user, HttpServletRequest request)
+	public ResponseEntity<Token> forgotPassword(@RequestBody User user, HttpServletRequest request)
 			throws FileNotFoundException, ClassNotFoundException, IOException, URISyntaxException {
 
 		// first check whether the user exists in the database
@@ -174,14 +174,14 @@ public class UserController {
 
 				// Finally send the mail!
 				mailUtility.sendMail(email, "Token Login", messageBody);
-				return new ResponseEntity<Void>(HttpStatus.OK);
+				return new ResponseEntity<>(token, HttpStatus.OK);
 
 			}
 
-			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} catch (Exception e) {
 			logger.debug(e.getMessage());
-			return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
