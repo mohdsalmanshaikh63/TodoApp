@@ -22,11 +22,15 @@ public interface UserDao {
 	public int login(User user);
 
 	public boolean activate(int userId);
+	
+	public int saveUser(User user);
 
 	public User getUser(int id);
 
 	public int getUserId(String email);
 	
 	public int checkUser(String email);
+
+	public boolean changePassword(int id, User pUser);
 
 }

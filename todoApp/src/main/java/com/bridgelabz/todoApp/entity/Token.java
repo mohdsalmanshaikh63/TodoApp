@@ -1,7 +1,5 @@
 package com.bridgelabz.todoApp.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 /**
  * @author Salman
  *
@@ -12,7 +10,6 @@ public class Token {
 
 	private String value;
 
-	@JsonIgnore
 	private Integer uid;
 
 	public Token() {

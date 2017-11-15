@@ -8,16 +8,21 @@ import com.bridgelabz.todoApp.entity.User;
 
 public interface UserService {
 
-	public int createUser(User user, String link) throws FileNotFoundException, ClassNotFoundException, IOException, URISyntaxException;
-	
+	public int createUser(User user, String link)
+			throws FileNotFoundException, ClassNotFoundException, IOException, URISyntaxException;
+
 	public int login(User user);
 
+	public int saveUser(User user);
+
 	public boolean activate(String activateToken);
-	
+
 	public User getUser(int id);
-	
+
 	public int getUserId(String email);
-	
+
 	public int checkUser(String email);
+
+	public boolean changePassword(int id, User user);
 
 }

@@ -190,17 +190,30 @@ public class UserController {
 		}
 	}
 
-	@RequestMapping(value = "/reset/{forgotToken}")
-	public ResponseEntity<String> reset(@PathVariable("forgotToken") String forgotToken) {
+	@RequestMapping(value = "/reset")
+	public ResponseEntity<Void> reset(@RequestHeader("forgotToken") String forgotToken, @RequestBody User user, HttpServletResponse response) {
 
-		int result = tokenService.verifyToken(forgotToken);
+		logger.info("*****Got the forgotToken as "+forgotToken);
+		
+		logger.info("********Got the user as "+user);
+		
+		response.setContentType("text/plain");
 
-		if (result != -1) {
+		
+		int userId = tokenService.verifyToken(forgotToken);
 
-			return new ResponseEntity<String>("Reset Success!", HttpStatus.OK);
+		if (userId != -1) {
+			
+			userService.changePassword(userId, user);
+			
+			logger.debug("*******Password reset successfully");
+
+			return new ResponseEntity<>(HttpStatus.OK);
 		}
+		
+		logger.debug("*******Password could not be reset");
 
-		return new ResponseEntity<String>("Authentication failed", HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
 	}
 

@@ -88,4 +88,18 @@ public class UserServiceImpl implements UserService {
 		return userDao.checkUser(email);
 	}
 
+	@Override
+	@Transactional
+	public boolean changePassword(int id, User user) {
+		
+		return userDao.changePassword(id, user);
+	}
+
+	@Override
+	@Transactional
+	public int saveUser(User user) {
+		
+		return userDao.saveUser(user);
+	}
+
 }

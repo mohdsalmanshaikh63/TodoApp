@@ -12,6 +12,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @author Salman
  *
@@ -41,6 +43,7 @@ public class User {
 	private String confirmPassword;
 
 	@Column(name = "valid")
+	@JsonIgnore
 	private boolean isValid;
 
 	@OneToMany(cascade = { CascadeType.ALL }, mappedBy = "user")
@@ -90,7 +93,7 @@ public class User {
 		this.password = password;
 	}
 
-	public boolean getValid() {
+	public boolean isValid() {
 		return isValid;
 	}
 

@@ -35,18 +35,25 @@ public class UserDaoImpl implements UserDao {
 
 				user.setPassword(hashedPassword);
 
-				user.setValid(false);
-
 			}
 
-			Session session = sessionFactory.getCurrentSession();
-
-			session.save(user);
-
-			return user.getUserId();
+			return saveUser(user);
 
 		}
 
+	}
+
+	// changed this from save to save or update check if it works properly
+	@Override
+	public int saveUser(User user) {
+		Session session = sessionFactory.getCurrentSession();
+
+		session.saveOrUpdate(user);
+		
+		// check if this fires another query or not if yes the revert to save and make seperate
+		// method for update
+
+		return user.getUserId();
 	}
 
 	@Override
@@ -74,7 +81,7 @@ public class UserDaoImpl implements UserDao {
 		try {
 			User aUser = (User) query.getSingleResult();
 
-			if (aUser.getValid() == false) {
+			if (aUser.isValid() == false) {
 				return -1;
 			} else {
 
@@ -181,6 +188,32 @@ public class UserDaoImpl implements UserDao {
 		}
 
 		return -1;
+	}
+
+	@Override
+	public boolean changePassword(int id, User pUser) {
+		
+		User user = getUser(id);
+		
+		String password = pUser.getPassword();
+		
+		if (password != null) {
+
+			String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+
+			user.setPassword(hashedPassword);
+			
+			int result = saveUser(user);
+			
+			if(result != -1) {
+			
+				return true;
+			}
+						
+		}
+			
+		
+		return false;
 	}
 
 }
