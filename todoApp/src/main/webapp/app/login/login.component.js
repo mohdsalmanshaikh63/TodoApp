@@ -30,7 +30,7 @@ angular.
 
                         },
                         function (error) {
-                            console.log("Got an error " + error);
+                            console.log("Got an error " + error.data.responseStatusCode);                            
                         })
                 }
             }

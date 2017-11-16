@@ -16,6 +16,13 @@ angular.
                 state('register', {
                     url:'/register',
                     template:'<register></register>'
-                });
+                }).
+                state('forgotpassword', {
+                    url: '/forgotpassword',
+                    template: '<forgotpassword></forgotpassword>'
+                })
+                .state('resetpassword', {
+                    url:'/resetpassword/:token',
+                    template:'<resetpassword></resetpassword>'});;
             $urlRouterProvider.otherwise('/login');
         }]);

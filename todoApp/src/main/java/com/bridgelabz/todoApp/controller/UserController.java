@@ -110,11 +110,11 @@ public class UserController {
 	}
 
 	@PostMapping(value = "/login")
-	public ResponseEntity<Map<String, Token>> login(@RequestHeader(value = "uId") int uId, @RequestBody User user,
-			HttpServletRequest request)
+
+	public ResponseEntity<Map<String, Token>> login(@RequestBody User user, HttpServletRequest request)
 			throws FileNotFoundException, ClassNotFoundException, IOException, URISyntaxException {
 
-		logger.info("******Got the header as: " + uId);
+		logger.info("******Got the user as: " + user);
 
 		// send the user to the service
 		int uid = userService.login(user);
@@ -163,18 +163,14 @@ public class UserController {
 
 				// prepare the url for sending activation mail
 
-				/*
-				 * String scheme = request.getScheme(); String host = request.getHeader("Host");
-				 * // includes server name and server port String contextPath =
-				 * request.getContextPath(); // includes leading forward slash
-				 * 
-				 * String resultPath = scheme + "://" + host + contextPath + "/user/reset/" +
-				 * token.getValue();
-				 */
 				
-				String resultPath = "http://localhost:8000/#/resetpassword"+token.getValue();
-				logger.info("Result path: " + resultPath);
-
+				  String scheme = request.getScheme(); String host = request.getHeader("Host");
+				  // includes server name and server port String contextPath =
+				  String contextPath = request.getContextPath(); // includes leading forward slash
+				  
+				  String resultPath = scheme + "://" + host + contextPath + "/#/resetpassword/" +
+				  token.getValue();
+				 				
 				String messageBody = "Click here to reset ur password " + resultPath;
 
 				// Finally send the mail!
@@ -190,27 +186,27 @@ public class UserController {
 		}
 	}
 
-	@RequestMapping(value = "/reset")
-	public ResponseEntity<Void> reset(@RequestHeader("forgotToken") String forgotToken, @RequestBody User user, HttpServletResponse response) {
+	@PostMapping(value = "/reset")
+	public ResponseEntity<Void> reset(@RequestHeader("forgotToken") String forgotToken, @RequestBody User user,
+			HttpServletResponse response) {
 
-		logger.info("*****Got the forgotToken as "+forgotToken);
-		
-		logger.info("********Got the user as "+user);
-		
+		logger.info("*****Got the forgotToken as " + forgotToken);
+
+		logger.info("********Got the user as " + user);
+
 		response.setContentType("text/plain");
 
-		
 		int userId = tokenService.verifyToken(forgotToken);
 
 		if (userId != -1) {
-			
+
 			userService.changePassword(userId, user);
-			
+
 			logger.debug("*******Password reset successfully");
 
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
-		
+
 		logger.debug("*******Password could not be reset");
 
 		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

@@ -5,5 +5,7 @@ angular.module('todoApp', [
     'ui.router',
     'login',
     'register',
+    'forgotpassword',
+    'resetpassword',
     'LocalStorageModule'
 ]);

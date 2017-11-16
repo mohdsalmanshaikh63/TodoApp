@@ -41,7 +41,16 @@
   <script src="${pageContext.request.contextPath}/app/register/register.module.js"></script>
   <script src="${pageContext.request.contextPath}/app/register/register.component.js"></script>
   <script src="${pageContext.request.contextPath}/app/register/register.service.js"></script>
+  
+  <!-- forgotpassword module and it's dependencies -->
+  <script src="${pageContext.request.contextPath}/app/forgotpassword/forgotpassword.module.js"></script>
+  <script src="${pageContext.request.contextPath}/app//forgotpassword/forgotpassword.component.js"></script>
+  <script src="${pageContext.request.contextPath}/app/forgotpassword/forgotpassword.service.js"></script>
 
+  <!-- forgotpassword module and it's dependencies -->
+  <script src="${pageContext.request.contextPath}/app/resetpassword/resetpassword.module.js"></script>
+  <script src="${pageContext.request.contextPath}/app/resetpassword/resetpassword.component.js"></script>
+  <script src="${pageContext.request.contextPath}/app/resetpassword/resetpassword.service.js"></script>
 </head>
 
 <body>
