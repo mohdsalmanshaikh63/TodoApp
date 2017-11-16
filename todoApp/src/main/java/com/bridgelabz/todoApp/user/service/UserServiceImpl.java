@@ -1,4 +1,4 @@
-package com.bridgelabz.todoApp.service;
+package com.bridgelabz.todoApp.user.service;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -8,10 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bridgelabz.todoApp.dao.UserDao;
-import com.bridgelabz.todoApp.entity.Token;
-import com.bridgelabz.todoApp.entity.User;
 import com.bridgelabz.todoApp.mailUtility.MailUtility;
+import com.bridgelabz.todoApp.token.entity.Token;
+import com.bridgelabz.todoApp.token.service.TokenService;
+import com.bridgelabz.todoApp.user.dao.UserDao;
+import com.bridgelabz.todoApp.user.entity.User;
 
 @Service
 public class UserServiceImpl implements UserService {

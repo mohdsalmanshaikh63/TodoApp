@@ -1,10 +1,10 @@
-package com.bridgelabz.todoApp.service;
+package com.bridgelabz.todoApp.user.service;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-import com.bridgelabz.todoApp.entity.User;
+import com.bridgelabz.todoApp.user.entity.User;
 
 public interface UserService {
 

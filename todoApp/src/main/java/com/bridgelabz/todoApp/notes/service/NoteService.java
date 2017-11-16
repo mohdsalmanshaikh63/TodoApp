@@ -1,8 +1,8 @@
-package com.bridgelabz.todoApp.service;
+package com.bridgelabz.todoApp.notes.service;
 
 import java.util.List;
 
-import com.bridgelabz.todoApp.entity.Note;
+import com.bridgelabz.todoApp.notes.entity.Note;
 
 public interface NoteService {
 	

@@ -1,4 +1,4 @@
-package com.bridgelabz.todoApp.dao;
+package com.bridgelabz.todoApp.token.dao;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -14,7 +14,7 @@ import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
 import org.springframework.stereotype.Repository;
 
-import com.bridgelabz.todoApp.entity.Token;
+import com.bridgelabz.todoApp.token.entity.Token;
 
 @Repository
 public class TokenDaoImpl implements TokenDao {

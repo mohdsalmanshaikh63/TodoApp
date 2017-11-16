@@ -1,10 +1,10 @@
-package com.bridgelabz.todoApp.service;
+package com.bridgelabz.todoApp.token.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bridgelabz.todoApp.dao.TokenDao;
-import com.bridgelabz.todoApp.entity.Token;
+import com.bridgelabz.todoApp.token.dao.TokenDao;
+import com.bridgelabz.todoApp.token.entity.Token;
 
 @Service
 public class TokenServiceImpl implements TokenService {

@@ -1,4 +1,4 @@
-package com.bridgelabz.todoApp.dao;
+package com.bridgelabz.todoApp.notes.dao;
 
 
 import java.time.LocalDateTime;
@@ -15,9 +15,9 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.bridgelabz.todoApp.entity.Note;
-import com.bridgelabz.todoApp.entity.User;
-import com.bridgelabz.todoApp.service.UserService;
+import com.bridgelabz.todoApp.notes.entity.Note;
+import com.bridgelabz.todoApp.user.entity.User;
+import com.bridgelabz.todoApp.user.service.UserService;
 
 @Repository
 public class NotesDaoImpl implements NotesDao {

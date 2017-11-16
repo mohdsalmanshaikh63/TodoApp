@@ -1,8 +1,8 @@
-package com.bridgelabz.todoApp.dao;
+package com.bridgelabz.todoApp.notes.dao;
 
 import java.util.List;
 
-import com.bridgelabz.todoApp.entity.Note;
+import com.bridgelabz.todoApp.notes.entity.Note;
 
 public interface NotesDao {
 

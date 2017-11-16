@@ -1,4 +1,4 @@
-package com.bridgelabz.todoApp.entity;
+package com.bridgelabz.todoApp.notes.entity;
 
 import java.time.LocalDateTime;
 
@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.bridgelabz.todoApp.user.entity.User;
 
 
 @Entity

@@ -1,4 +1,4 @@
-package com.bridgelabz.todoApp.controller;
+package com.bridgelabz.todoApp.socialLogin;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -17,11 +17,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bridgelabz.todoApp.entity.Token;
-import com.bridgelabz.todoApp.entity.User;
-import com.bridgelabz.todoApp.service.TokenService;
-import com.bridgelabz.todoApp.service.UserService;
-import com.bridgelabz.todoApp.socialLogin.GoogleConnection;
+import com.bridgelabz.todoApp.token.entity.Token;
+import com.bridgelabz.todoApp.token.service.TokenService;
+import com.bridgelabz.todoApp.user.entity.User;
+import com.bridgelabz.todoApp.user.service.UserService;
 import com.fasterxml.jackson.databind.JsonNode;
 
 @RestController

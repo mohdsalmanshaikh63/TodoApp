@@ -1,4 +1,4 @@
-package com.bridgelabz.todoApp.dao;
+package com.bridgelabz.todoApp.user.dao;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
@@ -7,7 +7,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.bridgelabz.todoApp.entity.User;
+import com.bridgelabz.todoApp.user.entity.User;
 
 import jodd.util.BCrypt;
 

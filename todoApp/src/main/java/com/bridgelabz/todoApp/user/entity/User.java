@@ -1,4 +1,4 @@
-package com.bridgelabz.todoApp.entity;
+package com.bridgelabz.todoApp.user.entity;
 
 import java.util.List;
 
@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.bridgelabz.todoApp.notes.entity.Note;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**

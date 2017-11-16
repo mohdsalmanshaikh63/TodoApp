@@ -11,8 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.bridgelabz.todoApp.entity.Token;
-import com.bridgelabz.todoApp.service.TokenService;
+import com.bridgelabz.todoApp.token.entity.Token;
+import com.bridgelabz.todoApp.token.service.TokenService;
 import com.google.gson.Gson;
 
 @Component

@@ -1,6 +1,6 @@
-package com.bridgelabz.todoApp.service;
+package com.bridgelabz.todoApp.token.service;
 
-import com.bridgelabz.todoApp.entity.Token;
+import com.bridgelabz.todoApp.token.entity.Token;
 
 public interface TokenService {
 	

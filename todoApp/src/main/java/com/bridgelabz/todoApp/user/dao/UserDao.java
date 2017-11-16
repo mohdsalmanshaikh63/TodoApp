@@ -1,6 +1,6 @@
-package com.bridgelabz.todoApp.dao;
+package com.bridgelabz.todoApp.user.dao;
 
-import com.bridgelabz.todoApp.entity.User;
+import com.bridgelabz.todoApp.user.entity.User;
 
 /**
  * @author Salman

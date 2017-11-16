@@ -1,4 +1,4 @@
-package com.bridgelabz.todoApp.controller;
+package com.bridgelabz.todoApp.user.controller;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -23,11 +23,11 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bridgelabz.todoApp.entity.Token;
-import com.bridgelabz.todoApp.entity.User;
 import com.bridgelabz.todoApp.mailUtility.MailUtility;
-import com.bridgelabz.todoApp.service.TokenService;
-import com.bridgelabz.todoApp.service.UserService;
+import com.bridgelabz.todoApp.token.entity.Token;
+import com.bridgelabz.todoApp.token.service.TokenService;
+import com.bridgelabz.todoApp.user.entity.User;
+import com.bridgelabz.todoApp.user.service.UserService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:8000")

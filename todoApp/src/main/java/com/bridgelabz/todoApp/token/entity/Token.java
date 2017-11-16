@@ -1,4 +1,4 @@
-package com.bridgelabz.todoApp.entity;
+package com.bridgelabz.todoApp.token.entity;
 
 /**
  * @author Salman

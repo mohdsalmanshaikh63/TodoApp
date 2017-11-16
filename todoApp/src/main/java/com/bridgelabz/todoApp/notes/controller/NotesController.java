@@ -1,4 +1,4 @@
-package com.bridgelabz.todoApp.controller;
+package com.bridgelabz.todoApp.notes.controller;
 
 import java.util.List;
 
@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bridgelabz.todoApp.entity.Note;
-import com.bridgelabz.todoApp.service.NoteService;
+import com.bridgelabz.todoApp.notes.entity.Note;
+import com.bridgelabz.todoApp.notes.service.NoteService;
 
 @RestController
 @RequestMapping(value = "/notes")

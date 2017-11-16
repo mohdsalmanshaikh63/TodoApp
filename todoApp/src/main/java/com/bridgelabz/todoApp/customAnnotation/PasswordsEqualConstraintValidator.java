@@ -3,7 +3,7 @@ package com.bridgelabz.todoApp.customAnnotation;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import com.bridgelabz.todoApp.entity.User;
+import com.bridgelabz.todoApp.user.entity.User;
 
 public class PasswordsEqualConstraintValidator implements ConstraintValidator<PasswordsEqualConstraint, Object> {
 

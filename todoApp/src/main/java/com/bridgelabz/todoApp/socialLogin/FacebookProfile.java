@@ -1,4 +1,4 @@
-package com.bridgelabz.todoApp.entity;
+package com.bridgelabz.todoApp.socialLogin;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

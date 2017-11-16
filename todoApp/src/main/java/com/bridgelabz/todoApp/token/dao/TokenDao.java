@@ -1,6 +1,6 @@
-package com.bridgelabz.todoApp.dao;
+package com.bridgelabz.todoApp.token.dao;
 
-import com.bridgelabz.todoApp.entity.Token;
+import com.bridgelabz.todoApp.token.entity.Token;
 
 public interface TokenDao {
 
