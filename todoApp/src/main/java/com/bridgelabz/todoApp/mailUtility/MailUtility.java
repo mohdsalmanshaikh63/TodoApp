@@ -6,6 +6,7 @@ import java.net.URISyntaxException;
 import java.util.Date;
 import java.util.Properties;
 
+import javax.annotation.PostConstruct;
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.PasswordAuthentication;
@@ -25,8 +26,22 @@ public class MailUtility {
 	
 	@Autowired
 	private EmailCredentialSerializer emailCredentialSerializer;
+	
+	Properties properties;
+	
+	@PostConstruct
+	public void  init() {
+		
+		properties = new Properties();
+		
+		properties.put("mail.smtp.host", "smtp.gmail.com"); // SMTP Host
+		properties.put("mail.smtp.port", "587"); // TLS Port
+		properties.put("mail.smtp.auth", "true");
+		properties.put("mail.smtp.starttls.enable", "true"); // enable STARTTLS
 
-	public void sendMail(String toMail, String subject, String messageBody) throws FileNotFoundException, ClassNotFoundException, IOException, URISyntaxException {
+	}
+
+	public void sendMail(Email email) throws FileNotFoundException, ClassNotFoundException, IOException, URISyntaxException {
 		logger.debug("Starting TLS");
 
 		// add relative path to the java class later we have used hardcoded path
@@ -34,12 +49,7 @@ public class MailUtility {
 		String fromMail = emailInfo.getEmail();
 		String password = emailInfo.getPassword();
 		
-		Properties properties = new Properties();
-		properties.put("mail.smtp.host", "smtp.gmail.com"); // SMTP Host
-		properties.put("mail.smtp.port", "587"); // TLS Port
-		properties.put("mail.smtp.auth", "true");
-		properties.put("mail.smtp.starttls.enable", "true"); // enable STARTTLS
-
+		
 		Authenticator authenticator = new Authenticator() {
 			@Override
 			protected PasswordAuthentication getPasswordAuthentication() {
@@ -60,11 +70,11 @@ public class MailUtility {
 			message.addHeader("Content-Transfer-Encoding", "8-bit");
 			message.setFrom(new InternetAddress(fromMail, "NoReply-SAL"));
 			message.setReplyTo(InternetAddress.parse(fromMail, false));
-			message.setSubject(subject, "UTF-8");
-			message.setText(messageBody, "UTF-8");
+			message.setSubject(email.getSubject(), "UTF-8");
+			message.setText(email.getMessage(), "UTF-8");
 			message.setSentDate(new Date());
 
-			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toMail, false));
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email.getTo(), false));
 
 			logger.debug("Message is ready");
 

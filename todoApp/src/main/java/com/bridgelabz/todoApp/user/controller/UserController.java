@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bridgelabz.todoApp.mailUtility.Email;
 import com.bridgelabz.todoApp.mailUtility.MailUtility;
 import com.bridgelabz.todoApp.token.entity.Token;
 import com.bridgelabz.todoApp.token.service.TokenService;
@@ -173,7 +174,7 @@ public class UserController {
 				String messageBody = "Click here to reset ur password " + resultPath;
 
 				// Finally send the mail!
-				mailUtility.sendMail(email, "Token Login", messageBody);
+				mailUtility.sendMail(new Email(email, "Token Login", messageBody));
 				return new ResponseEntity<>(token, HttpStatus.OK);
 
 			}

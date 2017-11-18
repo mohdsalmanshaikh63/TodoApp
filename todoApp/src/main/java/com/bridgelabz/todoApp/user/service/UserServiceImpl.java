@@ -8,7 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bridgelabz.todoApp.mailUtility.MailUtility;
+import com.bridgelabz.todoApp.mailUtility.Email;
+import com.bridgelabz.todoApp.rabbitMQ.EmailProducer;
 import com.bridgelabz.todoApp.token.entity.Token;
 import com.bridgelabz.todoApp.token.service.TokenService;
 import com.bridgelabz.todoApp.user.dao.UserDao;
@@ -21,7 +22,7 @@ public class UserServiceImpl implements UserService {
 	private UserDao userDao;
 
 	@Autowired
-	MailUtility mailUtitlity;
+	EmailProducer emailProducer;
 
 	@Autowired
 	private TokenService tokenService;
@@ -42,8 +43,8 @@ public class UserServiceImpl implements UserService {
 
 		// Finally send the mail!
 		String messageBody = link + activationToken.getValue() + " This link will expirein one day.";
-		mailUtitlity.sendMail(user.getEmail(), "Activate your account", messageBody);
-		
+		Email email = new Email(user.getEmail(), "Activate yout Account", messageBody);
+		emailProducer.enqueue(email);		
 		}
 
 		return userId;
