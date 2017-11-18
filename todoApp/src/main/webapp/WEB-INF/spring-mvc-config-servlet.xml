@@ -72,7 +72,12 @@
 			<bean class="com.bridgelabz.todoApp.interceptor.LoginInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
+	
+	<bean id="emailConsumer" class="com.bridgelabz.todoApp.rabbitMQ.EmailConsumer">
+	<property name="mailUtility" ref="mailUtility" />
+	</bean>
 
+	<bean id="mailUtility" class="com.bridgelabz.todoApp.mailUtility.MailUtility"></bean>
 
 </beans>
 

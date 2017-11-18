@@ -32,6 +32,8 @@ public class MailUtility {
 	@PostConstruct
 	public void  init() {
 		
+		logger.info("*******INSIDE INITIALIZING MAIL PROPERTIES");
+		
 		properties = new Properties();
 		
 		properties.put("mail.smtp.host", "smtp.gmail.com"); // SMTP Host

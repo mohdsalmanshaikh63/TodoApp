@@ -3,6 +3,7 @@ package com.bridgelabz.todoApp.config;
 import org.springframework.amqp.core.AcknowledgeMode;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory.CacheMode;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
@@ -18,13 +19,14 @@ import com.bridgelabz.todoApp.rabbitMQ.EmailConsumer;
 @ComponentScan("com.bridgelabz.todoApp.rabbitMQ")
 public class RabbitMQConfig {
 	
-    private static final String EMAIL_QUEUE = "email.queue";
+    private static final String EMAIL_QUEUE = "myqueue";
     
     @Bean
     public ConnectionFactory connectionFactory() {
         CachingConnectionFactory connectionFactory = new CachingConnectionFactory("localhost");
         connectionFactory.setUsername("guest");
         connectionFactory.setPassword("guest");
+        connectionFactory.setCacheMode(CacheMode.CHANNEL);
         return connectionFactory;
     }
     
