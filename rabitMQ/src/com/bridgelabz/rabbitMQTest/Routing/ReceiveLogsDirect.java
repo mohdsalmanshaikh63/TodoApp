@@ -1,4 +1,4 @@
-package Routing;
+package com.bridgelabz.rabbitMQTest.Routing;
 
 import com.rabbitmq.client.*;
 

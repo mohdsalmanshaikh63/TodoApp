@@ -163,14 +163,13 @@ public class UserController {
 
 				// prepare the url for sending activation mail
 
-				
-				  String scheme = request.getScheme(); String host = request.getHeader("Host");
-				  // includes server name and server port String contextPath =
-				  String contextPath = request.getContextPath(); // includes leading forward slash
-				  
-				  String resultPath = scheme + "://" + host + contextPath + "/#/resetpassword/" +
-				  token.getValue();
-				 				
+				String scheme = request.getScheme();
+				String host = request.getHeader("Host");
+				// includes server name and server port String contextPath =
+				String contextPath = request.getContextPath(); // includes leading forward slash
+
+				String resultPath = scheme + "://" + host + contextPath + "/#/resetpassword/" + token.getValue();
+
 				String messageBody = "Click here to reset ur password " + resultPath;
 
 				// Finally send the mail!
@@ -196,20 +195,26 @@ public class UserController {
 
 		response.setContentType("text/plain");
 
-		int userId = tokenService.verifyToken(forgotToken);
+		try {
+			int userId = tokenService.verifyToken(forgotToken);
 
-		if (userId != -1) {
+			if (userId != -1) {
 
-			userService.changePassword(userId, user);
+				userService.changePassword(userId, user);
 
-			logger.debug("*******Password reset successfully");
+				logger.debug("*******Password reset successfully");
 
-			return new ResponseEntity<>(HttpStatus.OK);
+				return new ResponseEntity<>(HttpStatus.OK);
+			}
+
+			logger.debug("*******Password could not be reset");
+
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		} catch (Exception e) {
+			logger.debug(e);
+
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
-		logger.debug("*******Password could not be reset");
-
-		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
 	}
 
