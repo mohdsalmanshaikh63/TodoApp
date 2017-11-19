@@ -23,7 +23,7 @@ public class UserDaoImpl implements UserDao {
 	public int registerUser(User user) {
 
 		// first check if the user already exists
-		if (checkUser(user.getEmail()) != -1) {
+		if (getUserId(user.getEmail()) != -1) {
 			return -1;
 		} else {
 
@@ -165,7 +165,7 @@ public class UserDaoImpl implements UserDao {
 
 	}
 
-	@Override
+	/*@Override
 	public int checkUser(String email) {
 
 		Session session = sessionFactory.getCurrentSession();
@@ -189,7 +189,7 @@ public class UserDaoImpl implements UserDao {
 
 		return -1;
 	}
-
+*/
 	@Override
 	public boolean changePassword(int id, User pUser) {
 		

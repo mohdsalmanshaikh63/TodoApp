@@ -3,7 +3,6 @@ package com.bridgelabz.todoApp.user.controller;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,9 +22,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bridgelabz.todoApp.mailUtility.MailUtility;
 import com.bridgelabz.todoApp.token.entity.Token;
-import com.bridgelabz.todoApp.token.service.TokenService;
 import com.bridgelabz.todoApp.user.entity.User;
 import com.bridgelabz.todoApp.user.service.UserService;
 
@@ -36,12 +33,6 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
-
-	@Autowired
-	private TokenService tokenService;
-
-	@Autowired
-	private MailUtility mailUtility;
 
 	private static Logger logger = Logger.getLogger(UserController.class);
 
@@ -110,30 +101,26 @@ public class UserController {
 	}
 
 	@PostMapping(value = "/login")
-
-	public ResponseEntity<Map<String, Token>> login(@RequestBody User user, HttpServletRequest request)
+	public ResponseEntity<Map<String, Token>> login(@RequestBody User user)
 			throws FileNotFoundException, ClassNotFoundException, IOException, URISyntaxException {
 
 		logger.info("******Got the user as: " + user);
 
-		// send the user to the service
-		int uid = userService.login(user);
+		try {
+			Map<String, Token> tokenMap = userService.login(user);
 
-		if (uid == -1) {
-			logger.debug("******Invalid Credentials");
-			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-		} else {
+			if (tokenMap != null) {
+				return new ResponseEntity<>(tokenMap, HttpStatus.OK);
 
-			// generate access and refresh tokens
-			// save the token in the redis cache
-			Token accessToken = tokenService.generateToken("accessToken", uid);
-			Token refreshToken = tokenService.generateToken("refreshToken", uid);
+			} else {
 
-			Map<String, Token> tokenMap = new HashMap<>();
-			tokenMap.put("accessToken", accessToken);
-			tokenMap.put("refreshToken", refreshToken);
-			return new ResponseEntity<Map<String, Token>>(tokenMap, HttpStatus.OK);
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+		} catch (Exception e) {
 
+			e.printStackTrace();
+
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}
@@ -143,41 +130,59 @@ public class UserController {
 			throws FileNotFoundException, ClassNotFoundException, IOException, URISyntaxException {
 
 		// first check whether the user exists in the database
-		String email = user.getEmail();
+		// String email = user.getEmail();
 		// String email = request.getParameter("email");
 
-		logger.info("Got the email: " + email);
+		// logger.info("Got the email: " + email);
+
+		Token token = null;
 
 		try {
-			int uid = userService.checkUser(email);
 
-			// send email if the user exists
-			if (uid != -1) {
+			// prepare the url for sending activation mail
 
-				// Generate a token and send in the email
-				Token token = tokenService.generateToken("forgotToken", uid);
+			String scheme = request.getScheme();
+			String host = request.getHeader("Host");
+			// includes server name and server port String contextPath =
+			String contextPath = request.getContextPath(); // includes leading forward slash
 
-				logger.info("********Token Generated: " + token + "for email: " + email);
+			String link = scheme + "://" + host + contextPath;
 
-				// send the email the user with the token in the url
+			token = userService.forgotPassword(user, link);
 
-				// prepare the url for sending activation mail
-
-				String scheme = request.getScheme();
-				String host = request.getHeader("Host");
-				// includes server name and server port String contextPath =
-				String contextPath = request.getContextPath(); // includes leading forward slash
-
-				String resultPath = scheme + "://" + host + contextPath + "/#/resetpassword/" + token.getValue();
-
-				String messageBody = "Click here to reset ur password " + resultPath;
-
-				// Finally send the mail!
-				mailUtility.sendMail(email, "Token Login", messageBody);
+			if (token != null) {
 				return new ResponseEntity<>(token, HttpStatus.OK);
 
 			}
 
+			/*
+			 * int uid = userService.checkUser(email);
+			 * 
+			 * // send email if the user exists if (uid != -1) {
+			 * 
+			 * // Generate a token and send in the email Token token =
+			 * tokenService.generateToken("forgotToken", uid);
+			 * 
+			 * logger.info("********Token Generated: " + token + "for email: " + email);
+			 * 
+			 * // send the email the user with the token in the url
+			 * 
+			 * // prepare the url for sending activation mail
+			 * 
+			 * String scheme = request.getScheme(); String host = request.getHeader("Host");
+			 * // includes server name and server port String contextPath = String
+			 * contextPath = request.getContextPath(); // includes leading forward slash
+			 * 
+			 * String resultPath = scheme + "://" + host + contextPath + "/#/resetpassword/"
+			 * + token.getValue();
+			 * 
+			 * String messageBody = "Click here to reset ur password " + resultPath;
+			 * 
+			 * // Finally send the mail! mailUtility.sendMail(email, "Token Login",
+			 * messageBody); return new ResponseEntity<>(token, HttpStatus.OK);
+			 * 
+			 * }
+			 */
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} catch (Exception e) {
 			logger.debug(e.getMessage());
@@ -196,20 +201,20 @@ public class UserController {
 		response.setContentType("text/plain");
 
 		try {
-			int userId = tokenService.verifyToken(forgotToken);
+			boolean result = userService.resetPassword(forgotToken, user);
 
-			if (userId != -1) {
-
-				userService.changePassword(userId, user);
+			if (result) {
 
 				logger.debug("*******Password reset successfully");
 
 				return new ResponseEntity<>(HttpStatus.OK);
+			} else {
+
+				logger.debug("*******Password could not be reset");
+
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 			}
 
-			logger.debug("*******Password could not be reset");
-
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
 			logger.debug(e);
 

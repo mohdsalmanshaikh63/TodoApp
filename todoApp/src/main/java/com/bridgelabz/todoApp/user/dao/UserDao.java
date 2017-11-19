@@ -29,7 +29,7 @@ public interface UserDao {
 
 	public int getUserId(String email);
 	
-	public int checkUser(String email);
+	/*public int checkUser(String email);*/
 
 	public boolean changePassword(int id, User pUser);
 
