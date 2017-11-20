@@ -7,7 +7,7 @@ angular.module('login').factory('loginService',
 						console.log(statusCode);// prints 200 if nothing went
 												// wrong
 						var finalResponse = {
-							data : data,
+							data : angular.fromJson(data),
 							responseStatusCode : statusCode
 						};
 						
