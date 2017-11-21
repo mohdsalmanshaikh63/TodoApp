@@ -116,10 +116,29 @@ public class User {
 		this.confirmPassword = confirmPassword;
 	}
 
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", password=" + password + ", confirmPassword=" + confirmPassword + ", isValid=" + isValid + "]";
+				+ ", mobile=" + mobile + ", gender=" + gender + ", password=" + password + ", confirmPassword="
+				+ confirmPassword + ", isValid=" + isValid + "]";
 	}
+
+	
 
 }
