@@ -164,36 +164,13 @@ public class UserDaoImpl implements UserDao {
 		}
 
 	}
-
-	/*@Override
-	public int checkUser(String email) {
-
-		Session session = sessionFactory.getCurrentSession();
-
-		// get user object from db
-		Query<User> query = session.createQuery("from User where email= :email", User.class).setParameter("email",
-				email);
-
-		User user = null;
-
-		try {
-			user = (User) query.getSingleResult();
-		} catch (Exception e) {
-			// do nothing here
-		}
-
-		if (user != null) {
-
-			return user.getUserId();
-		}
-
-		return -1;
-	}
-*/
-	@Override
+	
+		@Override
 	public boolean changePassword(int id, User pUser) {
 		
 		User user = getUser(id);
+		
+		if(user.isValid()) {
 		
 		String password = pUser.getPassword();
 		
@@ -212,6 +189,7 @@ public class UserDaoImpl implements UserDao {
 						
 		}
 			
+		}
 		
 		return false;
 	}
