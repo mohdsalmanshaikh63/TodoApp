@@ -51,7 +51,7 @@ public class User {
 
 	@Column(name = "valid")
 	@JsonIgnore
-	private boolean isValid;
+	private boolean valid;
 
 	@OneToMany(cascade = { CascadeType.ALL }, mappedBy = "user")
 	private List<Note> notes;
@@ -101,11 +101,11 @@ public class User {
 	}
 
 	public boolean isValid() {
-		return isValid;
+		return valid;
 	}
 
 	public void setValid(boolean isValid) {
-		this.isValid = isValid;
+		this.valid = isValid;
 	}
 
 	public String getConfirmPassword() {
@@ -136,7 +136,7 @@ public class User {
 	public String toString() {
 		return "User [userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
 				+ ", mobile=" + mobile + ", gender=" + gender + ", password=" + password + ", confirmPassword="
-				+ confirmPassword + ", isValid=" + isValid + "]";
+				+ confirmPassword + ", valid=" + valid + "]";
 	}
 
 	

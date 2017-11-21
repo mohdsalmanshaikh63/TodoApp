@@ -14,9 +14,8 @@ import javax.persistence.Table;
 
 import com.bridgelabz.todoApp.user.entity.User;
 
-
 @Entity
-@Table(name="note")
+@Table(name = "note")
 public class Note {
 
 	@Id
@@ -32,11 +31,22 @@ public class Note {
 
 	@Column(name = "create_time", nullable = false)
 	private LocalDateTime createTime;
+	
+	@Column(name = "modify_time", nullable = false)
+	private LocalDateTime modifyTime;
+
+	@Column(name="color")
+	private String color;
+	
+	@Column(name="pinned")
+	private boolean pinned;
+	
+	@Column(name="archive")
+	private String archive;
 
 	// on deletion of notes a user should not be deleted
 	// also fetch type lazy since we don't want to get user object with notes
-	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST,
-			CascadeType.REFRESH })
+	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH })
 	@JoinColumn(name = "user_id")
 	private User user;
 
@@ -83,10 +93,45 @@ public class Note {
 		this.user = user;
 	}
 
+	public LocalDateTime getModifyTime() {
+		return modifyTime;
+	}
+
+	public void setModifyTime(LocalDateTime modifyTime) {
+		this.modifyTime = modifyTime;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	public boolean isPinned() {
+		return pinned;
+	}
+
+	public void setPinned(boolean pinned) {
+		this.pinned = pinned;
+	}
+
+	public String getArchive() {
+		return archive;
+	}
+
+	public void setArchive(String archive) {
+		this.archive = archive;
+	}
+
 	@Override
 	public String toString() {
 		return "Note [noteId=" + noteId + ", title=" + title + ", description=" + description + ", createTime="
-				+ createTime + ", user=" + user + "]";
+				+ createTime + ", modifyTime=" + modifyTime + ", color=" + color + ", pinned=" + pinned + ", archive="
+				+ archive + ", user=" + user + "]";
 	}
+
+	
 
 }
