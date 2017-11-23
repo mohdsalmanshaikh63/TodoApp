@@ -32,7 +32,7 @@ public class Note {
 	@Column(name = "create_time", nullable = false)
 	private LocalDateTime createTime;
 	
-	@Column(name = "modify_time", nullable = false)
+	@Column(name = "modify_time")
 	private LocalDateTime modifyTime;
 
 	@Column(name="color")

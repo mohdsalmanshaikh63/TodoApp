@@ -9,11 +9,13 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.bridgelabz.todoApp.token.entity.Token;
 import com.bridgelabz.todoApp.token.service.TokenService;
 import com.google.gson.Gson;
+
 
 @Component
 public class LoginInterceptor extends HandlerInterceptorAdapter {
@@ -26,7 +28,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-
+		
+		
 		String accessToken = request.getHeader("accessToken");
 
 		// check if accessToken has expired
@@ -34,7 +37,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
 		if (aUserId == -1) {
 
-			logger.info("******Acess token expired! Checking refresh token");
+			logger.info("******Acess token expired! Checking refresh token"+accessToken);
 
 			String refreshToken = request.getHeader("refreshToken");
 
@@ -43,7 +46,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
 			if (rUserId == -1) {
 
-				logger.info("*******Refresh token also expired");
+				logger.info("*******Refresh token also expired"+refreshToken);
 
 				// errorResponse(response, -2,"Refresh Token Expired. Redirect to login");
 				Gson gson = new Gson();

@@ -102,6 +102,10 @@ public class TokenDaoImpl implements TokenDao {
 
 	@Override
 	public int verifyToken(String tokenValue) {
+		
+		if(tokenValue == null) {
+			return -1;
+		}
 
 		Token token = tokenMap.get(tokenValue);
 
