@@ -1,0 +1,22 @@
+#maincard {
+  min-width: 330px;
+  max-width: 600px;
+}
+
+.noteContent {
+  border-bottom: none !important;
+  outline: none; 
+}
+
+.done {
+  float: right;
+}
+
+.noteContent[data-placeholder]:empty:before {
+  content: attr(data-placeholder);
+  color: #555; 
+}
+
+.noteContent[data-placeholder]:focus:before {
+  content: "";
+}

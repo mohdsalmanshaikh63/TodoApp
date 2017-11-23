@@ -1,118 +1,59 @@
-<div class="container">
-
-    <div class="row">
-        <div class="col">
-            <form class="form-signin" name="form" novalidate>
-                <h2 class="form-signin-heading">Register</h2>
-
-                <div class="form-group">
-                    <label for="firstName" class="form-control-label">First Name</label>
-                    <input type="text" ng-model="user.firstName" class="form-control" placeholder="John" name="firstName" ng-pattern="$ctrl.name"
-                        required>
-                    <div class="has-danger">
-                        <div class="form-control-feedback" ng-show="form.firstName.$dirty &&  form.firstName.$error.required">* Required</div>
-                        <div class="form-control-feedback" ng-show="form.firstName.$dirty &&  form.firstName.$error.pattern">Please enter characters only.</div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="lastName" class="form-control-label">Last Name</label>
-                    <input type="text" ng-model="user.lastName" class="form-control" placeholder="Doe" name="lastName" ng-pattern="$ctrl.name"
-                        required>
-                    <div class="has-danger">
-                        <div class="form-control-feedback" ng-show="form.lastName.$dirty &&  form.lastName.$error.required">* Required</div>
-                        <div class="form-control-feedback" ng-show="form.lastName.$dirty &&  form.lastName.$error.pattern">Please enter characters only.</div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="email" class="form-control-label">Email address</label>
-                    <input type="email" name="email" class="form-control form-control-danger" placeholder="Email" ng-model="user.email" required/>
-                    <div class="has-danger">
-                        <div class="form-control-feedback" ng-show="form.email.$dirty &&  form.email.$error.required">* Required</div>
-                        <div class="form-control-feedback" ng-show="form.email.$dirty &&  form.email.$error.email">Not an E-mail</div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="mobile">Mobile</label>
-                    <input type="text" class="form-control no-spin" ng-model="user.mobile" placeholder="8963757247"
-                        name="mobile" ng-pattern="$ctrl.phoneNumber">
-                    <div class="has-danger">
-                        <div class="form-control-feedback" ng-show="form.mobile.$dirty &&  form.mobile.$error.required">* Required</div>
-                        <div class="form-control-feedback" ng-show="form.mobile.$dirty &&  form.mobile.$error.minlength">Please enter 10 digits only</div>
-                        <div class="form-control-feedback" ng-show="form.mobile.$dirty &&  form.mobile.$error.maxlength">Please enter 10 digits only</div>
-                        <div class="form-control-feedback" ng-show="form.mobile.$dirty &&  form.mobile.$error.pattern">Incorrect mobile no</div>
-                    </div>
-                </div>
-
-
-                <div class="form-group">
-                    <input type="password" name="password" ng-model="user.password" class="form-control" placeholder="Password" ng-model="user.password"
-                        ng-minlength="5" ng-maxlength="10" required />
-                    <div class="has-danger">
-                        <div class="form-control-feedback" ng-show="form.password.$dirty &&  form.password.$error.required">* Required</div>
-                        <div class="form-control-feedback" ng-show="form.password.$dirty &&  form.password.$error.minlength">Password is Too Short!!!</div>
-                        <div class="form-control-feedback" ng-show="form.password.$dirty &&  form.password.$error.maxlength">Password is To Long!!!</div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <input type="password" name="confirmpassword" ng-model="user.confirmpassword" class="form-control" placeholder="Retype the password"
-                        ng-model="user.confirmpassword" match-password="password" required />
-                    <div class="has-danger">
-                        <div class="form-control-feedback" ng-show="form.confirmpassword.$dirty &&  form.confirmpassword.$error.required">* Required</div>
-                        <div class="form-control-feedback" ng-show="form.confirmpassword.$dirty &&  form.confirmpassword.$error.passwordMatch">Passwords do not match!
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col">
-                            <label for="gender">Gender</label>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="form-check form-check-inline col">
-                            <label class="form-check-label">
-                                <input class="form-check-input" ng-model="user.gender" type="radio" name="gender" value="male"
-                                    required> Male
-                            </label>
-                        </div>
-                        <div class="form-check form-check-inline col">
-                            <label class="form-check-label">
-                                <input class="form-check-input" ng-model="user.gender" type="radio" name="gender" value="female"
-                                    required> Female
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="form-group">
-                    <p id="agreement">
-                        By Clicking on the "Create Account" Button below, you certify that you have read and agree to our
-                        <a
-                            href="#">terms of use</a> and
-                            <a href="">privacy policy</a>.
-                    </p>
-                </div>
-
-
-                <button type="submit" class="btn btn-success btn-block" ng-disabled="form.$invalid" ng-click="submit()">Create an Account</button>
-
-
-
-                <div class="form-group">
-                    <p id="signin" class="text-center">
-                        Already have an Account?
-                        <a ui-sref="login">Sign In</a>.
-                    </p>
-                </div>
-
-            </form>
+<md-content flex layout="row" layout-align="space-around" layout-padding="layout-padding" ng-cloak="ng-cloak" class="login-form">
+    <md-card flex="flex" flex-gt-sm="50" flex-gt-md="33">
+      <md-card-content>
+        <h1>Register to Fundoo Notes</h1>
+        <form name="Form">
+          <md-input-container class="md-block">
+            <label>First Name</label>
+            <input type="text" name="firstName" ng-model="user.firstName" required="" />
+            <div ng-messages="Form.firstName.$error" role="alert" multiple="">
+              <div ng-message="required" class="my-message">Please enter your first name.</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="md-block">
+            <label>Last Name</label>
+            <input type="text" name="lastName" ng-model="user.lastName" required="" />
+            <div ng-messages="Form.lastName.$error" role="alert" multiple="">
+              <div ng-message="required" class="my-message">Please enter your last name.</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="md-block">
+            <label>Email</label>
+            <input type="text" name="email" ng-model="user.email" required="" ng-pattern="/^.+@.+\..+$/" />
+            <div ng-messages="Form.email.$error" role="alert" multiple="">
+              <div ng-message-exp="['required', 'pattern']" class="my-message">Please enter correct email.</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="md-block">
+            <label>Password</label>
+            <input type="password" name="password" ng-model="user.password" ng-minlength="6" required=""/>
+            <div ng-messages="Form.password.$error" role="alert" multiple="">
+              <div ng-message="required" class="my-message">Please enter your password.</div>
+              <div ng-message="minlength" class="my-message">Your password must be at least 6 characters</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="md-block">
+            <label>Confirm Password</label>
+            <input type="password" name="confirmPassword" ng-model="confirmPassword" match-password="password" required="" />
+            <div ng-messages="Form.confirmPassword.$error" role="alert" multiple="">
+              <div ng-message="required" class="my-message">Please re-enter your password.</div>
+              <div ng-message="passwordMatch" class="my-message">Your password is not matching</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="md-block">
+            <label>Mobile Phone</label>
+            <input type="number" name="mobilePhone" ng-model="user.mobilePhone" ng-maxlength="10" ng-minlength="10" ng-pattern="/^\d{10}$/" required="" />
+            <div ng-messages="Form.mobilePhone.$error" role="alert" multiple="">
+              <div ng-message="required" class="my-message">Please enter your mobile phone number.</div>
+              <div ng-message="minlength" class="my-message">Your mobile phone number must be atleast 10</div>
+              <div ng-message="maxlength" class="my-message">Your mobile phone number must be atmost 10</div>
+            </div>
+          </md-input-container>
+          <md-button style="width: -webkit-fill-available;" ng-disabled="!Form.$valid" ng-click="submit()" class="md-raised md-primary">&nbsp Sign Up &nbsp</md-button>
+          <div layout="column">
+          <a ui-sref="login" style="text-align:center">Already Have an Account?</a>
         </div>
-    </div>
-</div>
+        </form>
+      </md-card-content>
+    </md-card>
+  </md-content>

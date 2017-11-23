@@ -8,19 +8,26 @@
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Bootstrap dependencies -->
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/app/bower_components/bootstrap/dist/css/bootstrap.css">
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/app/login/login.css">
+  <!-- Css dependencies -->
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/app/bower_components/angular-material/angular-material.css" >  
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/app/app.css">  
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/app/login/login.css">  
   <link rel="stylesheet" href="${pageContext.request.contextPath}/app/register/register.css">
-  <script src="${pageContext.request.contextPath}/app/bower_components/jquery/dist/jquery.js"></script>
-  <script src="${pageContext.request.contextPath}/app/bower_components/tether/dist/js/tether.js"></script>
-  <script src="${pageContext.request.contextPath}/app/bower_components/bootstrap/dist/js/bootstrap.js"></script>
-
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/app/homepage/homepage.css">
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  
   <!-- angular dependencies -->
   <script src="${pageContext.request.contextPath}/app/bower_components/angular/angular.js"></script>
   <script src="${pageContext.request.contextPath}/app/bower_components/angular-animate/angular-animate.js"></script>
+  <script src="${pageContext.request.contextPath}/app/bower_components/angular-aria/angular-aria.js"></script>
+  <script src="${pageContext.request.contextPath}/app/bower_components/angular-messages/angular-messages.js"></script>
   <script src="${pageContext.request.contextPath}/app/bower_components/angular-resource/angular-resource.js"></script>
   <script src="${pageContext.request.contextPath}/app/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+  
+  <!-- angular material dependcies -->  
+  <script src="${pageContext.request.contextPath}/app/bower_components/angular-material/angular-material.js"></script>
 
   <!-- confirm password library -->
   <script src="${pageContext.request.contextPath}/app/bower_components/angular-password/angular-password.js"></script>
@@ -51,6 +58,12 @@
   <script src="${pageContext.request.contextPath}/app/resetpassword/resetpassword.module.js"></script>
   <script src="${pageContext.request.contextPath}/app/resetpassword/resetpassword.component.js"></script>
   <script src="${pageContext.request.contextPath}/app/resetpassword/resetpassword.service.js"></script>
+  
+  <!-- homepage module and it's dependencies -->
+  <script src="${pageContext.request.contextPath}/app/homepage/homepage.module.js"></script>
+  <script src="${pageContext.request.contextPath}/app/homepage/homepage.component.js"></script>
+  <script src="${pageContext.request.contextPath}/app/homepage/homepage.service.js"></script>
+  
 </head>
 
 <body>

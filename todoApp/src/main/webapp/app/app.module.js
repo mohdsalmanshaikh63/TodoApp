@@ -7,5 +7,10 @@ angular.module('todoApp', [
     'register',
     'forgotpassword',
     'resetpassword',
+    'homepage',
+    'ngMaterial',
+    'ngAnimate',
+    'ngMessages',
+    'ngAria',
     'LocalStorageModule'
 ]);
