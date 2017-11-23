@@ -20,3 +20,7 @@
 .noteContent[data-placeholder]:focus:before {
   content: "";
 }
+
+md-sidenav {
+  height: -webkit-fill-available;
+}

@@ -47,7 +47,7 @@ angular.module('login').component(
 
 							}, function(error) {
 								console.log("Got an error "
-										+ error.data.responseStatusCode);
+										+ JSON.stringify(error));
 							})
 						}
 					} ]

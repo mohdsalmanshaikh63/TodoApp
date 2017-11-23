@@ -7,9 +7,12 @@
   <title>My AngularJS App</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
 
   <!-- Css dependencies -->
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/app/bower_components/angular-material/angular-material.css" >  
+  <%-- <link rel="stylesheet" href="${pageContext.request.contextPath}/app/bower_components/angular-material/angular-material.css" > --%>
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">  
   <link rel="stylesheet" href="${pageContext.request.contextPath}/app/app.css">  
   <link rel="stylesheet" href="${pageContext.request.contextPath}/app/login/login.css">  
   <link rel="stylesheet" href="${pageContext.request.contextPath}/app/register/register.css">
@@ -19,15 +22,24 @@
   
   
   <!-- angular dependencies -->
-  <script src="${pageContext.request.contextPath}/app/bower_components/angular/angular.js"></script>
+  <!-- Angular Material requires Angular.js Libraries -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+
+  <!-- Angular Material Library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+  <%-- <script src="${pageContext.request.contextPath}/app/bower_components/angular/angular.js"></script>
   <script src="${pageContext.request.contextPath}/app/bower_components/angular-animate/angular-animate.js"></script>
   <script src="${pageContext.request.contextPath}/app/bower_components/angular-aria/angular-aria.js"></script>
-  <script src="${pageContext.request.contextPath}/app/bower_components/angular-messages/angular-messages.js"></script>
+  <script src="${pageContext.request.contextPath}/app/bower_components/angular-messages/angular-messages.js"></script> --%>
+  
   <script src="${pageContext.request.contextPath}/app/bower_components/angular-resource/angular-resource.js"></script>
   <script src="${pageContext.request.contextPath}/app/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
   
   <!-- angular material dependcies -->  
-  <script src="${pageContext.request.contextPath}/app/bower_components/angular-material/angular-material.js"></script>
+  <%-- <script src="${pageContext.request.contextPath}/app/bower_components/angular-material/angular-material.js"></script> --%>
 
   <!-- confirm password library -->
   <script src="${pageContext.request.contextPath}/app/bower_components/angular-password/angular-password.js"></script>

@@ -37,6 +37,6 @@
     "commit": "91409016cb44aa8f9568a4d890f0010973cea28c"
   },
   "_source": "https://github.com/gdi2290/angular-password.git",
-  "_target": "^1.0.3",
+  "_target": "~1.x.x",
   "_originalSource": "angular-password"
 }
