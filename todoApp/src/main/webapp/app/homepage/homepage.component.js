@@ -1,6 +1,6 @@
 'use strict';
 
-// Register 'login module along with controller and template
+// Register 'gomepage module along with controller and template
 angular.
 module('homepage').
 component('homepage', {
@@ -30,18 +30,17 @@ component('homepage', {
                 self.newNote.description = document.getElementById("mainNoteDescription").innerHTML;
 
                 // call the service
-                homepageService.createNewNote(self.newNote,
+                var httpRequest = homepageService.createNewNote(self.newNote);
+                httpRequest.then(
                     function (response) {
-                        console.log("Got the response data as " + JSON.stringify(response.data));
+                        console.log("Got the response data as " + JSON.stringify(response));
                         document.getElementById("mainNoteTitle").innerHTML = "";
                         document.getElementById("mainNoteDescription").innerHTML = "";
                     },
                 function(error) {
-                    console.log("Got the response data as " + JSON.stringify(error));
+                    console.log("Got the response data as " + error);
                 });
-
                 
-
                 console.log("Got the note as " + JSON.stringify(self.newNote));
 
             }

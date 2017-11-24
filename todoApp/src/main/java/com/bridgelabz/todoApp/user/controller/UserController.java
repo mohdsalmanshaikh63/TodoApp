@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bridgelabz.todoApp.customResponse.Message;
 import com.bridgelabz.todoApp.token.entity.Token;
 import com.bridgelabz.todoApp.user.entity.User;
 import com.bridgelabz.todoApp.user.service.UserService;
@@ -37,7 +38,7 @@ public class UserController {
 	private static Logger logger = Logger.getLogger(UserController.class);
 
 	@PostMapping(value = "/create")
-	public ResponseEntity<Void> create(@RequestBody User user, BindingResult bindingResult, HttpServletRequest request,
+	public ResponseEntity<Message> create(@RequestBody User user, BindingResult bindingResult, HttpServletRequest request,
 			HttpServletResponse response)
 			throws FileNotFoundException, ClassNotFoundException, IOException, URISyntaxException {
 
@@ -66,21 +67,21 @@ public class UserController {
 				logger.debug("*********Created user");
 				logger.debug("*********User id of saved user is" + user.getUserId());
 
-				return new ResponseEntity<Void>(HttpStatus.OK);
+				return new ResponseEntity<Message>(HttpStatus.OK);
 			} else {
 				logger.debug("**********User already exists");
-				return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+				return new ResponseEntity<Message>(HttpStatus.CONFLICT);
 			}
 		} catch (Exception e) {
 			logger.info("*******Error while creating user record");
 			logger.debug(e.getMessage());
-			return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Message>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}
 
 	@GetMapping(value = "/activate/{activateToken}")
-	public ResponseEntity<Void> activate(@PathVariable("activateToken") String activateToken) {
+	public ResponseEntity<Message> activate(@PathVariable("activateToken") String activateToken) {
 
 		// add activation token to the url later for more security
 
@@ -90,10 +91,10 @@ public class UserController {
 			// redirect to login page
 			// response.sendRedirect
 
-			return new ResponseEntity<Void>(HttpStatus.OK);
+			return new ResponseEntity<Message>(new Message("Activation successful"),HttpStatus.OK);
 		} else {
 			logger.debug("Could not activate user");
-			return new ResponseEntity<Void>(HttpStatus.UNPROCESSABLE_ENTITY);
+			return new ResponseEntity<Message>(new Message("Could not activate user"),HttpStatus.UNPROCESSABLE_ENTITY);
 
 			// redirect to appropiate error page later
 		}
@@ -191,7 +192,7 @@ public class UserController {
 	}
 
 	@PostMapping(value = "/reset")
-	public ResponseEntity<Void> reset(@RequestHeader("forgotToken") String forgotToken, @RequestBody User user,
+	public ResponseEntity<Message> reset(@RequestHeader("forgotToken") String forgotToken, @RequestBody User user,
 			HttpServletResponse response) {
 
 		logger.info("*****Got the forgotToken as " + forgotToken);
@@ -207,18 +208,18 @@ public class UserController {
 
 				logger.debug("*******Password reset successfully");
 
-				return new ResponseEntity<>(HttpStatus.OK);
+				return new ResponseEntity<Message>(new Message("Password reset success"),HttpStatus.OK);
 			} else {
 
 				logger.debug("*******Password could not be reset");
 
-				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<Message>(new Message("Reset failure"),HttpStatus.BAD_REQUEST);
 			}
 
 		} catch (Exception e) {
 			logger.debug(e);
 
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Message>(new Message("Internal Error"),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}

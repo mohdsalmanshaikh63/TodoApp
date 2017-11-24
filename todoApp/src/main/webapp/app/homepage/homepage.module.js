@@ -1,4 +1,4 @@
 'use strict';
 
-// define the 'login' module
-angular.module('homepage', ['ngResource']);
+// define the 'homepage' module
+angular.module('homepage', []);

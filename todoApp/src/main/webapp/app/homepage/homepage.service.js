@@ -1,8 +1,10 @@
 angular.module('homepage').
-factory('homepageService', ['$resource', 'localStorageService',
-        function ($resource, localStorageService) {
+factory('homepageService', ['localStorageService', '$http',
+        function (localStorageService, $http) {
 
-                console.log("Tokens are "+localStorageService.get('accessToken')+localStorageService.get('refreshToken'));
+                console.log("Tokens are " + localStorageService.get('accessToken') + localStorageService.get('refreshToken'));
+
+                var notes = {}
 
                 function getAccessToken() {
                         return localStorageService.get('accessToken');
@@ -11,31 +13,22 @@ factory('homepageService', ['$resource', 'localStorageService',
                 function getRefreshToken() {
                         return localStorageService.get('refreshToken');
                 }
+
+                notes.createNewNote = function (note) {
                         
-
-                // this is for transforming response to get status and correct response format
-                var transformResponse = function (data, headers, statusCode) {
-                        console.log(statusCode); // prints 200 if nothing went
-                        // wrong
-                        var finalResponse = {
-                                data: angular.fromJson(data),
-                                responseStatusCode: statusCode
-                        };
-                        console.log("Final response is " + finalResponse);
-                        return finalResponse;
-                }
-
-                return $resource('notes/create', {}, {
-                        createNewNote: {
-                                method: 'PUT',
-                                headers: {
-                                        'Content-Type': 'application/json',
-                                        'accessToken' : localStorageService.get('accessToken'),
-                                        'refreshToken' : localStorageService.get('refreshToken'),
-                                },                              
-                                transformResponse: transformResponse,
-
+                        console.log("Got the note as "+note);
+                        return $http({
+                                        method: 'PUT',
+                                        url: 'notes/create',
+                                        data : note,
+                                        headers: {
+                                                'Content-Type': 'application/json',
+                                                'accessToken': getAccessToken,
+                                                'refreshToken': getRefreshToken,
+                                        }
+                                });
                         }
-                });
+                
+                return notes;
         }
 ]);
