@@ -1,7 +1,6 @@
 package com.bridgelabz.todoApp.notes.dao;
 
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.hibernate.query.Query;
@@ -32,7 +31,7 @@ public class NotesDaoImpl implements NotesDao {
 	@Override
 	public void createNote(Note note, int uId) {
 		
-		note.setCreateTime(getLocalDateTime());
+		
 		
 		Session session = sessionFactory.getCurrentSession();
 		
@@ -50,8 +49,7 @@ public class NotesDaoImpl implements NotesDao {
 	@Override
 	public void updateNote(Note note) {
 		
-		note.setCreateTime(getLocalDateTime());
-		
+				
 		Session session = sessionFactory.getCurrentSession();
 		
 		session.update(note);
@@ -121,8 +119,6 @@ public class NotesDaoImpl implements NotesDao {
 		return notesList;
 	}
 	
-	public LocalDateTime getLocalDateTime() {
-		return LocalDateTime.now();
-	}
+	
 
 }

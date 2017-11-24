@@ -1,5 +1,6 @@
 package com.bridgelabz.todoApp.notes.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ public class NotesServiceImpl implements NoteService {
 	@Transactional
 	public void createNote(Note note, int uId) {
 		
+		LocalDateTime currentDateTime = getLocalDateTime();
+		note.setCreateTime(currentDateTime);
+		note.setModifyTime(currentDateTime);
 		notesDao.createNote(note, uId);
 
 	}
@@ -27,6 +31,8 @@ public class NotesServiceImpl implements NoteService {
 	@Transactional
 	public void updateNote(Note note) {
 		
+		LocalDateTime currentDateTime = getLocalDateTime();		
+		note.setModifyTime(currentDateTime);
 		notesDao.updateNote(note);
 
 	}
@@ -50,6 +56,10 @@ public class NotesServiceImpl implements NoteService {
 	@Transactional
 	public List<Note> getAllNotes(int userId) {
 		return notesDao.getAllNotes(userId);
+	}
+	
+	public LocalDateTime getLocalDateTime() {
+		return LocalDateTime.now();
 	}
 
 }
