@@ -15,20 +15,32 @@ factory('homepageService', ['localStorageService', '$http',
                 }
 
                 notes.createNewNote = function (note) {
-                        
-                        console.log("Got the note as "+note);
+
+                        console.log("Got the note as " + note);
                         return $http({
-                                        method: 'PUT',
-                                        url: 'notes/create',
-                                        data : note,
-                                        headers: {
-                                                'Content-Type': 'application/json',
-                                                'accessToken': getAccessToken,
-                                                'refreshToken': getRefreshToken,
+                                method: 'PUT',
+                                url: 'notes/create',
+                                data: note,
+                                headers: {
+                                        'Content-Type': 'application/json',
+                                        'accessToken': getAccessToken,
+                                        'refreshToken': getRefreshToken,
+                                }
+                        });
+                }
+
+                notes.getAllNotes = function () {                                                                        
+                                                return $http({
+                                                        method: 'GET',
+                                                        url: 'notes/getAllNotes',                                                        
+                                                        headers: {
+                                                                'Content-Type': 'application/json',
+                                                                'accessToken': getAccessToken,
+                                                                'refreshToken': getRefreshToken,
+                                                        }
+                                                });
                                         }
-                                });
-                        }
-                
+
                 return notes;
         }
 ]);

@@ -9,8 +9,9 @@ angular.module('login').component(
 					'$scope',
 					'loginService',
 					'localStorageService',
+					'$state',
 					function LoginController($scope, loginService,
-							localStorageService) {
+							localStorageService, $state) {
 						$scope.user = {};
 
 						console.log("LoginController called");
@@ -44,6 +45,8 @@ angular.module('login').component(
 										accessToken);
 								localStorageService.set('refreshToken',
 										refreshToken);
+								
+								$state.go('homepage');
 
 							}, function(error) {
 								console.log("Got an error "

@@ -1,26 +1,22 @@
 #maincard {
-  min-width: 330px;
-  max-width: 600px;
+	min-width: 330px;
+	max-width: 600px;
 }
 
 .noteContent {
-  border-bottom: none !important;
-  outline: none; 
+	border-bottom: none !important;
+	outline: none;
 }
 
 .done {
-  float: right;
+	float: right;
 }
 
-.noteContent[data-placeholder]:empty:before {
-  content: attr(data-placeholder);
-  color: #555; 
-}
-
-.noteContent[data-placeholder]:focus:before {
-  content: "";
+[contenteditable=true]:empty:before {
+	content: attr(placeholder);
+	display: block;
 }
 
 md-sidenav {
-  height: -webkit-fill-available;
+	height: -webkit-fill-available;
 }
