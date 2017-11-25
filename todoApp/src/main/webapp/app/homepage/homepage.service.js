@@ -30,9 +30,22 @@ factory('homepageService', ['localStorageService', '$http',
                 }
 
                 notes.getAllNotes = function () {                                                                        
+                        return $http({
+                                method: 'GET',
+                                url: 'notes/getAllNotes',                                                        
+                                headers: {
+                                        'Content-Type': 'application/json',
+                                        'accessToken': getAccessToken,
+                                        'refreshToken': getRefreshToken,
+                                }
+                        });
+                }
+
+                notes.updateNote = function (note) {                                                                        
                                                 return $http({
-                                                        method: 'GET',
-                                                        url: 'notes/getAllNotes',                                                        
+                                                        method: 'POST',
+                                                        url: 'notes/update',
+                                                        data:note,                                                        
                                                         headers: {
                                                                 'Content-Type': 'application/json',
                                                                 'accessToken': getAccessToken,

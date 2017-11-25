@@ -6,9 +6,9 @@ import com.bridgelabz.todoApp.notes.entity.Note;
 
 public interface NoteService {
 	
-	public void createNote(Note note, int uId);
+	public int createNote(Note note, int uId);
 	
-	public void updateNote(Note note);
+	public void updateNote(Note note, int userId);
 	
 	public void deleteNote(int noteId);
 	

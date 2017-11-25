@@ -3,7 +3,6 @@ package com.bridgelabz.todoApp.notes.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,35 +34,37 @@ public class NotesController {
 
 	// add backend spring validation later
 	@PutMapping(value = "/create")
-	public ResponseEntity<Message> createNote(@RequestBody Note note, HttpServletRequest request) {
+	public ResponseEntity<Note> createNote(@RequestBody Note note, HttpServletRequest request) {
 				
 
 		try {
-
+						
+			
 			int userId = (int) request.getAttribute("userId");			
 
-			noteService.createNote(note, userId);
+			int noteId = noteService.createNote(note, userId);
 			
-			String message = "Note created successfully";
+			note.setNoteId(noteId);
 
-			return new ResponseEntity<Message>(new Message(message), HttpStatus.OK);
+			return new ResponseEntity<Note>(note, HttpStatus.OK);
 
 		} catch (Exception e) {
 
-			logger.info("Note could not be created");
-			String message = "Error while creating note";
-			return new ResponseEntity<Message>(new Message(message), HttpStatus.INTERNAL_SERVER_ERROR);
+			logger.info("Note could not be created");			
+			return new ResponseEntity<Note>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}
 
 	// add backend spring validation later
 	@PostMapping(value = "/update")
-	public ResponseEntity<Message> updateNote(@RequestBody Note note) {
+	public ResponseEntity<Message> updateNote(@RequestBody Note note,HttpServletRequest request) {
 
 		try {
+			
+			int userId = (int) request.getAttribute("userId");			
 
-			noteService.updateNote(note);
+			noteService.updateNote(note, userId);
 
 			return new ResponseEntity<Message>(new Message("Note updated successfully"), HttpStatus.OK);
 

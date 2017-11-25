@@ -42,7 +42,10 @@ public class Note {
 	private boolean pinned;
 	
 	@Column(name="archive")
-	private String archive;
+	private boolean archive;
+	
+	@Column(name="trash")
+	private boolean trash;
 
 	// on deletion of notes a user should not be deleted
 	// also fetch type lazy since we don't want to get user object with notes
@@ -117,12 +120,21 @@ public class Note {
 		this.pinned = pinned;
 	}
 
-	public String getArchive() {
+	public boolean isArchive() {
 		return archive;
 	}
 
-	public void setArchive(String archive) {
+	public void setArchive(boolean archive) {
 		this.archive = archive;
+	}
+		
+
+	public boolean isTrash() {
+		return trash;
+	}
+
+	public void setTrash(boolean trash) {
+		this.trash = trash;
 	}
 
 	@Override

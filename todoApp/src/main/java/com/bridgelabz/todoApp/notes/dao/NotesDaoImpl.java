@@ -29,7 +29,7 @@ public class NotesDaoImpl implements NotesDao {
 	private static Logger logger = Logger.getLogger(NotesDaoImpl.class);
 
 	@Override
-	public void createNote(Note note, int uId) {
+	public int createNote(Note note, int uId) {
 		
 		
 		
@@ -42,6 +42,8 @@ public class NotesDaoImpl implements NotesDao {
 		note.setUser(user);
 		
 		session.save(note);
+		
+		return note.getNoteId();
 				
 
 	}

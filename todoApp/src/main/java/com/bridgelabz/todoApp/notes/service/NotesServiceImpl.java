@@ -9,30 +9,39 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.bridgelabz.todoApp.notes.dao.NotesDao;
 import com.bridgelabz.todoApp.notes.entity.Note;
+import com.bridgelabz.todoApp.user.entity.User;
+import com.bridgelabz.todoApp.user.service.UserService;
 
 @Service
 public class NotesServiceImpl implements NoteService {
 	
 	@Autowired
 	NotesDao notesDao;
+	
+	@Autowired
+	UserService userService;
 
 	@Override
 	@Transactional
-	public void createNote(Note note, int uId) {
+	public int createNote(Note note, int uId) {
 		
 		LocalDateTime currentDateTime = getLocalDateTime();
 		note.setCreateTime(currentDateTime);
 		note.setModifyTime(currentDateTime);
-		notesDao.createNote(note, uId);
+		return notesDao.createNote(note, uId);
 
 	}
 
 	@Override
 	@Transactional
-	public void updateNote(Note note) {
+	public void updateNote(Note note, int userId) {
 		
 		LocalDateTime currentDateTime = getLocalDateTime();		
 		note.setModifyTime(currentDateTime);
+		
+		User user = userService.getUser(userId);
+		note.setUser(user);
+		
 		notesDao.updateNote(note);
 
 	}
