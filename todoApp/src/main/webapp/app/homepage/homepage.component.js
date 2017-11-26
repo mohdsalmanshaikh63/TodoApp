@@ -80,9 +80,9 @@ component('homepage', {
                     if ($scope.notes[i].noteId == note.noteId) {
                     $scope.notes[i] = note;
                     }
-
+                                       
                     // add to the existing notes array later
-                    console.log("Note updated successfully");
+                    console.log("Note updated successfully "+$scope.notes);
                 },
                 function(error) {
 

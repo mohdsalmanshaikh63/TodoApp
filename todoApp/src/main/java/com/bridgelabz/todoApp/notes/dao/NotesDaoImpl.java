@@ -94,15 +94,15 @@ public class NotesDaoImpl implements NotesDao {
 		
 		Session session = sessionFactory.getCurrentSession();				
 		
-		/*Query<Note> getAllNotes = session.createQuery("from Note where user_id=:userId",Note.class);
+		Query<Note> getAllNotes = session.createQuery("from Note where user_id=:userId",Note.class);
 					
 		getAllNotes.setParameter("userId",userId);
 		
-		List<Note> notesList = getAllNotes.getResultList();*/
+		List<Note> notesList = getAllNotes.getResultList();
 		
 		
 		// used transformer for setting user object to null
-		@SuppressWarnings("deprecation")
+		/*@SuppressWarnings("deprecation")
 		Criteria criteria = session.createCriteria(Note.class)
 							.setProjection(Projections.projectionList()
 							.add(Projections.property("noteId"), "noteId")
@@ -113,7 +113,7 @@ public class NotesDaoImpl implements NotesDao {
 							.setResultTransformer(Transformers.aliasToBean(Note.class));
 		
 		@SuppressWarnings("unchecked")
-		List<Note> notesList = criteria.list();
+		List<Note> notesList = criteria.list();*/
 							
 		
 		logger.info("*****Getting Notes List:"+notesList);
