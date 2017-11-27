@@ -20,6 +20,7 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/app/homepage/navbar/navbar.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/app/homepage/sidenav/sidenav.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/app/homepage/maincard/maincard.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/app/homepage/noteslist/noteslist.css">
   
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   
@@ -91,6 +92,10 @@
   <!-- Load maincard and it's dependencies -->
   <script src="${pageContext.request.contextPath}/app/homepage/maincard/maincard.module.js"></script>
   <script src="${pageContext.request.contextPath}/app/homepage/maincard/maincard.component.js"></script>
+
+  <!-- Load notesList and it's dependencies -->
+  <script src="${pageContext.request.contextPath}/app/homepage/noteslist/noteslist.module.js"></script>
+  <script src="${pageContext.request.contextPath}/app/homepage/noteslist/noteslist.component.js"></script>
   
 </head>
 
