@@ -1,0 +1,43 @@
+<md-card id="maincard">
+    
+                    <md-card-header ng-show="fullNote">
+                        <md-card-header-text>
+                            <div class="noteContent md-title" id="mainNoteTitle" ng-bind-html="newNote.title" contenteditable="true" contenteditabledata
+                                aria-multiline="true" placeholder="Title">
+                            </div>
+                        </md-card-header-text>
+                    </md-card-header>
+    
+                    <md-card-content>
+                        <div class="noteContent" id="mainNoteDescription" ng-click="showFullNote()" ng-bind-html="newNote.description" contenteditable="true"
+                            contenteditabledata aria-multiline="true" placeholder="Description"></div>
+                    </md-card-content>
+    
+                    <md-card-actions layout="row" layout-align="center center" ng-show="fullNote">
+                        <div flex="80">
+                            <md-button class="md-icon-button" aria-label="Remind Me">
+                                <i class="material-icons">touch_app</i>
+                            </md-button>
+                            <md-button class="md-icon-button" aria-label="Collaborate">
+                                <i class="material-icons">person_add</i>
+                            </md-button>
+                            <md-button class="md-icon-button" aria-label="Color Palette">
+                                <i class="material-icons">color_lens</i>
+                            </md-button>
+                            <md-button class="md-icon-button" aria-label="Color Palette">
+                                <i class="material-icons">image</i>
+                            </md-button>
+                            <md-button class="md-icon-button" aria-label="Archive">
+                                <i class="material-icons">archive</i>
+                            </md-button>
+                            <md-button class="md-icon-button" aria-label="Archive">
+                                <i class="material-icons">more_vert</i>
+                            </md-button>
+                        </div>
+    
+                        <div flex="20">
+                            <md-button class="md-button done" ng-click="createNote()" aria-label="Archive"> DONE </md-button>
+                        </div>
+    
+                    </md-card-actions>
+                </md-card>

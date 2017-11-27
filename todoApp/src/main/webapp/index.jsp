@@ -17,6 +17,9 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/app/login/login.css">  
   <link rel="stylesheet" href="${pageContext.request.contextPath}/app/register/register.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/app/homepage/homepage.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/app/homepage/navbar/navbar.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/app/homepage/sidenav/sidenav.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/app/homepage/maincard/maincard.css">
   
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   
@@ -74,7 +77,20 @@
   <!-- homepage module and it's dependencies -->
   <script src="${pageContext.request.contextPath}/app/homepage/homepage.module.js"></script>
   <script src="${pageContext.request.contextPath}/app/homepage/homepage.component.js"></script>
+  <!-- <script src="${pageContext.request.contextPath}/app/homepage/homepage.controller.js"></script> -->
   <script src="${pageContext.request.contextPath}/app/homepage/homepage.service.js"></script>
+  
+  <!-- Load navbar and it's dependencies -->
+  <script src="${pageContext.request.contextPath}/app/homepage/navbar/navbar.module.js"></script>
+  <script src="${pageContext.request.contextPath}/app/homepage/navbar/navbar.component.js"></script>
+
+  <!-- Load navbar and it's dependencies -->
+  <script src="${pageContext.request.contextPath}/app/homepage/sidenav/sidenav.module.js"></script>
+  <script src="${pageContext.request.contextPath}/app/homepage/sidenav/sidenav.component.js"></script>
+
+  <!-- Load maincard and it's dependencies -->
+  <script src="${pageContext.request.contextPath}/app/homepage/maincard/maincard.module.js"></script>
+  <script src="${pageContext.request.contextPath}/app/homepage/maincard/maincard.component.js"></script>
   
 </head>
 

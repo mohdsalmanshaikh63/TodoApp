@@ -1,4 +1,4 @@
 'use strict';
 
 // define the 'homepage' module
-angular.module('homepage', []);
+angular.module('homepage', ['navbar', 'sidenav', 'maincard']);

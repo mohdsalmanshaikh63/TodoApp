@@ -19,13 +19,7 @@ component('homepage', {
 
             $scope.fullNote = false;
 
-            // call the necessary services and make appropiate initializations
-
-            // toggler for main card
-            $scope.showFullNote = function () {
-
-                $scope.fullNote = true;
-            }
+            // call the necessary services and make appropiate initializations            
 
             // getAllNotes
             var getAllNotes = homepageService.getAllNotes();
@@ -35,35 +29,7 @@ component('homepage', {
                 $scope.notes = (response.data);
             }, function (response) {
                 console.log('error loading notes');
-            });
-
-            // create new note
-            $scope.createNote = function () {
-
-                // get the note data from form
-                self.newNote = {};
-                self.newNote.title = document.getElementById("mainNoteTitle").innerHTML;
-                self.newNote.description = document.getElementById("mainNoteDescription").innerHTML;
-
-                // call the service
-                var getAllNotesRequest = homepageService.createNewNote(self.newNote);
-                getAllNotesRequest.then(
-                    function (response) {
-                        console.log("Got the response data as " + JSON.stringify(response));
-                        document.getElementById("mainNoteTitle").innerHTML = "";
-                        document.getElementById("mainNoteDescription").innerHTML = "";
-                        self.newNote.noteId = response.data.noteId;
-                        var note = angular.copy(self.newNote);
-                        $state.reload();
-                        $scope.notes.push(note);
-                    },
-                    function (error) {
-                        console.log("Got the response data as " + error);
-                    });
-
-                console.log("Got the note as " + JSON.stringify(self.newNote));
-
-            }
+            });            
 
             // archive note
             $scope.archive = function (note) {

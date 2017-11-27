@@ -1,0 +1,22 @@
+#maincard {
+	min-width: 330px !important;
+	max-width: 600px !important;
+}
+
+md-card {
+	word-break: break-all;
+	max-width: 330;
+}
+
+.noteContent {
+	border-bottom: none !important;
+	outline: none;
+	word-break: break-all;
+}
+
+
+
+[contenteditable=true]:empty:before {
+	content: attr(placeholder);
+	display: block;
+}
