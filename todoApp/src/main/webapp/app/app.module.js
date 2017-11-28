@@ -12,5 +12,7 @@ angular.module('todoApp', [
     'ngAnimate',
     'ngMessages',
     'ngAria',
-    'LocalStorageModule'
+    'LocalStorageModule',
+    'tb-color-picker'
+      
 ]);

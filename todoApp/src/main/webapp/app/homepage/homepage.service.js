@@ -41,7 +41,8 @@ factory('homepageService', ['localStorageService', '$http',
                         });
                 }
 
-                notes.updateNote = function (note) {                                                                        
+                notes.updateNote = function (note) {   
+                        console.log("Got the note as "+JSON.stringify(note));                                                                     
                                                 return $http({
                                                         method: 'POST',
                                                         url: 'notes/update',

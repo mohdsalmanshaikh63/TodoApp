@@ -2,8 +2,10 @@
     font-family: 'Material Icons';
     font-weight: normal;
     font-style: normal;
-    font-size: 24px;
-    max-width: 30px !important;
+    font-size: 18px !important;
+    height: 18px !important;
+    width: 18px !important;
+    /* max-width: 25px !important; */
     /* Preferred icon size */
     display: inline-block;
     line-height: 1;
@@ -19,8 +21,7 @@
     /* Support for Firefox. */
     -moz-osx-font-smoothing: grayscale;
     /* Support for IE. */
-    font-feature-settings: 'liga';    
-    
+    font-feature-settings: 'liga';
 }
 
 html,
@@ -39,7 +40,7 @@ body {
     background-color: transparent;
     border: none;
     height: 45px;
-    margin-top:15px;
+    margin-top: 15px;
     width: 45px;
 }
 
@@ -53,7 +54,7 @@ md-toolbar h3 {
 
 md-list-item>button {
     width: 100%;
-    text-align: left !important;    
+    text-align: left !important;
 }
 
 md-list .md-button.selected {
@@ -109,7 +110,7 @@ md-toolbar h1 {
     font-weight: 400;
 }
 
-.icons {    
+.icons {
     position: relative;
     width: 128px;
     height: 128px;
