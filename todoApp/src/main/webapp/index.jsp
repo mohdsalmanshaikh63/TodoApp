@@ -41,6 +41,12 @@
   <script src="app/bower_components/colorpicker/dist/colorPicker.js"></script>
   <link rel="stylesheet" href="app/bower_components/colorpicker/dist/colorPickerStyle.css">
 
+  <!-- dateTime Picker -->
+  <script src="app/bower_components/moment/moment.js"></script>
+  <script src="app/bower_components/ng-material-datetimepicker/dist/angular-material-datetimepicker.min.js"></script>
+  <script src="app/bower_components/ng-material-datetimepicker/dist/angular-material-datetimepicker.min.js.map"></script>
+  <link rel="stylesheet" href="app/bower_components/ng-material-datetimepicker/dist/material-datetimepicker.min.css">
+
   <!-- Angular Sanitize -->
   <%-- <script src="${pageContext.request.contextPath}/app/bower_components/angular-sanitize/angular-sanitize.js"></script> --%>
 

@@ -13,6 +13,6 @@ angular.module('todoApp', [
     'ngMessages',
     'ngAria',
     'LocalStorageModule',
-    'tb-color-picker'
-      
+    'tb-color-picker',
+    'ngMaterialDatePicker'      
 ]);

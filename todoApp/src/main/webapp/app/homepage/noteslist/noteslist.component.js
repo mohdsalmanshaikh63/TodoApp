@@ -4,8 +4,8 @@ angular.
 module('noteslist').
 component('noteslist', {
     templateUrl: 'app/homepage/noteslist/noteslist.template.html',
-    controller: ['$scope', 'homepageService', '$state',
-        function notesListController($scope, homepageService, $state) {
+    controller: ['$scope', 'homepageService', '$state', 'mdcDateTimeDialog', '$filter',
+        function notesListController($scope, homepageService, $state, mdcDateTimeDialog, $filter) {
 
             console.log("Inside notesListController");
 
@@ -15,8 +15,42 @@ component('noteslist', {
 
             $scope.notes = [];
 
+            $scope.fullNote = false;
+
+            // dateTime picker
+            $scope.displayDialog = function (note) {
+                mdcDateTimeDialog.show({
+                  minDate:  new Date(),
+                  minuteSteps: 1 ,
+                  shortTime : true                                                      ,
+                  
+                }).then(function (date) {
+                //   var temporaryDate = $filter('date')(date,'yyyy MM dd HH mm a');
+                //   note.reminder = temporaryDate.split(" ");
+                note.reminder = date;
+
+                  //note.reminder = [2017, 11, 28, 11, 12, 56];
+                  console.log('New Date / Time selected:', note.reminder );
+                  var remindMe = homepageService.updateNote(note);
+                  remindMe.then(function (response) {
+  
+                          $state.reload();
+  
+                          console.log("Note updated successfully");
+                      },
+                      function (error) {
+                          console.log("Could not update note");
+                      });
+                  
+
+                }, function() {
+                  console.log('Selection canceled');
+                });
+            }
+
             // color picker logic
-            $scope.colors = ['transparent','#FF8A80', '#FFD180', '#FFFF8D', '#CFD8DC', '#80D8FF', '#A7FFEB', '#CCFF90'];
+            $scope.colors = ['transparent','#FF8A80', '#FFD180', '#FFFF8D', '#CFD8DC', '#80D8FF', '#A7FFEB', '#CCFF90',
+                            '#fcff77', '#80ff80', '#99ffff', '#0099ff', '#1a53ff', '#9966ff', '#ff99cc', '#d9b38c', '#bfbfbf' ];
             $scope.color = '#FF8A80';
         
             $scope.colorChanged = function(newColor, oldColor,note) {
@@ -32,40 +66,7 @@ component('noteslist', {
                     function (error) {
                         console.log("Could not update note");
                     });
-            }
-
-                // {
-                //     "color":                    
-                // }, {
-                //     "color": 
-                    
-                // }, {
-                //     "color": 
-                // }, {
-                //     "color": '#fcff77'
-                // }, {
-                //     "color": '#80ff80'
-                // }, {
-                //     "color": '#99ffff'
-                // }, {
-                //     "color": '#0099ff'
-                // }, {
-                //     "color": '#1a53ff'
-                // }, {
-                //     "color": '#9966ff'
-                // }, {
-                //     "color": '#ff99cc'
-                // }, {
-                //     "color": '#d9b38c'
-                // }, {
-                //     "color": '#bfbfbf'
-                // }
-
-
-
-            console.log("HomepageController called");
-
-            $scope.fullNote = false;
+            }                        
 
             // call the necessary services and make appropiate initializations            
 

@@ -62,6 +62,8 @@ public class NotesController {
 
 		try {
 			
+			logger.info("********Got the note from front end as "+note);
+			
 			int userId = (int) request.getAttribute("userId");			
 
 			noteService.updateNote(note, userId);

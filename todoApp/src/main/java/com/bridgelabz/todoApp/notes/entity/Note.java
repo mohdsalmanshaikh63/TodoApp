@@ -1,6 +1,7 @@
 package com.bridgelabz.todoApp.notes.entity;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.bridgelabz.todoApp.user.entity.User;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Entity
 @Table(name = "note")
@@ -34,6 +37,9 @@ public class Note {
 	
 	@Column(name = "modify_time")
 	private LocalDateTime modifyTime;
+		
+	@Column(name = "reminder")	
+	private Date reminder;
 
 	@Column(name="color")
 	private String color;
@@ -135,13 +141,23 @@ public class Note {
 
 	public void setTrash(boolean trash) {
 		this.trash = trash;
+	}	
+
+	
+
+	public Date getReminder() {
+		return reminder;
+	}
+
+	public void setReminder(Date reminder) {
+		this.reminder = reminder;
 	}
 
 	@Override
 	public String toString() {
 		return "Note [noteId=" + noteId + ", title=" + title + ", description=" + description + ", createTime="
-				+ createTime + ", modifyTime=" + modifyTime + ", color=" + color + ", pinned=" + pinned + ", archive="
-				+ archive + ", user=" + user + "]";
+				+ createTime + ", modifyTime=" + modifyTime + ", reminder=" + reminder + ", color=" + color
+				+ ", pinned=" + pinned + ", archive=" + archive + ", trash=" + trash + "]";
 	}
 
 	
