@@ -14,5 +14,7 @@ angular.module('todoApp', [
     'ngAria',
     'LocalStorageModule',
     'tb-color-picker',
-    'ngMaterialDatePicker'      
+    'ngMaterialDatePicker',
+    'ngSanitize',
+    'toastr'      
 ]);

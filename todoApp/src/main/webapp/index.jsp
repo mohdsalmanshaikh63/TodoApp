@@ -69,6 +69,16 @@
   <!-- local storage library -->
   <script src="${pageContext.request.contextPath}/app/bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
 
+  <!-- Ng sanitizer for cleaning html -->
+  <script src="app/bower_components/angular-sanitize/angular-sanitize.js"></script>
+  
+  <link rel="stylesheet" href="app/bower_components/angular-toastr/dist/angular-toastr.css" />
+  <script src="app/bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
+  
+  <!-- <link rel="stylesheet" href="https://unpkg.com/angular-toastr/dist/angular-toastr.css" />
+  <script src="https://unpkg.com/angular-toastr/dist/angular-toastr.tpls.js"></script> -->
+    
+
   <!-- core dependencies -->
   <script src="${pageContext.request.contextPath}/app/app.module.js"></script>
   <script src="${pageContext.request.contextPath}/app/app.config.js"></script>

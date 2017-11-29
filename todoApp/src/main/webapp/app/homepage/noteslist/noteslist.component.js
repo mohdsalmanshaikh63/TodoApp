@@ -4,8 +4,8 @@ angular.
 module('noteslist').
 component('noteslist', {
     templateUrl: 'app/homepage/noteslist/noteslist.template.html',
-    controller: ['$scope', 'homepageService', '$state', 'mdcDateTimeDialog', '$filter',
-        function notesListController($scope, homepageService, $state, mdcDateTimeDialog, $filter) {
+    controller: ['$scope', 'homepageService', '$state', 'mdcDateTimeDialog', '$filter', 'toastr', '$interval',
+        function notesListController($scope, homepageService, $state, mdcDateTimeDialog, $filter, toastr, $interval) {
 
             console.log("Inside notesListController");
 
@@ -20,40 +20,41 @@ component('noteslist', {
             // dateTime picker
             $scope.displayDialog = function (note) {
                 mdcDateTimeDialog.show({
-                  minDate:  new Date(),
-                  minuteSteps: 1 ,
-                  shortTime : true                                                      ,
-                  
+                    minDate: new Date(),
+                    minuteSteps: 1,
+                    shortTime: true,
+
                 }).then(function (date) {
-                //   var temporaryDate = $filter('date')(date,'yyyy MM dd HH mm a');
-                //   note.reminder = temporaryDate.split(" ");
-                note.reminder = date;
+                    //   var temporaryDate = $filter('date')(date,'yyyy MM dd HH mm a');
+                    //   note.reminder = temporaryDate.split(" ");
+                    note.reminder = date;
 
-                  //note.reminder = [2017, 11, 28, 11, 12, 56];
-                  console.log('New Date / Time selected:', note.reminder );
-                  var remindMe = homepageService.updateNote(note);
-                  remindMe.then(function (response) {
-  
-                          $state.reload();
-  
-                          console.log("Note updated successfully");
-                      },
-                      function (error) {
-                          console.log("Could not update note");
-                      });
-                  
+                    //note.reminder = [2017, 11, 28, 11, 12, 56];
+                    console.log('New Date / Time selected:', note.reminder);
+                    var remindMe = homepageService.updateNote(note);
+                    remindMe.then(function (response) {
 
-                }, function() {
-                  console.log('Selection canceled');
+                            $state.reload();
+
+                            console.log("Note updated successfully");
+                        },
+                        function (error) {
+                            console.log("Could not update note");
+                        });
+
+
+                }, function () {
+                    console.log('Selection canceled');
                 });
             }
 
             // color picker logic
-            $scope.colors = ['transparent','#FF8A80', '#FFD180', '#FFFF8D', '#CFD8DC', '#80D8FF', '#A7FFEB', '#CCFF90',
-                            '#fcff77', '#80ff80', '#99ffff', '#0099ff', '#1a53ff', '#9966ff', '#ff99cc', '#d9b38c', '#bfbfbf' ];
+            $scope.colors = ['transparent', '#FF8A80', '#FFD180', '#FFFF8D', '#CFD8DC', '#80D8FF', '#A7FFEB', '#CCFF90',
+                '#fcff77', '#80ff80', '#99ffff', '#0099ff', '#1a53ff', '#9966ff', '#ff99cc', '#d9b38c', '#bfbfbf'
+            ];
             $scope.color = '#FF8A80';
-        
-            $scope.colorChanged = function(newColor, oldColor,note) {
+
+            $scope.colorChanged = function (newColor, oldColor, note) {
                 console.log('from ', oldColor, ' to ', newColor);
                 note.color = newColor;
                 var colorChange = homepageService.updateNote(note);
@@ -66,7 +67,7 @@ component('noteslist', {
                     function (error) {
                         console.log("Could not update note");
                     });
-            }                        
+            }
 
             // call the necessary services and make appropiate initializations            
 
@@ -76,6 +77,19 @@ component('noteslist', {
                 console.log('notes loaded');
                 console.log(response.data);
                 $scope.notes = (response.data);
+                // toaster
+                $interval(function () {
+
+                    for (var i = 0; i < response.data.length; i++) {
+                        if (response.data[i].reminder) {
+                            var date = new Date(response.data[i].reminder);
+                            if ($filter('date')(date, 'YYYY MM dd hh:mm a') == $filter('date', 'YYYY MM dd hh:mm a')(new Date())) {
+                                console.log("Hello00000000000")
+                                toastr.success(response.data[i].body, response.data[i].title);
+                            }
+                        }
+                    }
+                }, 60000);
             }, function (response) {
                 console.log('error loading notes');
             });

@@ -16,12 +16,11 @@
 
             <md-card-header>
                 <md-card-header-text>
-                    <span class="md-title">{{note.title}}</span>
+                    <span class="md-title" ng-bind-html="note.title"></span>
                 </md-card-header-text>
             </md-card-header>
 
-            <md-card-content>
-                {{note.description}}
+            <md-card-content ng-bind-html="note.description">                
             </md-card-content>
 
             <md-card-content ng-if("note.reminder")>
@@ -91,11 +90,10 @@
 
             <md-card-header>
                 <md-card-header-text>
-                    <span class="md-title">{{note.title}}</span>
+                    <span class="md-title" ng-bind-html="note.title"></span>
                 </md-card-header-text>
             </md-card-header>
-            <md-card-content>
-                {{note.description}}
+            <md-card-content ng-bind-html="note.description">
             </md-card-content>
             <md-card-actions layout="row" layout-align="start center" flex>
                 <md-button class="md-icon-button" aria-label="Remind Me" ng-click="displayDialog(note)">
