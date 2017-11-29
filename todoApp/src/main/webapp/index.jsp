@@ -103,6 +103,11 @@
   <script src="${pageContext.request.contextPath}/app/resetpassword/resetpassword.component.js"></script>
   <script src="${pageContext.request.contextPath}/app/resetpassword/resetpassword.service.js"></script>
   
+  <!-- forgotpassword module and it's dependencies -->
+  <script src="app/dummypage/dummypage.module.js"></script>
+  <script src="app/dummypage/dummypage.component.js"></script>
+  <script src="app/dummypage/dummypage.service.js"></script>
+  
   <!-- homepage module and it's dependencies -->
   <script src="${pageContext.request.contextPath}/app/homepage/homepage.module.js"></script>
   <script src="${pageContext.request.contextPath}/app/homepage/homepage.component.js"></script>

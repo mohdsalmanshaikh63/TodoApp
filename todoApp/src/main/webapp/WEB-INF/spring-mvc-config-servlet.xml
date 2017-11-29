@@ -70,6 +70,7 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/notes/**" />
+			<mvc:mapping path="/user/getUserId" />
 			<bean class="com.bridgelabz.todoApp.interceptor.LoginInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>

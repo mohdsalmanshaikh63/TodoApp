@@ -40,6 +40,9 @@ public class User {
 	@Column(name = "mobile", unique = true)
 	private String mobile;
 	
+	@Column(name = "profile_pic", columnDefinition="LONGBLOB")
+	private String profilePic;
+	
 	@Column(name = "gender")
 	private String gender;
 
@@ -131,13 +134,23 @@ public class User {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
+		
+	public String getProfilePic() {
+		return profilePic;
+	}
+
+	public void setProfilePic(String profilePic) {
+		this.profilePic = profilePic;
+	}
 
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", mobile=" + mobile + ", gender=" + gender + ", password=" + password + ", confirmPassword="
-				+ confirmPassword + ", valid=" + valid + "]";
+				+ ", mobile=" + mobile + ", profilePic=" + profilePic + ", gender=" + gender + ", password=" + password
+				+ ", confirmPassword=" + confirmPassword + ", valid=" + valid + "]";
 	}
+
+	
 
 	
 

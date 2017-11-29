@@ -7,6 +7,7 @@ angular.module('todoApp', [
     'register',
     'forgotpassword',
     'resetpassword',
+    'dummypage',
     'homepage',
     'ngMaterial',
     'ngAnimate',

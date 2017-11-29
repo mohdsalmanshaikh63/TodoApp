@@ -12,22 +12,27 @@ angular.module('todoApp').config(
 				.setStorageType('localStorage');
 
 			$stateProvider.state('login', {
-				url: '/login',
-				template: '<login></login>'
-			}).state('register', {
-				url: '/register',
-				template: '<register></register>'
-			}).state('forgotpassword', {
-				url: '/forgotpassword',
-				template: '<forgotpassword></forgotpassword>'
-			}).state('resetpassword', {
-				url: '/resetpassword/:token',
-				template: '<resetpassword></resetpassword>'
-			}).state('homepage', {
-				url: '/homepage',
-				template: '<homepage></homepage>'
-				/* templateUrl: 'app/homepage/homepage.template.html',
-				controller: 'homepageController' */
-			});
+					url: '/login',
+					template: '<login></login>'
+				}).state('register', {
+					url: '/register',
+					template: '<register></register>'
+				}).state('forgotpassword', {
+					url: '/forgotpassword',
+					template: '<forgotpassword></forgotpassword>'
+				}).state('resetpassword', {
+					url: '/resetpassword/:token',
+					template: '<resetpassword></resetpassword>'
+				}).state('dummypage', {
+					url: '/dummypage/:token',
+					template: '<dummypage></dummypage>'
+				})
+				.state('homepage', {
+					url: '/homepage',
+					template: '<homepage></homepage>'
+					/* templateUrl: 'app/homepage/homepage.template.html',
+					controller: 'homepageController' */
+				});
 			$urlRouterProvider.otherwise('/login');
-		}]);
+		}
+	]);

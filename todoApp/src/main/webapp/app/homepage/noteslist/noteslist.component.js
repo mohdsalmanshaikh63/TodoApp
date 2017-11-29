@@ -4,8 +4,8 @@ angular.
 module('noteslist').
 component('noteslist', {
     templateUrl: 'app/homepage/noteslist/noteslist.template.html',
-    controller: ['$scope', 'homepageService', '$state', 'mdcDateTimeDialog', '$filter', 'toastr', '$interval',
-        function notesListController($scope, homepageService, $state, mdcDateTimeDialog, $filter, toastr, $interval) {
+    controller: ['$scope', 'homepageService', '$state', 'mdcDateTimeDialog', '$filter', 'toastr', '$interval', '$sanitize',
+        function notesListController($scope, homepageService, $state, mdcDateTimeDialog, $filter, toastr, $interval, $sanitize) {
 
             console.log("Inside notesListController");
 
@@ -77,19 +77,23 @@ component('noteslist', {
                 console.log('notes loaded');
                 console.log(response.data);
                 $scope.notes = (response.data);
+                
                 // toaster
                 $interval(function () {
 
                     for (var i = 0; i < response.data.length; i++) {
                         if (response.data[i].reminder) {
                             var date = new Date(response.data[i].reminder);
-                            if ($filter('date')(date, 'YYYY MM dd hh:mm a') == $filter('date', 'YYYY MM dd hh:mm a')(new Date())) {
-                                console.log("Hello00000000000")
-                                toastr.success(response.data[i].body, response.data[i].title);
+                            if ($filter('date','yyyy-MM-ddTHH:mm')(date) == $filter('date','yyyy-MM-ddTHH:mm')(new Date())) {
+                                console.log("Sanitize"+$sanitize('Hello, <b>World</b>!'));
+                                console.log("Sanitize"+$sanitize());
+                                console.log("Test--"+$sanitize(response.data[i].description)+" "+$sanitize(response.data[i].title))
+                                toastr.success($sanitize(response.data[i].description), $sanitize(response.data[i].title));
                             }
                         }
                     }
                 }, 60000);
+                
             }, function (response) {
                 console.log('error loading notes');
             });
