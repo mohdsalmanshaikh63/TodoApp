@@ -29,10 +29,10 @@ factory('homepageService', ['localStorageService', '$http',
                         });
                 }
 
-                notes.getAllNotes = function () {                                                                        
+                notes.getAllNotes = function () {
                         return $http({
                                 method: 'GET',
-                                url: 'notes/getAllNotes',                                                        
+                                url: 'notes/getAllNotes',
                                 headers: {
                                         'Content-Type': 'application/json',
                                         'accessToken': getAccessToken,
@@ -41,19 +41,35 @@ factory('homepageService', ['localStorageService', '$http',
                         });
                 }
 
-                notes.updateNote = function (note) {   
-                        console.log("Got the note as "+JSON.stringify(note));                                                                     
-                                                return $http({
-                                                        method: 'POST',
-                                                        url: 'notes/update',
-                                                        data:note,                                                        
-                                                        headers: {
-                                                                'Content-Type': 'application/json',
-                                                                'accessToken': getAccessToken,
-                                                                'refreshToken': getRefreshToken,
-                                                        }
-                                                });
-                                        }
+                notes.updateNote = function (note) {
+                        console.log("Got the note as " + JSON.stringify(note));
+                        return $http({
+                                method: 'POST',
+                                url: 'notes/update',
+                                data: note,
+                                headers: {
+                                        'Content-Type': 'application/json',
+                                        'accessToken': getAccessToken,
+                                        'refreshToken': getRefreshToken
+                                }
+                        });
+                }
+
+                notes.xyz = function () {
+                        
+                        console.log("Getting user for navbar");
+
+                        return $http({
+                                method: 'GET',
+                                url: 'user/getUserById',                                
+                                headers: {
+                                        'Content-Type': 'application/json',
+                                        'accessToken': getAccessToken,
+                                        'refreshToken': getRefreshToken
+                                }
+                        });
+                }
+
 
                 return notes;
         }

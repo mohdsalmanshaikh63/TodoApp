@@ -196,7 +196,7 @@ public class UserController {
 
 	}
 	
-	@PostMapping(value = "/getUserById")
+	@GetMapping(value = "/getUserById")
 	public ResponseEntity<User> getUserById(HttpServletRequest request) {
 
 		int userId = (int) request.getAttribute("userId");
@@ -209,18 +209,18 @@ public class UserController {
 
 			if (user != null) {
 
-				logger.debug("*******Returning user");
+				logger.info("*******Returning user");
 
 				return new ResponseEntity<User>(user, HttpStatus.OK);
 			} else {
 
-				logger.debug("*******Could not get the user");
+				logger.info("*******Could not get the user");
 
 				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 			}
 
 		} catch (Exception e) {
-			logger.debug(e);
+			logger.info(e);
 
 			return new ResponseEntity<>( HttpStatus.INTERNAL_SERVER_ERROR);
 		}

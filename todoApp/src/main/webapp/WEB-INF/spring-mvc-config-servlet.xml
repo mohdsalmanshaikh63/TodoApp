@@ -69,10 +69,15 @@
 
 	<mvc:interceptors>
 		<mvc:interceptor>
-			<mvc:mapping path="/notes/**" />
-			<mvc:mapping path="/user/getUserId" />
+			<mvc:mapping path="/notes/**" />			
 			<bean class="com.bridgelabz.todoApp.interceptor.LoginInterceptor" />
 		</mvc:interceptor>
+		
+		<mvc:interceptor>
+			<mvc:mapping path="/user/getUserById" />			
+			<bean class="com.bridgelabz.todoApp.interceptor.LoginInterceptor" />
+		</mvc:interceptor>
+		
 	</mvc:interceptors>
 
 
