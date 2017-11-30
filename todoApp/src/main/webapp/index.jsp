@@ -8,7 +8,12 @@
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
+  <!-- Google Roboto font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+
+  <!-- Font awesome -->
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/app/bower_components/font-awesome/css/font-awesome.min.css">
 
   <!-- Css dependencies -->
   <%-- <link rel="stylesheet" href="${pageContext.request.contextPath}/app/bower_components/angular-material/angular-material.css" > --%>
@@ -22,15 +27,28 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/app/homepage/maincard/maincard.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/app/homepage/noteslist/noteslist.css">
   
+  <!-- Google material icons font's -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  
-  
+
   <!-- angular dependencies -->
   <!-- Angular Material requires Angular.js Libraries -->
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+
+  <!-- Color picker -->
+  <script src="app/bower_components/colorpicker/dist/colorPicker.js"></script>
+  <link rel="stylesheet" href="app/bower_components/colorpicker/dist/colorPickerStyle.css">
+
+  <!-- dateTime Picker -->
+  <script src="app/bower_components/moment/moment.js"></script>
+  <script src="app/bower_components/ng-material-datetimepicker/dist/angular-material-datetimepicker.min.js"></script>
+  <script src="app/bower_components/ng-material-datetimepicker/dist/angular-material-datetimepicker.min.js.map"></script>
+  <link rel="stylesheet" href="app/bower_components/ng-material-datetimepicker/dist/material-datetimepicker.min.css">
+
+  <!-- Angular Sanitize -->
+  <%-- <script src="${pageContext.request.contextPath}/app/bower_components/angular-sanitize/angular-sanitize.js"></script> --%>
 
   <!-- Angular Material Library -->
   <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
@@ -50,6 +68,16 @@
 
   <!-- local storage library -->
   <script src="${pageContext.request.contextPath}/app/bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
+
+  <!-- Ng sanitizer for cleaning html -->
+  <script src="app/bower_components/angular-sanitize/angular-sanitize.js"></script>
+  
+  <link rel="stylesheet" href="app/bower_components/angular-toastr/dist/angular-toastr.css" />
+  <script src="app/bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
+  
+  <!-- <link rel="stylesheet" href="https://unpkg.com/angular-toastr/dist/angular-toastr.css" />
+  <script src="https://unpkg.com/angular-toastr/dist/angular-toastr.tpls.js"></script> -->
+    
 
   <!-- core dependencies -->
   <script src="${pageContext.request.contextPath}/app/app.module.js"></script>
@@ -74,6 +102,11 @@
   <script src="${pageContext.request.contextPath}/app/resetpassword/resetpassword.module.js"></script>
   <script src="${pageContext.request.contextPath}/app/resetpassword/resetpassword.component.js"></script>
   <script src="${pageContext.request.contextPath}/app/resetpassword/resetpassword.service.js"></script>
+  
+  <!-- forgotpassword module and it's dependencies -->
+  <script src="app/dummypage/dummypage.module.js"></script>
+  <script src="app/dummypage/dummypage.component.js"></script>
+  <script src="app/dummypage/dummypage.service.js"></script>
   
   <!-- homepage module and it's dependencies -->
   <script src="${pageContext.request.contextPath}/app/homepage/homepage.module.js"></script>

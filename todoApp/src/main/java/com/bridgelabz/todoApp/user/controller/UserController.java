@@ -38,8 +38,8 @@ public class UserController {
 	private static Logger logger = Logger.getLogger(UserController.class);
 
 	@PostMapping(value = "/create")
-	public ResponseEntity<Message> create(@RequestBody User user, BindingResult bindingResult, HttpServletRequest request,
-			HttpServletResponse response)
+	public ResponseEntity<Message> create(@RequestBody User user, BindingResult bindingResult,
+			HttpServletRequest request, HttpServletResponse response)
 			throws FileNotFoundException, ClassNotFoundException, IOException, URISyntaxException {
 
 		// add code later for checking if email already exists
@@ -91,10 +91,10 @@ public class UserController {
 			// redirect to login page
 			// response.sendRedirect
 
-			return new ResponseEntity<Message>(new Message("Activation successful"),HttpStatus.OK);
+			return new ResponseEntity<Message>(new Message("Activation successful"), HttpStatus.OK);
 		} else {
 			logger.debug("Could not activate user");
-			return new ResponseEntity<Message>(new Message("Could not activate user"),HttpStatus.UNPROCESSABLE_ENTITY);
+			return new ResponseEntity<Message>(new Message("Could not activate user"), HttpStatus.UNPROCESSABLE_ENTITY);
 
 			// redirect to appropiate error page later
 		}
@@ -156,34 +156,6 @@ public class UserController {
 
 			}
 
-			/*
-			 * int uid = userService.checkUser(email);
-			 * 
-			 * // send email if the user exists if (uid != -1) {
-			 * 
-			 * // Generate a token and send in the email Token token =
-			 * tokenService.generateToken("forgotToken", uid);
-			 * 
-			 * logger.info("********Token Generated: " + token + "for email: " + email);
-			 * 
-			 * // send the email the user with the token in the url
-			 * 
-			 * // prepare the url for sending activation mail
-			 * 
-			 * String scheme = request.getScheme(); String host = request.getHeader("Host");
-			 * // includes server name and server port String contextPath = String
-			 * contextPath = request.getContextPath(); // includes leading forward slash
-			 * 
-			 * String resultPath = scheme + "://" + host + contextPath + "/#/resetpassword/"
-			 * + token.getValue();
-			 * 
-			 * String messageBody = "Click here to reset ur password " + resultPath;
-			 * 
-			 * // Finally send the mail! mailUtility.sendMail(email, "Token Login",
-			 * messageBody); return new ResponseEntity<>(token, HttpStatus.OK);
-			 * 
-			 * }
-			 */
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} catch (Exception e) {
 			logger.debug(e.getMessage());
@@ -208,18 +180,70 @@ public class UserController {
 
 				logger.debug("*******Password reset successfully");
 
-				return new ResponseEntity<Message>(new Message("Password reset success"),HttpStatus.OK);
+				return new ResponseEntity<Message>(new Message("Password reset success"), HttpStatus.OK);
 			} else {
 
 				logger.debug("*******Password could not be reset");
 
-				return new ResponseEntity<Message>(new Message("Reset failure"),HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<Message>(new Message("Reset failure"), HttpStatus.BAD_REQUEST);
 			}
 
 		} catch (Exception e) {
 			logger.debug(e);
 
-			return new ResponseEntity<Message>(new Message("Internal Error"),HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Message>(new Message("Internal Error"), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
+
+	@GetMapping(value = "/getUserById")
+	public ResponseEntity<User> getUserById(HttpServletRequest request) {
+
+		int userId = (int) request.getAttribute("userId");
+
+		logger.info("********Got the userId as " + userId);
+
+		try {
+			User user = userService.getUser(userId);
+
+			if (user != null) {
+
+				logger.info("*******Returning user");
+
+				return new ResponseEntity<User>(user, HttpStatus.OK);
+			} else {
+
+				logger.info("*******Could not get the user");
+
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+
+		} catch (Exception e) {
+			logger.info(e);
+
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
+
+	@PostMapping(value = "/logout")
+	public ResponseEntity<Void> getUserById(@RequestHeader("accessToken") String accessToken,
+			@RequestHeader("refreshToken") String refreshToken) {
+
+		try {
+
+			boolean result = userService.logout(accessToken, refreshToken);
+
+			if (result) {
+				return new ResponseEntity<>(HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
+			}
+
+		} catch (Exception e) {
+			logger.info(e);
+
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}

@@ -2,8 +2,6 @@ package com.bridgelabz.todoApp.socialLogin;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,8 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -59,8 +55,8 @@ public class GoogleController {
 	}
 
 	@GetMapping(value = "/connectGoogle")
-	public ResponseEntity<Map<String, Token>> redirectFromGoogle(HttpServletRequest request,
-			HttpServletResponse response) throws IOException, ClassNotFoundException, URISyntaxException {
+	public void redirectFromGoogle(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ClassNotFoundException, URISyntaxException {
 
 		logger.info("*******Inside connectGoogle");
 
@@ -69,7 +65,7 @@ public class GoogleController {
 			String googlestate = request.getParameter("state");
 
 			if (sessionState == null || !sessionState.equals(googlestate)) {
-				response.sendRedirect("loginWithGoogle");
+				response.sendRedirect("http://localhost:8080/todoApp/#/login");
 			}
 
 			String error = request.getParameter("error");
@@ -77,8 +73,7 @@ public class GoogleController {
 			// change this to the front end homepage address
 			if (error != null && error.trim().isEmpty()) {
 
-				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-				// response.sendRedirect("userlogin");
+				response.sendRedirect("http://localhost:8080/todoApp/#/login");
 			}
 
 			String authCode = request.getParameter("code");
@@ -98,6 +93,8 @@ public class GoogleController {
 				user.setFirstName(profile.get("name").get("givenName").asText());
 				user.setLastName(profile.get("name").get("familyName").asText());
 				user.setEmail(profile.get("emails").get(0).get("value").asText());
+				user.setProfilePic(profile.get("image").get("url").asText());
+				logger.info("********Image url is "+profile.get("image").get("url").asText());
 				// user.setPassword("");
 				user.setValid(true);
 
@@ -108,23 +105,16 @@ public class GoogleController {
 			}
 
 			logger.info("**********User is not new to our db ,it is there in our db");
-			Token accessToken = tokenService.generateToken("accessToken", userId);
-			Token refreshToken = tokenService.generateToken("refreshToken", userId);
 
-			// request.setAttribute("user", user);
-			// RequestDispatcher dispatcher = request.getRequestDispatcher("fbsucess.jsp");
-			// dispatcher.forward(request, response);
+			Token socialToken = tokenService.generateToken("socialToken", userId);
+			String tokevalue = socialToken.getValue();
 
-			Map<String, Token> tokenMap = new HashMap<>();
-			tokenMap.put("accessToken", accessToken);
-			tokenMap.put("refreshToken", refreshToken);
+			// redirect to the dummy page for getting login tokens
+			response.sendRedirect("http://localhost:8080/todoApp/#/dummypage/" + tokevalue);
 
-			logger.info("*********TokenMap" + tokenMap);
-
-			return new ResponseEntity<Map<String, Token>>(tokenMap, HttpStatus.OK);
 		} catch (Exception e) {
 			logger.info("*****Error while connecting with Google. " + e.getMessage());
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			response.sendRedirect("http://localhost:8080/todoApp/#/login");
 		}
 	}
 

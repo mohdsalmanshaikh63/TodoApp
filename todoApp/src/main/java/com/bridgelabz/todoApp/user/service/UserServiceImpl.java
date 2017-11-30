@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService {
 			Map<String, Token> tokenMap = new HashMap<>();
 			tokenMap.put("accessToken", accessToken);
 			tokenMap.put("refreshToken", refreshToken);
-			
+
 			return tokenMap;
 
 		}
@@ -125,7 +125,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public Token forgotPassword(User user, String link)
 			throws FileNotFoundException, ClassNotFoundException, IOException, URISyntaxException {
 
@@ -162,7 +162,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public boolean resetPassword(String token, User user) {
-		
+
 		int userId = tokenService.verifyToken(token);
 
 		if (userId != -1) {
@@ -170,10 +170,36 @@ public class UserServiceImpl implements UserService {
 			return changePassword(userId, user);
 
 		}
-		
+
 		return false;
 	}
-	
-	
+
+	@Override	
+	public Map<String, Token> socialLogin(String token) {
+
+		int userId = tokenService.verifyToken(token);
+
+		if (userId != -1) {
+
+			// generate and save access and refresh tokens in redis
+			Token accessToken = tokenService.generateToken("accessToken", userId);
+			Token refreshToken = tokenService.generateToken("refreshToken", userId);
+
+			Map<String, Token> tokenMap = new HashMap<>();
+			tokenMap.put("accessToken", accessToken);
+			tokenMap.put("refreshToken", refreshToken);
+
+			return tokenMap;
+
+		}
+
+		return null;
+	}
+
+	@Override
+	public boolean logout(String accessToken, String refreshToken) {
+		
+		return tokenService.removeTokens(accessToken, refreshToken);
+	}
 
 }

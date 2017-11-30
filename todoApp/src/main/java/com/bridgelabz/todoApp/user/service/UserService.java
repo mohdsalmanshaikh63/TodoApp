@@ -30,4 +30,8 @@ public interface UserService {
 	
 	public boolean resetPassword(String token, User user);
 
+	Map<String, Token> socialLogin(String token);
+
+	public boolean logout(String accessToken, String refreshToken);
+
 }

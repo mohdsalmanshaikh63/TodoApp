@@ -8,4 +8,6 @@ public interface TokenService {
 	
 	public int verifyToken(String tokenValue);
 
+	public boolean removeTokens(String accessToken, String refreshToken);
+
 }

@@ -1,56 +1,147 @@
+<!-- pinned notes -->
+<div ng-show="pinnedNotes.length">
+<h4>Pinned</h4>
+</div>
 <div layout="row" layout-align="start start" layout-wrap flex>
-    <div flex="30" layout="column" ng-repeat="note in notes | filter:{archive:false}" ng-mouseenter="mouse=true" ng-mouseleave="mouse=false">
+    <div flex="30" layout="column" ng-repeat="note in notes | filter:{pinned:true,archive:false,trash:false} as pinnedNotes" ng-mouseenter="mouse=true"
+        ng-mouseleave="mouse=false">
 
-        <md-card>
+        <md-card ng-style="{'background-color' : note.color}">
+
+            <md-card-actions layout="row" layout-align="end center" flex>
+                <md-button class="md-icon-button" aria-label="Pin">
+                    <i class="fa fa-thumb-tack" aria-hidden="true" ng-click="pin(note)"></i>
+                </md-button>
+            </md-card-actions>
+
             <md-card-header>
                 <md-card-header-text>
-                    <span class="md-title">{{note.title}}</span>
+                    <span class="md-title" ng-bind-html="note.title"></span>
                 </md-card-header-text>
             </md-card-header>
-            <md-card-content>
-                {{note.description}}
+
+            <md-card-content ng-bind-html="note.description">                
             </md-card-content>
+
+            <md-card-content ng-if("note.reminder")>
+                    {{note.reminder | date:'medium'}}
+            </md-card-content>
+
             <md-card-actions layout="row" layout-align="start center" flex>
-                <md-card-icon-actions>
-                    <md-button class="md-icon-button" aria-label="Remind Me">
-                        <i class="material-icons" ng-show="mouse">touch_app</i>
-                    </md-button>
-                    <md-button class="md-icon-button" aria-label="Collaborate">
-                        <i class="material-icons" ng-show="mouse">person_add</i>
-                    </md-button>
-                    <md-button class="md-icon-button" aria-label="Color Palette">
-                        <i class="material-icons" ng-show="mouse">color_lens</i>
-                    </md-button>
-                    <md-button class="md-icon-button" aria-label="Color Palette">
-                        <i class="material-icons" ng-show="mouse">image</i>
-                    </md-button>
-                    <md-button class="md-icon-button" ng-click="archive(note)" aria-label="Archive">
-                        <i class="material-icons" ng-show="mouse">archive</i>
+                <md-button class="md-icon-button" aria-label="Remind Me" ng-click="displayDialog(note)">
+                    <i class="material-icons" ng-show="mouse">touch_app</i>
+                </md-button>
+                <md-button class="md-icon-button" aria-label="Collaborate">
+                    <i class="material-icons" ng-show="mouse">person_add</i>
+                </md-button>
+                
+                <color-picker class="colorIcon" value="cardColor" color="color" ng-show="mouse" options="colors" on-color-changed="colorChanged(newColor, oldColor,note)"></color-picker>
+                <md-button class="md-icon-button" aria-label="Image Upload">
+                    <i class="material-icons" ng-show="mouse">image</i>
+                </md-button>
+                <md-button class="md-icon-button" ng-click="archive(note)" aria-label="Archive">
+                    <i class="material-icons" ng-show="mouse">archive</i>
+                </md-button>
+
+                <md-menu>
+                    <md-button class="md-icon-button" aria-label="Open menu with custom trigger" ng-click="$mdOpenMenu()">
+                        <i class="material-icons" ng-show="mouse">more_vert</i>
                     </md-button>
 
-                    <md-menu>
-                        <md-button class="md-icon-button" aria-label="Open menu with custom trigger" ng-click="$mdOpenMenu()">
-                            <i class="material-icons" ng-show="mouse">more_vert</i>
-                        </md-button>
+                    <md-menu-content>
+                        <md-menu-item>
+                            <md-button class="md-button" ng-click="trash(note)" aria-label="Delete">
+                                Delete
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button class="md-button" ng-click="addLabel(note)" aria-label="Add Label">
+                                Add Label
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button class="md-button" ng-click="copyNote(note)" aria-label="Make a Copy">
+                                Make a copy
+                            </md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
 
-                        <md-menu-content>
-                            <md-menu-item>
-                                <md-button class="md-button" ng-click="trash(note)" aria-label="Delete">
-                                    Delete
-                                </md-button>
-                            </md-menu-item>
-                            <md-menu-item>
-                                <md-button class="md-button" ng-click="addLabel(note)" aria-label="Add Label">
-                                    Add Label
-                                </md-button>
-                            </md-menu-item>
-                            <md-menu-item>
-                                <md-button class="md-button" ng-click="copyNote(note)" aria-label="Make a Copy">
-                                    Make a copy
-                                </md-button>
-                            </md-menu-item>
-                        </md-menu-content>
-                    </md-menu>
+                </md-card-icon-actions>
+        </md-card>
+    </div>
+</div>
+
+<!-- Others notes -->
+<div ng-show="others.length">
+        <h4 >Others</h4>
+</div>
+<div layout="row" layout-align="start start" layout-wrap flex>
+    <div flex="30" layout="column" ng-repeat="note in notes | filter:{archive:false, pinned:false, trash:false} as others" ng-mouseenter="mouse=true"
+        ng-mouseleave="mouse=false">
+
+        <md-card ng-style="{'background-color' : note.color}">
+
+            <md-card-actions layout="row" layout-align="end center" flex>
+                <md-button class="md-icon-button" aria-label="Pin" ng-click="pin(note)">
+                    <i class="fa fa-thumb-tack" aria-hidden="true"></i>
+                </md-button>
+            </md-card-actions>
+
+            <md-card-header>
+                <md-card-header-text>
+                    <span class="md-title" ng-bind-html="note.title"></span>
+                </md-card-header-text>
+            </md-card-header>
+
+            <md-card-content ng-bind-html="note.description">
+            </md-card-content>
+
+            <md-card-content ng-if("note.reminder")>
+                    {{note.reminder | date:'medium'}}
+            </md-card-content>
+            
+            <md-card-actions layout="row" layout-align="start center" flex>
+                <md-button class="md-icon-button" aria-label="Remind Me" ng-click="displayDialog(note)">
+                    <i class="material-icons" ng-show="mouse">touch_app</i>
+                </md-button>
+                <md-button class="md-icon-button" aria-label="Collaborate">
+                    <i class="material-icons" ng-show="mouse">person_add</i>
+                </md-button>
+                <!-- <md-button class="md-icon-button" aria-label="Color Palette">
+                    <i class="material-icons" ng-show="mouse">color_lens</i> -->
+                <color-picker class="colorIcon" value="cardColor" color="color" ng-show="mouse" options="colors" on-color-changed="colorChanged(newColor, oldColor,note)"></color-picker>
+                </md-button>
+                <md-button class="md-icon-button" aria-label="Image Upload">
+                    <i class="material-icons" ng-show="mouse">image</i>
+                </md-button>
+                <md-button class="md-icon-button" ng-click="archive(note)" aria-label="Archive">
+                    <i class="material-icons" ng-show="mouse">archive</i>
+                </md-button>
+
+                <md-menu>
+                    <md-button class="md-icon-button" aria-label="Open menu with custom trigger" ng-click="$mdOpenMenu()">
+                        <i class="material-icons" ng-show="mouse">more_vert</i>
+                    </md-button>
+
+                    <md-menu-content>
+                        <md-menu-item>
+                            <md-button class="md-button" ng-click="trash(note)" aria-label="Delete">
+                                Delete
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button class="md-button" ng-click="addLabel(note)" aria-label="Add Label">
+                                Add Label
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button class="md-button" ng-click="copyNote(note)" aria-label="Make a Copy">
+                                Make a copy
+                            </md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
 
                 </md-card-icon-actions>
         </md-card>

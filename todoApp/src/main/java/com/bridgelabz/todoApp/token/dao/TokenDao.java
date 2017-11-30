@@ -7,4 +7,6 @@ public interface TokenDao {
 	public Token generateToken(String tokenType, int uid);
 
 	public int verifyToken(String token);
+
+	public boolean removeTokens(String accessToken, String refreshToken);
 }
