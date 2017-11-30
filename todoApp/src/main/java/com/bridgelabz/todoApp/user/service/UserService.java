@@ -32,4 +32,6 @@ public interface UserService {
 
 	Map<String, Token> socialLogin(String token);
 
+	public boolean logout(String accessToken, String refreshToken);
+
 }

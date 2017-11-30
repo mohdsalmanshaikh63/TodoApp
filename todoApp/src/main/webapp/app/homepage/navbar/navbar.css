@@ -2,7 +2,6 @@
     float: right;
 }
 
-md-menu-content {
-    width: 200px;
-    height: 200px;
+md-menu {    
+    border-radius: 4px;
 }

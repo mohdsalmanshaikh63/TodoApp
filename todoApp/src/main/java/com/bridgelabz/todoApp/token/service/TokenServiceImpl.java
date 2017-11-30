@@ -24,4 +24,10 @@ public class TokenServiceImpl implements TokenService {
 		return tokenDao.verifyToken(token);
 	}
 
+	@Override
+	public boolean removeTokens(String accessToken, String refreshToken) {
+		
+		return tokenDao.removeTokens(accessToken, refreshToken);
+	}
+
 }

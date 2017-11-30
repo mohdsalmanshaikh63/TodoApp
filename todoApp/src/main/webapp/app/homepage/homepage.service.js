@@ -4,7 +4,7 @@ factory('homepageService', ['localStorageService', '$http',
 
                 console.log("Tokens are " + localStorageService.get('accessToken') + localStorageService.get('refreshToken'));
 
-                var notes = {}
+                var homepageRequests = {}
 
                 function getAccessToken() {
                         return localStorageService.get('accessToken');
@@ -14,7 +14,7 @@ factory('homepageService', ['localStorageService', '$http',
                         return localStorageService.get('refreshToken');
                 }
 
-                notes.createNewNote = function (note) {
+                homepageRequests.createNewNote = function (note) {
 
                         console.log("Got the note as " + note);
                         return $http({
@@ -29,7 +29,7 @@ factory('homepageService', ['localStorageService', '$http',
                         });
                 }
 
-                notes.getAllNotes = function () {
+                homepageRequests.getAllNotes= function () {
                         return $http({
                                 method: 'GET',
                                 url: 'notes/getAllNotes',
@@ -41,7 +41,7 @@ factory('homepageService', ['localStorageService', '$http',
                         });
                 }
 
-                notes.updateNote = function (note) {
+                homepageRequests.updateNote = function (note) {
                         console.log("Got the note as " + JSON.stringify(note));
                         return $http({
                                 method: 'POST',
@@ -55,13 +55,13 @@ factory('homepageService', ['localStorageService', '$http',
                         });
                 }
 
-                notes.xyz = function () {
-                        
+                homepageRequests.xyz = function () {
+
                         console.log("Getting user for navbar");
 
                         return $http({
                                 method: 'GET',
-                                url: 'user/getUserById',                                
+                                url: 'user/getUserById',
                                 headers: {
                                         'Content-Type': 'application/json',
                                         'accessToken': getAccessToken,
@@ -70,7 +70,21 @@ factory('homepageService', ['localStorageService', '$http',
                         });
                 }
 
+                homepageRequests.logoutUser = function () {                        
 
-                return notes;
+                        return $http({
+                                method: 'POST',
+                                url: 'user/logout',
+                                headers: {
+                                        'Content-Type': 'application/json',
+                                        'accessToken': getAccessToken,
+                                        'refreshToken': getRefreshToken
+                                }
+                        });
+
+                }
+
+
+                return homepageRequests;
         }
 ]);

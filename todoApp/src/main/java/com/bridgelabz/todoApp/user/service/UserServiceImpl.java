@@ -196,4 +196,10 @@ public class UserServiceImpl implements UserService {
 		return null;
 	}
 
+	@Override
+	public boolean logout(String accessToken, String refreshToken) {
+		
+		return tokenService.removeTokens(accessToken, refreshToken);
+	}
+
 }

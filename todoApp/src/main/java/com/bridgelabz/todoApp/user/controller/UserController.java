@@ -195,14 +195,13 @@ public class UserController {
 		}
 
 	}
-	
+
 	@GetMapping(value = "/getUserById")
 	public ResponseEntity<User> getUserById(HttpServletRequest request) {
 
 		int userId = (int) request.getAttribute("userId");
 
 		logger.info("********Got the userId as " + userId);
-		
 
 		try {
 			User user = userService.getUser(userId);
@@ -222,7 +221,29 @@ public class UserController {
 		} catch (Exception e) {
 			logger.info(e);
 
-			return new ResponseEntity<>( HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
+
+	@PostMapping(value = "/logout")
+	public ResponseEntity<Void> getUserById(@RequestHeader("accessToken") String accessToken,
+			@RequestHeader("refreshToken") String refreshToken) {
+
+		try {
+
+			boolean result = userService.logout(accessToken, refreshToken);
+
+			if (result) {
+				return new ResponseEntity<>(HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>( HttpStatus.BAD_REQUEST);
+			}
+
+		} catch (Exception e) {
+			logger.info(e);
+
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}

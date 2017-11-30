@@ -122,4 +122,18 @@ public class TokenDaoImpl implements TokenDao {
 		return -1;
 	}
 
+	@Override
+	public boolean removeTokens(String accessToken, String refreshToken) {
+
+		try {
+			tokenMap.remove(accessToken);
+			tokenMap.remove(refreshToken);
+			return true;			
+		} catch (Exception e) {
+			return false;
+			
+		}
+				
+	}
+
 }
