@@ -1,12 +1,18 @@
 <!-- pinned notes -->
 <div ng-show="pinnedNotes.length">
-<h4>Pinned</h4>
+    <h4>Pinned</h4>
 </div>
+<input ng-show="false" id="image" type='file' ng-model-instant ng-model="file" onchange="angular.element(this).scope().imageUpload(this)"
+/>
+
 <div layout="row" layout-align="start start" layout-wrap flex>
-    <div flex="30" layout="column" ng-repeat="note in notes | filter:{pinned:true,archive:false,trash:false} as pinnedNotes" ng-mouseenter="mouse=true"
-        ng-mouseleave="mouse=false">
+    <div flex="30" layout="column" ng-repeat="note in notes | filter:{pinned:true,archive:false,trash:false} as pinnedNotes"
+        ng-mouseenter="mouse=true" ng-mouseleave="mouse=false">
 
         <md-card ng-style="{'background-color' : note.color}">
+
+
+            <img ng-src="{{note.image}}" alt="no-image" class="md-card-image" ng-if( "note.image")>
 
             <md-card-actions layout="row" layout-align="end center" flex>
                 <md-button class="md-icon-button" aria-label="Pin">
@@ -20,11 +26,11 @@
                 </md-card-header-text>
             </md-card-header>
 
-            <md-card-content ng-bind-html="note.description">                
+            <md-card-content ng-bind-html="note.description">
             </md-card-content>
 
-            <md-card-content ng-if("note.reminder")>
-                    {{note.reminder | date:'medium'}}
+            <md-card-content ng-if( "note.reminder")>
+                {{note.reminder | date:'medium'}}
             </md-card-content>
 
             <md-card-actions layout="row" layout-align="start center" flex>
@@ -34,9 +40,9 @@
                 <md-button class="md-icon-button" aria-label="Collaborate">
                     <i class="material-icons" ng-show="mouse">person_add</i>
                 </md-button>
-                
+
                 <color-picker class="colorIcon" value="cardColor" color="color" ng-show="mouse" options="colors" on-color-changed="colorChanged(newColor, oldColor,note)"></color-picker>
-                <md-button class="md-icon-button" aria-label="Image Upload">
+                <md-button class="md-icon-button" aria-label="Image Upload" ng-click="openImageUploader(note)">
                     <i class="material-icons" ng-show="mouse">image</i>
                 </md-button>
                 <md-button class="md-icon-button" ng-click="archive(note)" aria-label="Archive">
@@ -74,13 +80,15 @@
 
 <!-- Others notes -->
 <div ng-show="others.length">
-        <h4 >Others</h4>
+    <h4>Others</h4>
 </div>
 <div layout="row" layout-align="start start" layout-wrap flex>
     <div flex="30" layout="column" ng-repeat="note in notes | filter:{archive:false, pinned:false, trash:false} as others" ng-mouseenter="mouse=true"
         ng-mouseleave="mouse=false">
 
         <md-card ng-style="{'background-color' : note.color}">
+
+            <img ng-src="{{note.image}}" class="md-card-image" ng-show="note.image">
 
             <md-card-actions layout="row" layout-align="end center" flex>
                 <md-button class="md-icon-button" aria-label="Pin" ng-click="pin(note)">
@@ -97,10 +105,10 @@
             <md-card-content ng-bind-html="note.description">
             </md-card-content>
 
-            <md-card-content ng-if("note.reminder")>
-                    {{note.reminder | date:'medium'}}
+            <md-card-content ng-if( "note.reminder")>
+                {{note.reminder | date:'medium'}}
             </md-card-content>
-            
+
             <md-card-actions layout="row" layout-align="start center" flex>
                 <md-button class="md-icon-button" aria-label="Remind Me" ng-click="displayDialog(note)">
                     <i class="material-icons" ng-show="mouse">touch_app</i>
@@ -112,7 +120,7 @@
                     <i class="material-icons" ng-show="mouse">color_lens</i> -->
                 <color-picker class="colorIcon" value="cardColor" color="color" ng-show="mouse" options="colors" on-color-changed="colorChanged(newColor, oldColor,note)"></color-picker>
                 </md-button>
-                <md-button class="md-icon-button" aria-label="Image Upload">
+                <md-button class="md-icon-button" aria-label="Image Upload" ng-click="openImageUploader(note)">
                     <i class="material-icons" ng-show="mouse">image</i>
                 </md-button>
                 <md-button class="md-icon-button" ng-click="archive(note)" aria-label="Archive">
@@ -138,6 +146,11 @@
                         <md-menu-item>
                             <md-button class="md-button" ng-click="copyNote(note)" aria-label="Make a Copy">
                                 Make a copy
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button class="md-button" ng-click="socialShare(note)" aria-label="Social Share">
+                                Social Share
                             </md-button>
                         </md-menu-item>
                     </md-menu-content>

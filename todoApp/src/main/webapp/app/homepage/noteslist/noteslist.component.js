@@ -49,8 +49,8 @@ component('noteslist', {
             }
 
             // color picker logic
-            $scope.colors = ['transparent', '#FF8A80', '#FFD180', '#FFFF8D', '#CFD8DC', '#80D8FF', '#A7FFEB', '#CCFF90',
-                '#fcff77', '#80ff80', '#99ffff', '#0099ff', '#1a53ff', '#9966ff', '#ff99cc', '#d9b38c', '#bfbfbf'
+            $scope.colors = ['transparent', '#FFD180', '#FFFF8D', '#CFD8DC', '#80D8FF', '#A7FFEB', '#CCFF90',
+                '#fcff77', '#80ff80', '#a7686a', '#0099ff', '#1a53ff', '#9966ff', '#ff99cc', '#d9b38c', '#bfbfbf'
             ];
             $scope.color = '#FF8A80';
 
@@ -75,25 +75,24 @@ component('noteslist', {
             var getAllNotes = homepageService.getAllNotes();
             getAllNotes.then(function (response) {
                 console.log('notes loaded');
-                console.log(response.data);
                 $scope.notes = (response.data);
-                
+
                 // toaster
                 $interval(function () {
 
                     for (var i = 0; i < response.data.length; i++) {
                         if (response.data[i].reminder) {
                             var date = new Date(response.data[i].reminder);
-                            if ($filter('date','yyyy-MM-ddTHH:mm')(date) == $filter('date','yyyy-MM-ddTHH:mm')(new Date())) {
-                                console.log("Sanitize"+$sanitize('Hello, <b>World</b>!'));
-                                console.log("Sanitize"+$sanitize());
-                                console.log("Test--"+$sanitize(response.data[i].description)+" "+$sanitize(response.data[i].title))
+                            if ($filter('date', 'yyyy-MM-ddTHH:mm')(date) == $filter('date', 'yyyy-MM-ddTHH:mm')(new Date())) {
+                                console.log("Sanitize" + $sanitize('Hello, <b>World</b>!'));
+                                console.log("Sanitize" + $sanitize());
+                                console.log("Test--" + $sanitize(response.data[i].description) + " " + $sanitize(response.data[i].title))
                                 toastr.success($sanitize(response.data[i].description), $sanitize(response.data[i].title));
                             }
                         }
                     }
                 }, 60000);
-                
+
             }, function (response) {
                 console.log('error loading notes');
             });
@@ -114,7 +113,6 @@ component('noteslist', {
 
                         $state.reload();
 
-                        console.log("Note updated successfully " + $scope.notes);
                     },
                     function (error) {
 
@@ -140,8 +138,6 @@ component('noteslist', {
 
                         $state.reload();
 
-                        // add to the existing notes array later
-                        console.log("Note updated successfully " + $scope.notes);
                     },
                     function (error) {
 
@@ -171,6 +167,75 @@ component('noteslist', {
                         console.log("Could not update note");
                     });
 
+            }
+
+            // SOCIAL SHARE
+            $scope.socialShare = function (note) {
+                console.log(note.title);
+                console.log('inside fbAsyncInit');
+                FB.init({
+                    appId: '876789189147877',
+                    status: true,
+                    cookie: true,
+                    xfbml: true,
+                    version: 'v2.4'
+                });
+
+                FB.ui({
+                    method: 'share_open_graph',
+                    action_type: 'og.likes',
+                    action_properties: JSON.stringify({
+                        object: {
+                            'og:title': note.title,
+                            'og:description': note.description
+                        }
+                    })
+                }, function (response) {
+                    if (response && !response.error_message) {
+                        toastr.success("Note shared successfully!");
+                    } else {
+                        toastr.success("Note could not be shared!");
+                    }
+                });
+            };
+
+            //Image uploader
+            $scope.openImageUploader = function (type) {
+                $scope.type = type;
+                $('#image').trigger('click');
+                return false;
+            }
+
+
+            $scope.stepsModel = [];
+            $scope.imageUpload = function (element) {
+                var reader = new FileReader();
+                reader.onload = $scope.imageIsLoaded;
+                reader.readAsDataURL(element.files[0]);
+            }
+
+            $scope.imageIsLoaded = function (e) {
+                $scope.$apply(function () {
+                    $scope.stepsModel.push(e.target.result);
+
+                    var imageSrc = e.target.result;
+                    $scope.type.image = imageSrc;
+
+
+
+                    // call upate service
+                    var archiveRequest = homepageService.updateNote($scope.type);
+                    archiveRequest.then(function (response) {
+
+                            $state.reload();
+
+                        },
+                        function (error) {
+
+                            console.log("Could not update note");
+                        });
+                    
+                });
             }
 
         }

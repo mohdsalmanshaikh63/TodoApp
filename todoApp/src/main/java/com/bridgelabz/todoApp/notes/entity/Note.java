@@ -44,11 +44,26 @@ public class Note {
 	@Column(name = "pinned")
 	private boolean pinned;
 
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public Date getModifyTime() {
+		return modifyTime;
+	}
+
 	@Column(name = "archive")
 	private boolean archive;
 
 	@Column(name = "trash")
 	private boolean trash;
+	
+	@Column(name = "image", columnDefinition="LONGBLOB")
+	private String image;
 
 	// on deletion of notes a user should not be deleted
 	// also fetch type lazy since we don't want to get user object with notes
@@ -148,7 +163,7 @@ public class Note {
 	public String toString() {
 		return "Note [noteId=" + noteId + ", title=" + title + ", description=" + description + ", createTime="
 				+ createTime + ", modifyTime=" + modifyTime + ", reminder=" + reminder + ", color=" + color
-				+ ", pinned=" + pinned + ", archive=" + archive + ", trash=" + trash + "]";
+				+ ", pinned=" + pinned + ", archive=" + archive + ", trash=" + trash +  "]";
 	}
 
 }

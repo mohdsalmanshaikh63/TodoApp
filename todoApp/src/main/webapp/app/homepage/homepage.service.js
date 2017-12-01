@@ -15,8 +15,7 @@ factory('homepageService', ['localStorageService', '$http',
                 }
 
                 homepageRequests.createNewNote = function (note) {
-
-                        console.log("Got the note as " + note);
+                        
                         return $http({
                                 method: 'PUT',
                                 url: 'notes/create',
@@ -41,8 +40,7 @@ factory('homepageService', ['localStorageService', '$http',
                         });
                 }
 
-                homepageRequests.updateNote = function (note) {
-                        console.log("Got the note as " + JSON.stringify(note));
+                homepageRequests.updateNote = function (note) {                        
                         return $http({
                                 method: 'POST',
                                 url: 'notes/update',

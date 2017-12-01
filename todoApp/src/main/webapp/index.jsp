@@ -15,6 +15,8 @@
   <!-- Font awesome -->
   <link rel="stylesheet" href="${pageContext.request.contextPath}/app/bower_components/font-awesome/css/font-awesome.min.css">
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
   <!-- Css dependencies -->
   <%-- <link rel="stylesheet" href="${pageContext.request.contextPath}/app/bower_components/angular-material/angular-material.css" > --%>
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">  
@@ -129,6 +131,15 @@
   <!-- Load notesList and it's dependencies -->
   <script src="${pageContext.request.contextPath}/app/homepage/noteslist/noteslist.module.js"></script>
   <script src="${pageContext.request.contextPath}/app/homepage/noteslist/noteslist.component.js"></script>
+
+  <!-- Facebook login -->
+  <script src="https://connect.facebook.net/en_US/sdk.js"></script>
+
+  <!-- Load image upload and it's dependencies -->
+  <script src="app/bower_components/ng-file-upload/ng-file-upload-shim.min.js"></script>
+  <script src="app/bower_components/ng-file-upload/ng-file-upload.min.js"></script>
+
+  
   
 </head>
 
