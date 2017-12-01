@@ -16,4 +16,6 @@ public interface NoteService {
 	
 	public List<Note> getAllNotes(int uId);
 
+	public int deleteTrash();
+
 }

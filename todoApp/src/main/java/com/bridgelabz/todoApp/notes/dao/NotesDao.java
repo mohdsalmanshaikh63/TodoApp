@@ -15,4 +15,6 @@ public int createNote(Note note, int uId);
 	public Note getNote(int noteId);
 	
 	public List<Note> getAllNotes(int uId);
+
+	public int deleteTrash();
 }

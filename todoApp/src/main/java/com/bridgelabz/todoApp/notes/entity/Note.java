@@ -1,6 +1,5 @@
 package com.bridgelabz.todoApp.notes.entity;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -14,8 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.bridgelabz.todoApp.user.entity.User;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Entity
 @Table(name = "note")
@@ -33,24 +30,24 @@ public class Note {
 	private String description;
 
 	@Column(name = "create_time", nullable = false)
-	private LocalDateTime createTime;
-	
+	private Date createTime;
+
 	@Column(name = "modify_time")
-	private LocalDateTime modifyTime;
-		
-	@Column(name = "reminder")	
+	private Date modifyTime;
+
+	@Column(name = "reminder")
 	private Date reminder;
 
-	@Column(name="color")
+	@Column(name = "color")
 	private String color;
-	
-	@Column(name="pinned")
+
+	@Column(name = "pinned")
 	private boolean pinned;
-	
-	@Column(name="archive")
+
+	@Column(name = "archive")
 	private boolean archive;
-	
-	@Column(name="trash")
+
+	@Column(name = "trash")
 	private boolean trash;
 
 	// on deletion of notes a user should not be deleted
@@ -86,12 +83,16 @@ public class Note {
 		this.description = description;
 	}
 
-	public LocalDateTime getCreateTime() {
+	public Date getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(LocalDateTime createTime) {
+	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+
+	public void setModifyTime(Date modifyTime) {
+		this.modifyTime = modifyTime;
 	}
 
 	public User getUser() {
@@ -101,14 +102,7 @@ public class Note {
 	public void setUser(User user) {
 		this.user = user;
 	}
-
-	public LocalDateTime getModifyTime() {
-		return modifyTime;
-	}
-
-	public void setModifyTime(LocalDateTime modifyTime) {
-		this.modifyTime = modifyTime;
-	}
+	
 
 	public String getColor() {
 		return color;
@@ -133,7 +127,6 @@ public class Note {
 	public void setArchive(boolean archive) {
 		this.archive = archive;
 	}
-		
 
 	public boolean isTrash() {
 		return trash;
@@ -141,9 +134,7 @@ public class Note {
 
 	public void setTrash(boolean trash) {
 		this.trash = trash;
-	}	
-
-	
+	}
 
 	public Date getReminder() {
 		return reminder;
@@ -159,7 +150,5 @@ public class Note {
 				+ createTime + ", modifyTime=" + modifyTime + ", reminder=" + reminder + ", color=" + color
 				+ ", pinned=" + pinned + ", archive=" + archive + ", trash=" + trash + "]";
 	}
-
-	
 
 }
