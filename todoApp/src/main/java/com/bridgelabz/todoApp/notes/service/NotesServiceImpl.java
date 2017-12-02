@@ -2,6 +2,7 @@ package com.bridgelabz.todoApp.notes.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.bridgelabz.todoApp.notes.dao.NotesDao;
 import com.bridgelabz.todoApp.notes.entity.Note;
+import com.bridgelabz.todoApp.notes.entity.NoteLink;
 import com.bridgelabz.todoApp.user.entity.User;
 import com.bridgelabz.todoApp.user.service.UserService;
 
@@ -20,10 +22,20 @@ public class NotesServiceImpl implements NoteService {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	NoteLinkService noteLinkService;
 
 	@Override
 	@Transactional
-	public int createNote(Note note, int uId) {
+	public int createNote(Note note, int uId) throws Exception {
+		
+		// parse description for links
+		Set<NoteLink> noteLinks = noteLinkService.extractLinks(note.getDescription());
+		
+		if(noteLinks != null) {
+			note.setNoteLinks(noteLinks);
+		}
 		
 		Date currentDateTime = new Date();
 		note.setCreateTime(currentDateTime);

@@ -1,6 +1,7 @@
 package com.bridgelabz.todoApp.notes.entity;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.bridgelabz.todoApp.user.entity.User;
@@ -44,26 +46,17 @@ public class Note {
 	@Column(name = "pinned")
 	private boolean pinned;
 
-	public String getImage() {
-		return image;
-	}
-
-	public void setImage(String image) {
-		this.image = image;
-	}
-
-	public Date getModifyTime() {
-		return modifyTime;
-	}
-
 	@Column(name = "archive")
 	private boolean archive;
 
 	@Column(name = "trash")
 	private boolean trash;
-	
-	@Column(name = "image", columnDefinition="LONGBLOB")
+
+	@Column(name = "image", columnDefinition = "LONGBLOB")
 	private String image;
+
+	@OneToMany(cascade = { CascadeType.ALL }, mappedBy = "note")
+	private Set<NoteLink> noteLinks;
 
 	// on deletion of notes a user should not be deleted
 	// also fetch type lazy since we don't want to get user object with notes
@@ -105,10 +98,7 @@ public class Note {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
-
-	public void setModifyTime(Date modifyTime) {
-		this.modifyTime = modifyTime;
-	}
+	
 
 	public User getUser() {
 		return user;
@@ -117,7 +107,6 @@ public class Note {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
 
 	public String getColor() {
 		return color;
@@ -159,11 +148,36 @@ public class Note {
 		this.reminder = reminder;
 	}
 
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public Set<NoteLink> getNoteLinks() {
+		return noteLinks;
+	}
+
+	public void setNoteLinks(Set<NoteLink> noteLinks) {
+		this.noteLinks = noteLinks;
+	}
+
+	public Date getModifyTime() {
+		return modifyTime;
+	}
+	
+	public void setModifyTime(Date modifyTime) {
+		this.modifyTime = modifyTime;
+	}
+
 	@Override
 	public String toString() {
 		return "Note [noteId=" + noteId + ", title=" + title + ", description=" + description + ", createTime="
 				+ createTime + ", modifyTime=" + modifyTime + ", reminder=" + reminder + ", color=" + color
-				+ ", pinned=" + pinned + ", archive=" + archive + ", trash=" + trash +  "]";
+				+ ", pinned=" + pinned + ", archive=" + archive + ", trash=" + trash + ", image=" + image
+				+ ", noteLinks=" + noteLinks + "]";
 	}
 
 }

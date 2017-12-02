@@ -6,7 +6,7 @@ import com.bridgelabz.todoApp.notes.entity.Note;
 
 public interface NoteService {
 	
-	public int createNote(Note note, int uId);
+	public int createNote(Note note, int uId) throws Exception;
 	
 	public void updateNote(Note note, int userId);
 	
