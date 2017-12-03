@@ -5,7 +5,10 @@
 
 md-card {
 	word-break: break-all;
-	max-width: 330;
+}
+
+.mynote {
+	min-width: 330px;
 }
 
 .noteContent {

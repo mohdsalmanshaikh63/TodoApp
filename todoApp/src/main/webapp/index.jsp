@@ -146,7 +146,7 @@
 <body>
 
   <!-- router view -->
-  <div class="view-container">
+  <div class="view-container" ng-cloak>
     <div ui-view class="view-frame"></div>
   </div>
 

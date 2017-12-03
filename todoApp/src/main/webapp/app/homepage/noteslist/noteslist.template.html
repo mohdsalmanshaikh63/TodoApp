@@ -6,13 +6,15 @@
 />
 
 <div layout="row" layout-align="start start" layout-wrap flex>
-    <div flex="30" layout="column" ng-repeat="note in notes | filter:{pinned:true,archive:false,trash:false} as pinnedNotes"
+
+    <!-- Pinned notes array -->
+    <div class="mynote" flex="30" layout="column" ng-repeat="note in notes | filter:{pinned:true,archive:false,trash:false} as pinnedNotes"
         ng-mouseenter="mouse=true" ng-mouseleave="mouse=false">
 
         <md-card ng-style="{'background-color' : note.color}">
 
 
-            <img ng-src="{{note.image}}" alt="no-image" class="md-card-image" ng-if( "note.image")>
+            <img ng-src="{{note.image}}" class="md-card-image" ng-if( "note.image")>
 
             <md-card-actions layout="row" layout-align="end center" flex>
                 <md-button class="md-icon-button" aria-label="Pin">
@@ -82,8 +84,11 @@
 <div ng-show="others.length">
     <h4>Others</h4>
 </div>
+
 <div layout="row" layout-align="start start" layout-wrap flex>
-    <div flex="30" layout="column" ng-repeat="note in notes | filter:{archive:false, pinned:false, trash:false} as others" ng-mouseenter="mouse=true"
+
+    <!-- Others notes array -->
+    <div class="mynote" flex="30" layout="column" ng-repeat="note in notes | filter:{archive:false, pinned:false, trash:false} as others" ng-mouseenter="mouse=true"
         ng-mouseleave="mouse=false">
 
         <md-card ng-style="{'background-color' : note.color}">
