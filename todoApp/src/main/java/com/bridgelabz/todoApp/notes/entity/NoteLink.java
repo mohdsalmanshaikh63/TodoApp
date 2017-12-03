@@ -28,6 +28,11 @@ public class NoteLink {
 	@Column(name = "url")
 	private String url;
 	
+	@Column(name = "domain")
+	private String domain;
+	
+	@Column(name = "image_url")
+	private String imageUrl;
 	
 	@JsonBackReference
 	@JoinColumn(name="note_id")
@@ -58,9 +63,28 @@ public class NoteLink {
 		this.note = note;
 	}
 
+	public String getDomain() {
+		return domain;
+	}
+
+	public void setDomain(String domain) {
+		this.domain = domain;
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
 	@Override
 	public String toString() {
-		return "NoteLink [linkId=" + linkId + ", title=" + title + ", url=" + url + "]";
+		return "NoteLink [linkId=" + linkId + ", title=" + title + ", url=" + url + ", domain=" + domain + ", imageUrl="
+				+ imageUrl + "]";
 	}
+	
+	
 
 }

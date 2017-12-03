@@ -10,7 +10,7 @@ import com.bridgelabz.todoApp.notes.service.NoteService;
 @Component
 public class TrashScheduler {
 	
-	@Autowired 
+	/*@Autowired 
 	NoteService noteService;
 	
 	Logger logger = Logger.getLogger(TrashScheduler.class);
@@ -27,6 +27,6 @@ public class TrashScheduler {
 		
 		logger.info(deleted+" notes deleted");
 	    
-	}
+	}*/
 
 }

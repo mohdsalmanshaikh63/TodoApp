@@ -3,13 +3,16 @@ package com.bridgelabz.todoApp.notes.entity;
 import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -29,7 +32,9 @@ public class Note {
 	@Column(name = "title", nullable = false)
 	private String title;
 
-	@Column(name = "description", nullable = false, columnDefinition = "LONGBLOB")
+	@Lob
+	@Basic(fetch = FetchType.LAZY)
+	@Column(name = "description", nullable = false)
 	private String description;
 
 	@Column(name = "create_time", nullable = false)
@@ -57,7 +62,7 @@ public class Note {
 	private String image;
 
 	@JsonManagedReference
-	@OneToMany(cascade = { CascadeType.ALL }, mappedBy = "note")
+	@OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL }, mappedBy = "note")
 	private Set<NoteLink> noteLinks;
 
 	// on deletion of notes a user should not be deleted

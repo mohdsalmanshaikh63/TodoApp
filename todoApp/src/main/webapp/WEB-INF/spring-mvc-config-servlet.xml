@@ -90,7 +90,7 @@
 
 	<task:scheduler id="myScheduler" /> -->
 	
-	<task:annotation-driven/>
+	<!-- <task:annotation-driven/> -->
 
 
 </beans>

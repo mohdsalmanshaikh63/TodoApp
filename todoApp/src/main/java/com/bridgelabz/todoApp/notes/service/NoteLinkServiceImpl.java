@@ -1,5 +1,6 @@
 package com.bridgelabz.todoApp.notes.service;
 
+import java.net.URI;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,13 +11,18 @@ import org.springframework.transaction.annotation.Transactional;
 import com.bridgelabz.todoApp.notes.dao.NoteLinkDao;
 import com.bridgelabz.todoApp.notes.entity.Note;
 import com.bridgelabz.todoApp.notes.entity.NoteLink;
+import com.bridgelabz.todoApp.utilities.LinkScraper;
 import com.bridgelabz.todoApp.utilities.UrlExtractor;
+import com.bridgelabz.todoApp.utilities.pojo.UrlMetaData;
 
 @Service
 public class NoteLinkServiceImpl implements NoteLinkService {
-	
+
 	@Autowired
 	NoteLinkDao noteLinkDao;
+
+	@Autowired
+	LinkScraper linkScraper;
 
 	@Override
 	public Set<NoteLink> extractLinks(String string) throws Exception {
@@ -36,8 +42,6 @@ public class NoteLinkServiceImpl implements NoteLinkService {
 
 		Set<String> linkSet = UrlExtractor.getUrls(trimmedString);
 
-		// call another method to generate and save link metadata from each link
-
 		// improvise this code if possible
 		if (linkSet != null) {
 			noteLinks = new HashSet<>();
@@ -46,6 +50,21 @@ public class NoteLinkServiceImpl implements NoteLinkService {
 
 				NoteLink noteLink = new NoteLink();
 				noteLink.setUrl(link);
+
+				URI uri = new URI(link);
+
+				String domain = uri.getHost();
+
+				// call another method to generate and save link metadata from each link
+				UrlMetaData urlMetaData = linkScraper.getUrlMetaData(link);
+
+				String title = urlMetaData.getTitle();
+				String imageUrl = urlMetaData.getImageUrl();
+
+				noteLink.setTitle(title);
+				noteLink.setImageUrl(imageUrl);
+				noteLink.setDomain(domain);
+
 				noteLinks.add(noteLink);
 			}
 

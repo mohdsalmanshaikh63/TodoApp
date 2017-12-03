@@ -107,7 +107,8 @@
                 </md-card-header-text>
             </md-card-header>
 
-            <md-card-content ng-bind-html="note.description">
+            <md-card-content>
+            <div ng-bind-html="note.description"></div>
             </md-card-content>
 
             <md-card-content ng-if( "note.reminder")>
