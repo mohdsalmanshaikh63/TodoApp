@@ -27,7 +27,7 @@ public class NotesDaoImpl implements NotesDao {
 	private static Logger logger = Logger.getLogger(NotesDaoImpl.class);
 
 	@Override
-	public int createNote(Note note, int uId) {
+	public Note createNote(Note note, int uId) {
 
 		Session session = sessionFactory.getCurrentSession();
 
@@ -39,7 +39,7 @@ public class NotesDaoImpl implements NotesDao {
 
 		session.save(note);
 
-		return note.getNoteId();
+		return note;
 
 	}
 
@@ -109,7 +109,7 @@ public class NotesDaoImpl implements NotesDao {
 		 * @SuppressWarnings("unchecked") List<Note> notesList = criteria.list();
 		 */
 
-		logger.info("*****Getting Notes List:" + notesList);
+		//logger.info("*****Getting Notes List:" + notesList);
 
 		return notesList;
 	}

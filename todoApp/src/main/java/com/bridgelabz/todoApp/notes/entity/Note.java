@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.bridgelabz.todoApp.user.entity.User;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "note")
@@ -28,7 +29,7 @@ public class Note {
 	@Column(name = "title", nullable = false)
 	private String title;
 
-	@Column(name = "description", nullable = false)
+	@Column(name = "description", nullable = false, columnDefinition = "LONGBLOB")
 	private String description;
 
 	@Column(name = "create_time", nullable = false)
@@ -55,6 +56,7 @@ public class Note {
 	@Column(name = "image", columnDefinition = "LONGBLOB")
 	private String image;
 
+	@JsonManagedReference
 	@OneToMany(cascade = { CascadeType.ALL }, mappedBy = "note")
 	private Set<NoteLink> noteLinks;
 
@@ -98,7 +100,6 @@ public class Note {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
-	
 
 	public User getUser() {
 		return user;
@@ -167,7 +168,7 @@ public class Note {
 	public Date getModifyTime() {
 		return modifyTime;
 	}
-	
+
 	public void setModifyTime(Date modifyTime) {
 		this.modifyTime = modifyTime;
 	}
@@ -176,8 +177,7 @@ public class Note {
 	public String toString() {
 		return "Note [noteId=" + noteId + ", title=" + title + ", description=" + description + ", createTime="
 				+ createTime + ", modifyTime=" + modifyTime + ", reminder=" + reminder + ", color=" + color
-				+ ", pinned=" + pinned + ", archive=" + archive + ", trash=" + trash + ", image=" + image
-				+ ", noteLinks=" + noteLinks + "]";
+				+ ", pinned=" + pinned + ", archive=" + archive + ", trash=" + trash + ", noteLinks=" + noteLinks + "]";
 	}
 
 }

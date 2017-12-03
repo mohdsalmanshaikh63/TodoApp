@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 @Table(name = "note_link")
 @Entity
@@ -27,6 +29,7 @@ public class NoteLink {
 	private String url;
 	
 	
+	@JsonBackReference
 	@JoinColumn(name="note_id")
 	@ManyToOne(cascade= {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
 	private Note note;

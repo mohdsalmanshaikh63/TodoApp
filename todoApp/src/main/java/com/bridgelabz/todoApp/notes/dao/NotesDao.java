@@ -6,7 +6,7 @@ import com.bridgelabz.todoApp.notes.entity.Note;
 
 public interface NotesDao {
 
-public int createNote(Note note, int uId);
+public Note createNote(Note note, int uId);
 	
 	public void updateNote(Note note);
 	
