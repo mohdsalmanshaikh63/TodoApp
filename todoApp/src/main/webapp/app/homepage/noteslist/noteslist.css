@@ -21,3 +21,17 @@ md-card {
 	content: attr(placeholder);
 	display: block;
 }
+
+md-card-footer {	
+	border-top: solid 1px #E4E4E4;	
+	background-color: whitesmoke;
+}
+
+.linkpreview {
+	width: 40px !important;
+	height: 40px !important;
+}
+
+.linktext {
+	margin-left: 35px;
+}

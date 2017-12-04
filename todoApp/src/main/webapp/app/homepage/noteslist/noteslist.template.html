@@ -75,8 +75,27 @@
                     </md-menu-content>
                 </md-menu>
 
-                </md-card-icon-actions>
+            </md-card-actions>
+
+            <!-- Link preview -->
+            <md-card-footer ng-repeat="link in note.noteLinks" layout="row" layout-align="start center">
+
+                <div flex="10">
+                    <img ng-src="{{link.imageUrl}}" ng-show="link.imageUrl" class="linkpreview" alt="img">
+                    <i class="fa fa-globe fa-2x" ng-hide="link.imageUrl" aria-hidden="true"></i>
+                </div>
+
+                <div flex="90" class="linktext" layout="column" layout-align="center center">
+                    <div flex="90" ng-show="link.title">{{link.title}}</div>
+                    <div flex="90" ng-show="link.domain">
+                        <a href="{{link.url}}" target="_blank">{{link.domain}}</a>
+                    </div>
+                </div>
+
+            </md-card-footer>
+
         </md-card>
+
     </div>
 </div>
 
@@ -88,8 +107,8 @@
 <div layout="row" layout-align="start start" layout-wrap flex>
 
     <!-- Others notes array -->
-    <div class="mynote" flex="30" layout="column" ng-repeat="note in notes | filter:{archive:false, pinned:false, trash:false} as others" ng-mouseenter="mouse=true"
-        ng-mouseleave="mouse=false">
+    <div class="mynote" flex="30" layout="column" ng-repeat="note in notes | filter:{archive:false, pinned:false, trash:false} as others"
+        ng-mouseenter="mouse=true" ng-mouseleave="mouse=false">
 
         <md-card ng-style="{'background-color' : note.color}">
 
@@ -108,7 +127,7 @@
             </md-card-header>
 
             <md-card-content>
-            <div ng-bind-html="note.description"></div>
+                <div ng-bind-html="note.description"></div>
             </md-card-content>
 
             <md-card-content ng-if( "note.reminder")>
@@ -125,7 +144,6 @@
                 <!-- <md-button class="md-icon-button" aria-label="Color Palette">
                     <i class="material-icons" ng-show="mouse">color_lens</i> -->
                 <color-picker class="colorIcon" value="cardColor" color="color" ng-show="mouse" options="colors" on-color-changed="colorChanged(newColor, oldColor,note)"></color-picker>
-                </md-button>
                 <md-button class="md-icon-button" aria-label="Image Upload" ng-click="openImageUploader(note)">
                     <i class="material-icons" ng-show="mouse">image</i>
                 </md-button>
@@ -162,7 +180,28 @@
                     </md-menu-content>
                 </md-menu>
 
-                </md-card-icon-actions>
+            </md-card-actions>
+
+
+            <!-- Link preview -->
+            <md-card-footer ng-repeat="link in note.noteLinks" layout="row" layout-align="start center">
+
+                <div flex="10">
+                    <img ng-src="{{link.imageUrl}}" ng-show="link.imageUrl" class="linkpreview" alt="img">
+                    <i class="fa fa-globe fa-2x" ng-hide="link.imageUrl" aria-hidden="true"></i>
+                </div>
+
+                <div flex="90" class="linktext" layout="column" layout-align="center center">
+                    <div flex="90" ng-show="link.title">{{link.title}}</div>
+                    <div flex="90" ng-show="link.domain">
+                        <a href="{{link.url}}" target="_blank">{{link.domain}}</a>
+                    </div>
+                </div>
+
+            </md-card-footer>
+
+        </md-card>
+
         </md-card>
     </div>
 </div>

@@ -9,6 +9,6 @@ public interface NoteLinkService {
 
 	public Set<NoteLink> extractLinks(String string) throws Exception;
 	
-	public void createNoteLinks(Note note) throws Exception;
+	public Set<NoteLink> createNoteLinks(Note note) throws Exception;
 
 }

@@ -8,7 +8,7 @@ public interface NoteService {
 	
 	public int createNote(Note note, int uId) throws Exception;
 	
-	public void updateNote(Note note, int userId);
+	public void updateNote(Note note, int userId) throws Exception;
 	
 	public void deleteNote(int noteId);
 	

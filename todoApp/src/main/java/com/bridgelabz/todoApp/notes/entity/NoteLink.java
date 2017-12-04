@@ -84,7 +84,49 @@ public class NoteLink {
 		return "NoteLink [linkId=" + linkId + ", title=" + title + ", url=" + url + ", domain=" + domain + ", imageUrl="
 				+ imageUrl + "]";
 	}
-	
-	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((domain == null) ? 0 : domain.hashCode());
+		result = prime * result + ((imageUrl == null) ? 0 : imageUrl.hashCode());
+		result = prime * result + ((title == null) ? 0 : title.hashCode());
+		result = prime * result + ((url == null) ? 0 : url.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		NoteLink other = (NoteLink) obj;
+		if (domain == null) {
+			if (other.domain != null)
+				return false;
+		} else if (!domain.equals(other.domain))
+			return false;
+		if (imageUrl == null) {
+			if (other.imageUrl != null)
+				return false;
+		} else if (!imageUrl.equals(other.imageUrl))
+			return false;
+		if (title == null) {
+			if (other.title != null)
+				return false;
+		} else if (!title.equals(other.title))
+			return false;
+		if (url == null) {
+			if (other.url != null)
+				return false;
+		} else if (!url.equals(other.url))
+			return false;
+		return true;
+	}
+		
 
 }

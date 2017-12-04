@@ -75,7 +75,7 @@ public class NotesDaoImpl implements NotesDao {
 
 		session.detach(note);
 
-		note.setUser(null);
+		//note.setUser(null);
 
 		return note;
 	}

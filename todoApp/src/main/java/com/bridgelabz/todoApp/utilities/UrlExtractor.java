@@ -18,14 +18,14 @@ public class UrlExtractor {
 
 		Pattern pattern = Pattern.compile(URL_REGEX);
 		Matcher matcher = pattern.matcher(data);
-		Set<String> urlSet = null;
-		logger.info("Set of Url:::::::::" + urlSet);
+		Set<String> urlSet = null;		
 		while (matcher.find()) {
 			if (urlSet == null) {
 				urlSet = new HashSet<>();
 			}
 			urlSet.add(data.substring(matcher.start(), matcher.end()));
 		}
+		logger.info("Set of Url:::::::::" + urlSet);
 		return urlSet;
 	}
 }

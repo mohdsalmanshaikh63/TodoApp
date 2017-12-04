@@ -77,7 +77,7 @@ public class NoteLinkServiceImpl implements NoteLinkService {
 
 	@Override
 	@Transactional
-	public void createNoteLinks(Note note) throws Exception {
+	public Set<NoteLink> createNoteLinks(Note note) throws Exception {
 
 		// extract linkmetadata from noteDescription
 		Set<NoteLink> noteLinks = extractLinks(note.getDescription());
@@ -85,7 +85,10 @@ public class NoteLinkServiceImpl implements NoteLinkService {
 		// pass the note and linkset to dao for saving
 		if (noteLinks != null) {
 			noteLinkDao.saveNoteLinks(noteLinks, note);
+			return noteLinks;
 		}
+
+		return null;
 
 	}
 
