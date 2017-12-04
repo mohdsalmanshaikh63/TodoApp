@@ -9,7 +9,7 @@
 
     <!-- Pinned notes array -->
     <div class="mynote" flex="30" layout="column" ng-repeat="note in notes | filter:{pinned:true,archive:false,trash:false} as pinnedNotes"
-        ng-mouseenter="mouse=true" ng-mouseleave="mouse=false">
+        ng-mouseenter="mouse=true" ng-mouseleave="mouse=false" ng-click="editDialog($event, note)" ng-cloak>
 
         <md-card ng-style="{'background-color' : note.color}">
 
