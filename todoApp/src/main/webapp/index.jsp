@@ -13,21 +13,21 @@
   <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
 
   <!-- Font awesome -->
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/app/bower_components/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="app/bower_components/font-awesome/css/font-awesome.min.css">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
   <!-- Css dependencies -->
-  <%-- <link rel="stylesheet" href="${pageContext.request.contextPath}/app/bower_components/angular-material/angular-material.css" > --%>
+  <%-- <link rel="stylesheet" href="app/bower_components/angular-material/angular-material.css" > --%>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/app/app.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/app/login/login.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/app/register/register.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/app/homepage/homepage.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/app/homepage/navbar/navbar.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/app/homepage/sidenav/sidenav.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/app/homepage/maincard/maincard.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/app/homepage/noteslist/noteslist.css">
+    <link rel="stylesheet" href="app/app.css">
+    <link rel="stylesheet" href="app/login/login.css">
+    <link rel="stylesheet" href="app/register/register.css">
+    <link rel="stylesheet" href="app/homepage/homepage.css">
+    <link rel="stylesheet" href="app/homepage/navbar/navbar.css">
+    <link rel="stylesheet" href="app/homepage/sidenav/sidenav.css">
+    <link rel="stylesheet" href="app/homepage/maincard/maincard.css">
+    <link rel="stylesheet" href="app/homepage/noteslist/noteslist.css">
 
     <!-- Google material icons font's -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -50,26 +50,26 @@
     <link rel="stylesheet" href="app/bower_components/ng-material-datetimepicker/dist/material-datetimepicker.min.css">
 
     <!-- Angular Sanitize -->
-    <%-- <script src="${pageContext.request.contextPath}/app/bower_components/angular-sanitize/angular-sanitize.js"></script> --%>
+    <%-- <script src="app/bower_components/angular-sanitize/angular-sanitize.js"></script> --%>
 
       <!-- Angular Material Library -->
       <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
       <%-- <script src="${pageContext.request.contextPath}/app/bower_components/angular/angular.js"></script>
-  <script src="${pageContext.request.contextPath}/app/bower_components/angular-animate/angular-animate.js"></script>
-  <script src="${pageContext.request.contextPath}/app/bower_components/angular-aria/angular-aria.js"></script>
-  <script src="${pageContext.request.contextPath}/app/bower_components/angular-messages/angular-messages.js"></script> --%>
+  <script src="app/bower_components/angular-animate/angular-animate.js"></script>
+  <script src="app/bower_components/angular-aria/angular-aria.js"></script>
+  <script src="app/bower_components/angular-messages/angular-messages.js"></script> --%>
 
-        <script src="${pageContext.request.contextPath}/app/bower_components/angular-resource/angular-resource.js"></script>
-        <script src="${pageContext.request.contextPath}/app/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+        <script src="app/bower_components/angular-resource/angular-resource.js"></script>
+        <script src="app/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 
         <!-- angular material dependcies -->
-        <%-- <script src="${pageContext.request.contextPath}/app/bower_components/angular-material/angular-material.js"></script> --%>
+        <%-- <script src="app/bower_components/angular-material/angular-material.js"></script> --%>
 
           <!-- confirm password library -->
-          <script src="${pageContext.request.contextPath}/app/bower_components/angular-password/angular-password.js"></script>
+          <script src="app/bower_components/angular-password/angular-password.js"></script>
 
           <!-- local storage library -->
-          <script src="${pageContext.request.contextPath}/app/bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
+          <script src="app/bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
 
           <!-- Ng sanitizer for cleaning html -->
           <script src="app/bower_components/angular-sanitize/angular-sanitize.js"></script>
@@ -82,28 +82,28 @@
 
 
           <!-- core dependencies -->
-          <script src="${pageContext.request.contextPath}/app/app.module.js"></script>
-          <script src="${pageContext.request.contextPath}/app/app.config.js"></script>
+          <script src="app/app.module.js"></script>
+          <script src="app/app.config.js"></script>
 
           <!-- login module and it's dependencies -->
-          <script src="${pageContext.request.contextPath}/app/login/login.module.js"></script>
-          <script src="${pageContext.request.contextPath}/app/login/login.component.js"></script>
-          <script src="${pageContext.request.contextPath}/app/login/login.service.js"></script>
+          <script src="app/login/login.module.js"></script>
+          <script src="app/login/login.component.js"></script>
+          <script src="app/login/login.service.js"></script>
 
           <!-- register module and it's dependencies -->
-          <script src="${pageContext.request.contextPath}/app/register/register.module.js"></script>
-          <script src="${pageContext.request.contextPath}/app/register/register.component.js"></script>
-          <script src="${pageContext.request.contextPath}/app/register/register.service.js"></script>
+          <script src="app/register/register.module.js"></script>
+          <script src="app/register/register.component.js"></script>
+          <script src="app/register/register.service.js"></script>
 
           <!-- forgotpassword module and it's dependencies -->
-          <script src="${pageContext.request.contextPath}/app/forgotpassword/forgotpassword.module.js"></script>
-          <script src="${pageContext.request.contextPath}/app//forgotpassword/forgotpassword.component.js"></script>
-          <script src="${pageContext.request.contextPath}/app/forgotpassword/forgotpassword.service.js"></script>
+          <script src="app/forgotpassword/forgotpassword.module.js"></script>
+          <script src="app//forgotpassword/forgotpassword.component.js"></script>
+          <script src="app/forgotpassword/forgotpassword.service.js"></script>
 
           <!-- forgotpassword module and it's dependencies -->
-          <script src="${pageContext.request.contextPath}/app/resetpassword/resetpassword.module.js"></script>
-          <script src="${pageContext.request.contextPath}/app/resetpassword/resetpassword.component.js"></script>
-          <script src="${pageContext.request.contextPath}/app/resetpassword/resetpassword.service.js"></script>
+          <script src="app/resetpassword/resetpassword.module.js"></script>
+          <script src="app/resetpassword/resetpassword.component.js"></script>
+          <script src="app/resetpassword/resetpassword.service.js"></script>
 
           <!-- forgotpassword module and it's dependencies -->
           <script src="app/dummypage/dummypage.module.js"></script>
@@ -111,26 +111,26 @@
           <script src="app/dummypage/dummypage.service.js"></script>
 
           <!-- homepage module and it's dependencies -->
-          <script src="${pageContext.request.contextPath}/app/homepage/homepage.module.js"></script>
-          <script src="${pageContext.request.contextPath}/app/homepage/homepage.component.js"></script>
+          <script src="app/homepage/homepage.module.js"></script>
+          <script src="app/homepage/homepage.component.js"></script>
           <!-- <script src="${pageContext.request.contextPath}/app/homepage/homepage.controller.js"></script> -->
-          <script src="${pageContext.request.contextPath}/app/homepage/homepage.service.js"></script>
+          <script src="app/homepage/homepage.service.js"></script>
 
           <!-- Load navbar and it's dependencies -->
-          <script src="${pageContext.request.contextPath}/app/homepage/navbar/navbar.module.js"></script>
-          <script src="${pageContext.request.contextPath}/app/homepage/navbar/navbar.component.js"></script>
+          <script src="app/homepage/navbar/navbar.module.js"></script>
+          <script src="app/homepage/navbar/navbar.component.js"></script>
 
           <!-- Load navbar and it's dependencies -->
-          <script src="${pageContext.request.contextPath}/app/homepage/sidenav/sidenav.module.js"></script>
-          <script src="${pageContext.request.contextPath}/app/homepage/sidenav/sidenav.component.js"></script>
+          <script src="app/homepage/sidenav/sidenav.module.js"></script>
+          <script src="app/homepage/sidenav/sidenav.component.js"></script>
 
           <!-- Load maincard and it's dependencies -->
-          <script src="${pageContext.request.contextPath}/app/homepage/maincard/maincard.module.js"></script>
-          <script src="${pageContext.request.contextPath}/app/homepage/maincard/maincard.component.js"></script>
+          <script src="app/homepage/maincard/maincard.module.js"></script>
+          <script src="app/homepage/maincard/maincard.component.js"></script>
 
           <!-- Load notesList and it's dependencies -->
-          <script src="${pageContext.request.contextPath}/app/homepage/noteslist/noteslist.module.js"></script>
-          <script src="${pageContext.request.contextPath}/app/homepage/noteslist/noteslist.component.js"></script>
+          <script src="app/homepage/noteslist/noteslist.module.js"></script>
+          <script src="app/homepage/noteslist/noteslist.component.js"></script>
 
           <!-- Facebook login -->
           <script src="https://connect.facebook.net/en_US/sdk.js"></script>

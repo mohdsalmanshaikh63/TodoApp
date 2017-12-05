@@ -5,3 +5,9 @@ md-sidenav {
 .notespane {
 	overflow: visible;
 }
+
+.mypalette {
+	margin-left: 6px;
+	margin-right: 6px;
+	margin-bottom: 4px;
+}

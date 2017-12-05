@@ -1,54 +1,188 @@
+<md-dialog ng-style="{'background-color' : mdDialogData.color}" style="width:600px">
 
+  <md-dialog-content layout="column">
 
-<md-dialog aria-label="Mango (Fruit)">
-    <form>
-      <md-toolbar>
-        <div class="md-toolbar-tools">
-          <h2>Mango (Fruit)</h2>
-          <span flex></span>
-          <md-button class="md-icon-button" ng-click="cancel()">
-            <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+    <img ng-src="{{mdDialogData.image}}" style="width:600px" ng-show="mdDialogData.image">
+
+    <md-card-actions layout="row" layout-align="end center" flex>
+      <md-button class="md-icon-button" aria-label="Pin" ng-click="pin(note)">
+        <i class="fa fa-thumb-tack" ng-hide="mdDialogData.pinned" style="color : dodgerblue" aria-hidden="true" ng-click="pin(note)"></i>
+        <i class="fa fa-thumb-tack" ng-show="mdDialogData.pinned" aria-hidden="true" ng-click="pin(note)"></i>
+      </md-button>
+    </md-card-actions>
+
+    <div layout-padding>
+      <md-card-header>
+        <md-card-header-text>
+          <div class="noteContent md-title" id="editNoteTitle" ng-bind-html="mdDialogData.title" contenteditable="true" contenteditabledata
+            aria-multiline="true" placeholder="Title">
+          </div>
+        </md-card-header-text>
+      </md-card-header>
+
+      <md-card-content>
+        <div class="noteContent" id="editNoteDescription" ng-bind-html="mdDialogData.description" contenteditable="true" contenteditabledata
+          aria-multiline="true" placeholder="Description"></div>
+      </md-card-content>
+
+      <md-card-actions layout="row" layout-align="start center">
+        <md-button flex class="md-icon-button" aria-label="Remind Me" ng-click="displayDialog(mdDialogData)">
+          <i class="material-icons" >touch_app</i>
+        </md-button>
+        <md-button flex class="md-icon-button" aria-label="Collaborate">
+          <i class="material-icons">person_add</i>
+        </md-button>
+
+        <color-picker flex class="colorIcon mypalette" value="cardColor" color="color" ng-show="mouse" options="colors" on-color-changed="colorChanged(newColor, oldColor,note)"></color-picker>
+        <md-button flex class="md-icon-button" aria-label="Image Upload" ng-click="openImageUploader(mdDialogData)">
+          <i class="material-icons">image</i>
+        </md-button>
+        <md-button flex class="md-icon-button" ng-click="archive(mdDialogData)" aria-label="Archive">
+          <i class="material-icons">archive</i>
+        </md-button>
+
+        <md-menu flex>
+          <md-button class="md-icon-button" aria-label="Open menu with custom trigger" ng-click="$mdOpenMenu()">
+            <i class="material-icons">more_vert</i>
           </md-button>
+
+          <md-menu-content>
+            <md-menu-item>
+              <md-button class="md-button" ng-click="trash(mdDialogData)" aria-label="Delete">
+                Delete
+              </md-button>
+            </md-menu-item>
+            <md-menu-item>
+              <md-button class="md-button" ng-click="addLabel(mdDialogData)" aria-label="Add Label">
+                Add Label
+              </md-button>
+            </md-menu-item>
+            <md-menu-item>
+              <md-button class="md-button" ng-click="copyNote(mdDialogData)" aria-label="Make a Copy">
+                Make a copy
+              </md-button>
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
+
+      </md-card-actions>
+
+      <!-- Link preview -->
+      <md-card-footer ng-repeat="link in mdDialogData.noteLinks" layout="row" layout-align="start center">
+
+        <div flex="10">
+          <img ng-src="{{link.imageUrl}}" ng-show="link.imageUrl" class="linkpreview" alt="img">
+          <i class="fa fa-globe fa-2x" ng-hide="link.imageUrl" aria-hidden="true"></i>
         </div>
-      </md-toolbar>
-      <md-dialog-content style="max-width:800px;max-height:810px; ">
-        <md-tabs md-dynamic-height md-border-bottom>
-          <md-tab label="one">
-            <md-content class="md-padding">
-              <h1 class="md-display-2">Tab One</h1>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi.</p>
-            </md-content>
-          </md-tab>
-          <md-tab label="two">
-            <md-content class="md-padding">
-              <h1 class="md-display-2">Tab Two</h1>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi. Aliquam erat volutpat. Nam placerat, tortor in ultrices porttitor, orci enim rutrum enim, vel tempor sapien arcu a tellus. Vivamus convallis sodales ante varius gravida. Curabitur a purus vel augue ultrices ultricies id a nisl. Nullam malesuada consequat diam, a facilisis tortor volutpat et. Sed urna dolor, aliquet vitae posuere vulputate, euismod ac lorem. Sed felis risus, pulvinar at interdum quis, vehicula sed odio. Phasellus in enim venenatis, iaculis tortor eu, bibendum ante. Donec ac tellus dictum neque volutpat blandit. Praesent efficitur faucibus risus, ac auctor purus porttitor vitae. Phasellus ornare dui nec orci posuere, nec luctus mauris semper.</p>
-              <p>Morbi viverra, ante vel aliquet tincidunt, leo dolor pharetra quam, at semper massa orci nec magna. Donec posuere nec sapien sed laoreet. Etiam cursus nunc in condimentum facilisis. Etiam in tempor tortor. Vivamus faucibus egestas enim, at convallis diam pulvinar vel. Cras ac orci eget nisi maximus cursus. Nunc urna libero, viverra sit amet nisl at, hendrerit tempor turpis. Maecenas facilisis convallis mi vel tempor. Nullam vitae nunc leo. Cras sed nisl consectetur, rhoncus sapien sit amet, tempus sapien.</p>
-              <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
-            </md-content>
-          </md-tab>
-          <md-tab label="three">
-            <md-content class="md-padding">
-              <h1 class="md-display-2">Tab Three</h1>
-              <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
-            </md-content>
-          </md-tab>
-        </md-tabs>
-      </md-dialog-content>
-  
-      <md-dialog-actions layout="row">
-        <md-button href="http://en.wikipedia.org/wiki/Mango" target="_blank" md-autofocus>
-          More on Wikipedia
+
+        <div flex="90" class="linktext" layout="column" layout-align="center center" ng-click="$event.stopPropagation()">
+          <div flex="90" ng-show="link.title">
+            <a href="{{link.url}}" target="_blank">{{link.title}}</a>
+          </div>
+          <div flex="90" ng-show="link.domain">
+            {{link.domain}}
+          </div>
+        </div>
+
+      </md-card-footer>
+
+    </div>
+
+
+  </md-dialog-content>
+
+</md-dialog>
+
+<!-- <md-dialog flex="45" style="background-color:{{mdDialogData.color}}">
+  <md-dialog-content>
+    <md-icon md-svg-src="images/unpin.svg" style="width:15px;float:right" ng-click="pinned(note,true)"></md-icon>
+
+
+    <div ng-if="mdDialogData.image">
+      <img ng-src={{mdDialogData.image}} style="width: 95%;padding-left: 5px;">
+      <span>
+
+        <md-button style="margin-left:500px" ng-click="removeImage(mdDialogData)" aria-label="Delete">
+          <md-tooltip md-direction="bottom">Delete</md-tooltip>
+          <md-icon md-svg-src="images/cancel.svg" aria-lable="Delete"></md-icon>
         </md-button>
-        <span flex></span>
-        <md-button ng-click="answer('not useful')" >
-          Not Useful
-        </md-button>
-        <md-button ng-click="answer('useful')" style="margin-right:20px;" >
-          Useful
-        </md-button>
-      </md-dialog-actions>
-    </form>
-  </md-dialog>
-  
-  
+      </span>
+    </div>
+    <md-input-container class="md-block">
+      <div ng-bind-html="mdDialogData.title" id="updatedNoteTitle" contenteditable="{{editable}}" contenteditabledata aria-multiline="true"
+        role="textbox" style="background-color: rgb(250, 250, 250); outline:none; background-color:{{mdDialogData.color}}"></div>
+    </md-input-container>
+
+    <md-input-container class="md-block">
+      <div ng-bind-html="mdDialogData.body" id="updatedNoteBody" contenteditable="{{editable}}" contenteditabledata aria-multiline="true"
+        role="textbox" style="background-color: rgb(250, 250, 250); outline:none; background-color:{{mdDialogData.color}}"></div>
+    </md-input-container>
+    <div layout="row" layout-align="end start">Edited {{mdDialogData.lastUpdated | date:'medium'}}</div>
+    <md-dialog-actions>
+
+      <md-card-actions>
+        <md-panel>
+          <p class="icon">
+
+            <md-menu>
+              <md-button style="min-width:25px;padding:5px" ng-click="$mdMenu.open($event)" area-label="Remender">
+                <md-tooltip md-direction="bottom">Reminder</md-tooltip>
+                <img src="images/remender.svg">
+              </md-button>
+              <md-menu-content>
+
+                <md-menu-item>
+
+                  <button class="md-raised md-primary md-button md-ink-ripple" type="button"="" ng-click="displayDialog(note)">Display Picker</button>
+
+                </md-menu-item>
+              </md-menu-content>
+            </md-menu>
+
+            <md-button style="min-width:25px;padding:5px" aria-label="Share">
+              <md-tooltip md-direction="bottom">Share</md-tooltip>
+              <md-icon md-svg-src="images/share.svg" ng-click="" style="width:21px"></md-icon>
+            </md-button>
+
+            <color-picker class="colorIcon" value="cardColor" color="color" options="colors" on-color-changed="colorChanged(newColor, oldColor,note)"></color-picker>
+
+            <md-button style="min-width:25px;padding:5px" aria-label="Add image" ng-click="openImageUploader(mdDialogData)">
+              <input ng-show="false" id="image" type='file' ng-model-instant ng-model="file" onchange="angular.element(this).scope().imageUpload(this)"
+              />
+              <md-tooltip md-direction="bottom">Add image</md-tooltip>
+              <md-icon md-svg-src="images/uploadImg.svg" style="width:21px;"></md-icon>
+
+            </md-button>
+
+            <md-button style="min-width:25px;padding:5px" ng-click="archive(note,true)" aria-label="Archive">
+              <md-tooltip md-direction="bottom">Archive</md-tooltip>
+              <md-icon md-svg-src="images/archive.svg" aria-lable="archive note"></md-icon>
+            </md-button>
+
+            <md-menu>
+              <md-button style="min-width:25px;padding:5px" ng-click="$mdMenu.open($event)" aria-label="More">
+                <md-tooltip md-direction="bottom">More</md-tooltip>
+                <img ng-src="images/menu.svg" style="width:21px">
+              </md-button>
+              <md-menu-content>
+                <md-menu-item>
+                  <md-button class="primary" ng-click="deleteNote(note)">Delete</md-button>
+                </md-menu-item>
+                <md-menu-item>
+                  <md-button class="primary" ng-click="makeCopy(note)">Make Copy</md-button>
+                </md-menu-item>
+                <md-menu-item>
+                  <md-button class="primary" ng-click="addLabelWindow()">Add Label</md-button>
+                </md-menu-item>
+              </md-menu-content>
+              <md-button ng-click="saveUpdatedNote()" class="md-primary">Done</md-button>
+            </md-menu>
+          </p>
+        </md-panel>
+      </md-card-actions>
+
+
+    </md-dialog-actions>
+
+  </md-dialog-content>
+</md-dialog> -->

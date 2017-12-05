@@ -9,41 +9,42 @@
 
     <!-- Pinned notes array -->
     <div class="mynote" flex="30" layout="column" ng-repeat="note in notes | filter:{pinned:true,archive:false,trash:false} as pinnedNotes"
-        ng-mouseenter="mouse=true" ng-mouseleave="mouse=false" ng-click="editDialog($event, note)" ng-cloak>
+        ng-mouseenter="mouse=true" ng-mouseleave="mouse=false" ng-cloak>
 
         <md-card ng-style="{'background-color' : note.color}">
 
 
-            <img ng-src="{{note.image}}" class="md-card-image" ng-if( "note.image")>
+            <img ng-src="{{note.image}}" class="md-card-image" ng-if( "note.image") ng-click="editDialog($event, note)">
 
             <md-card-actions layout="row" layout-align="end center" flex>
                 <md-button class="md-icon-button" aria-label="Pin">
-                    <i class="fa fa-thumb-tack" aria-hidden="true" ng-click="pin(note)"></i>
+                    <i class="fa fa-thumb-tack" ng-hide="note.pinned" style="color : dodgerblue" aria-hidden="true" ng-click="pin(note)"></i>
+                    <i class="fa fa-thumb-tack" ng-show="note.pinned" aria-hidden="true" ng-click="pin(note)"></i>
                 </md-button>
             </md-card-actions>
 
-            <md-card-header>
+            <md-card-header ng-click="editDialog($event, note)">
                 <md-card-header-text>
                     <span class="md-title" ng-bind-html="note.title"></span>
                 </md-card-header-text>
             </md-card-header>
 
-            <md-card-content ng-bind-html="note.description">
+            <md-card-content ng-bind-html="note.description" ng-click="editDialog($event, note)">
             </md-card-content>
 
             <md-card-content ng-if( "note.reminder")>
                 {{note.reminder | date:'medium'}}
             </md-card-content>
 
-            <md-card-actions layout="row" layout-align="start center" flex>
+            <md-card-actions layout="row" layout-align="start center">
                 <md-button class="md-icon-button" aria-label="Remind Me" ng-click="displayDialog(note)">
                     <i class="material-icons" ng-show="mouse">touch_app</i>
                 </md-button>
                 <md-button class="md-icon-button" aria-label="Collaborate">
                     <i class="material-icons" ng-show="mouse">person_add</i>
                 </md-button>
-
-                <color-picker class="colorIcon" value="cardColor" color="color" ng-show="mouse" options="colors" on-color-changed="colorChanged(newColor, oldColor,note)"></color-picker>
+                
+                <color-picker class="colorIcon mypalette" value="cardColor" color="color" ng-show="mouse" options="colors" on-color-changed="colorChanged(newColor, oldColor,note)"></color-picker>
                 <md-button class="md-icon-button" aria-label="Image Upload" ng-click="openImageUploader(note)">
                     <i class="material-icons" ng-show="mouse">image</i>
                 </md-button>
@@ -78,17 +79,19 @@
             </md-card-actions>
 
             <!-- Link preview -->
-            <md-card-footer ng-repeat="link in note.noteLinks" layout="row" layout-align="start center">
+            <md-card-footer ng-repeat="link in note.noteLinks" layout="row" layout-align="start center" ng-click="editDialog($event, note)">
 
                 <div flex="10">
                     <img ng-src="{{link.imageUrl}}" ng-show="link.imageUrl" class="linkpreview" alt="img">
                     <i class="fa fa-globe fa-2x" ng-hide="link.imageUrl" aria-hidden="true"></i>
                 </div>
 
-                <div flex="90" class="linktext" layout="column" layout-align="center center">
-                    <div flex="90" ng-show="link.title">{{link.title}}</div>
+                <div flex="90" class="linktext" layout="column" layout-align="center center" ng-click="$event.stopPropagation()">
+                    <div flex="90" ng-show="link.title">
+                        <a href="{{link.url}}" target="_blank">{{link.title}}</a>
+                    </div>
                     <div flex="90" ng-show="link.domain">
-                        <a href="{{link.url}}" target="_blank">{{link.domain}}</a>
+                        {{link.domain}}
                     </div>
                 </div>
 
@@ -112,21 +115,22 @@
 
         <md-card ng-style="{'background-color' : note.color}">
 
-            <img ng-src="{{note.image}}" class="md-card-image" ng-show="note.image">
+            <img ng-src="{{note.image}}" class="md-card-image" ng-show="note.image" ng-click="editDialog($event, note)">
 
             <md-card-actions layout="row" layout-align="end center" flex>
                 <md-button class="md-icon-button" aria-label="Pin" ng-click="pin(note)">
-                    <i class="fa fa-thumb-tack" aria-hidden="true"></i>
+                    <i class="fa fa-thumb-tack" ng-hide="note.pinned" style="color : dodgerblue" aria-hidden="true" ng-click="pin(note)"></i>
+                    <i class="fa fa-thumb-tack" ng-show="note.pinned" aria-hidden="true" ng-click="pin(note)"></i>
                 </md-button>
             </md-card-actions>
 
-            <md-card-header>
+            <md-card-header ng-click="editDialog($event, note)">
                 <md-card-header-text>
                     <span class="md-title" ng-bind-html="note.title"></span>
                 </md-card-header-text>
             </md-card-header>
 
-            <md-card-content>
+            <md-card-content ng-click="editDialog($event, note)">
                 <div ng-bind-html="note.description"></div>
             </md-card-content>
 
@@ -184,7 +188,7 @@
 
 
             <!-- Link preview -->
-            <md-card-footer ng-repeat="link in note.noteLinks" layout="row" layout-align="start center">
+            <md-card-footer ng-repeat="link in note.noteLinks" layout="row" layout-align="start center" ng-click="editDialog($event, note)">
 
                 <div flex="10">
                     <img ng-src="{{link.imageUrl}}" ng-show="link.imageUrl" class="linkpreview" alt="img">
@@ -192,11 +196,14 @@
                 </div>
 
                 <div flex="90" class="linktext" layout="column" layout-align="center center">
-                    <div flex="90" ng-show="link.title">{{link.title}}</div>
+                    <div flex="90" ng-show="link.title">
+                        <a href="{{link.url}}" target="_blank">{{link.title}}</a>
+                    </div>
                     <div flex="90" ng-show="link.domain">
-                        <a href="{{link.url}}" target="_blank">{{link.domain}}</a>
+                        {{link.domain}}
                     </div>
                 </div>
+
 
             </md-card-footer>
 
