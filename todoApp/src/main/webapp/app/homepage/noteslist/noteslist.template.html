@@ -13,15 +13,16 @@
 
         <md-card ng-style="{'background-color' : note.color}">
 
-
-            <img ng-src="{{note.image}}" class="md-card-image" ng-if( "note.image") ng-click="editDialog($event, note)">
-
-            <md-card-actions layout="row" layout-align="end center" flex>
-                <md-button class="md-icon-button" aria-label="Pin">
+            <md-card-actions layout="row" layout-align="end center" class="pinholder" flex>
+                <md-button class="md-icon-button mypin" aria-label="Pin">
                     <i class="fa fa-thumb-tack" ng-hide="note.pinned" style="color : dodgerblue" aria-hidden="true" ng-click="pin(note)"></i>
                     <i class="fa fa-thumb-tack" ng-show="note.pinned" aria-hidden="true" ng-click="pin(note)"></i>
                 </md-button>
             </md-card-actions>
+
+            <img ng-src="{{note.image}}" class="md-card-image" ng-if("note.image") ng-click="editDialog($event, note)">
+
+
 
             <md-card-header ng-click="editDialog($event, note)">
                 <md-card-header-text>
@@ -43,8 +44,8 @@
                 <md-button class="md-icon-button" aria-label="Collaborate">
                     <i class="material-icons" ng-show="mouse">person_add</i>
                 </md-button>
-                
-                <color-picker class="colorIcon mypalette" value="cardColor" color="color" ng-show="mouse" options="colors" on-color-changed="colorChanged(newColor, oldColor,note)"></color-picker>
+
+                <!-- <color-picker class="colorIcon mypalette" value="cardColor" color="color" options="colors" on-color-changed="colorChanged(newColor, oldColor,note)"></color-picker> -->
                 <md-button class="md-icon-button" aria-label="Image Upload" ng-click="openImageUploader(note)">
                     <i class="material-icons" ng-show="mouse">image</i>
                 </md-button>
@@ -59,7 +60,7 @@
 
                     <md-menu-content>
                         <md-menu-item>
-                            <md-button class="md-button" ng-click="trash(note)" aria-label="Delete">
+                            <md-button class="md-button" ng-click="delete(note.noteId)" aria-label="Delete">
                                 Delete
                             </md-button>
                         </md-menu-item>
@@ -71,6 +72,11 @@
                         <md-menu-item>
                             <md-button class="md-button" ng-click="copyNote(note)" aria-label="Make a Copy">
                                 Make a copy
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button class="md-button" ng-click="socialShare(note)" aria-label="Social Share">
+                                Social Share
                             </md-button>
                         </md-menu-item>
                     </md-menu-content>
@@ -113,16 +119,18 @@
     <div class="mynote" flex="30" layout="column" ng-repeat="note in notes | filter:{archive:false, pinned:false, trash:false} as others"
         ng-mouseenter="mouse=true" ng-mouseleave="mouse=false">
 
-        <md-card ng-style="{'background-color' : note.color}">
+        <md-card ng-style="{'background-color' : note.color}" >
 
-            <img ng-src="{{note.image}}" class="md-card-image" ng-show="note.image" ng-click="editDialog($event, note)">
-
-            <md-card-actions layout="row" layout-align="end center" flex>
-                <md-button class="md-icon-button" aria-label="Pin" ng-click="pin(note)">
+            <md-card-actions layout="row" layout-align="end center" class="pinholder" flex>
+                <md-button class="md-icon-button mypin" aria-label="Pin" ng-click="pin(note)">
                     <i class="fa fa-thumb-tack" ng-hide="note.pinned" style="color : dodgerblue" aria-hidden="true" ng-click="pin(note)"></i>
                     <i class="fa fa-thumb-tack" ng-show="note.pinned" aria-hidden="true" ng-click="pin(note)"></i>
                 </md-button>
             </md-card-actions>
+
+            <img ng-src="{{note.image}}" class="md-card-image" ng-show="note.image" ng-click="editDialog($event, note)">
+
+
 
             <md-card-header ng-click="editDialog($event, note)">
                 <md-card-header-text>

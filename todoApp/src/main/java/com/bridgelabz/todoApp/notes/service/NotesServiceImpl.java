@@ -100,9 +100,17 @@ public class NotesServiceImpl implements NoteService {
 
 	@Override
 	@Transactional
-	public void deleteNote(int noteId) {
-
+	public boolean deleteNote(int noteId, int userId) {
+		
+		Note note = getNote(noteId);
+		
+		// Authorization only the owner can delete the note
+		if(userId == note.getUser().getUserId()) {
 		notesDao.deleteNote(noteId);
+		return true;
+		}
+		
+		return false;
 
 	}
 

@@ -6,6 +6,19 @@ component('navbar', {
     templateUrl: 'app/homepage/navbar/navbar.template.html',
     controller: ['$rootScope', '$scope', 'homepageService', '$state', 'localStorageService',
         function NavbarController($rootScope, $scope, homepageService, $state, localStorageService) {
+            
+            
+            $scope.toggleNav = function() {
+                console.log("Inside toggleNav"+$rootScope.toggled);
+                if($rootScope.toggled == true) {
+                $rootScope.toggled = false;
+                console.log("toggled rootscope to"+$rootScope.toggled);
+                } else {                    
+                    $rootScope.toggled = true;
+                    console.log("toggled rootscope to"+$rootScope.toggled);
+                }
+                $rootScope.$broadcast('toggled', $rootScope.toggled);
+            }
 
             $rootScope.user = {};
             $scope.user = {}

@@ -5,3 +5,7 @@
 md-menu {    
     border-radius: 4px;
 }
+
+md-toolbar {
+    position: fixed;
+}

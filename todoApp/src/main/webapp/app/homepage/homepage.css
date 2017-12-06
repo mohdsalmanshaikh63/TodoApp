@@ -4,10 +4,15 @@ md-sidenav {
 
 .notespane {
 	overflow: visible;
+	margin-top: 80px;
 }
 
 .mypalette {
 	margin-left: 6px;
 	margin-right: 6px;
 	margin-bottom: 4px;
+}
+
+sidenav {
+	margin-top: 80px;
 }

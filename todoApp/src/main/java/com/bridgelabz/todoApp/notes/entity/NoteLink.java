@@ -36,7 +36,7 @@ public class NoteLink {
 	
 	@JsonBackReference
 	@JoinColumn(name="note_id")
-	@ManyToOne(cascade= {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
+	@ManyToOne
 	private Note note;
 
 	public String getTitle() {

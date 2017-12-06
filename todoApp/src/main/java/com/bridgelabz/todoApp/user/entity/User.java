@@ -56,7 +56,7 @@ public class User {
 	@JsonIgnore
 	private boolean valid;
 
-	@OneToMany(cascade = { CascadeType.ALL }, mappedBy = "user")
+	@OneToMany(mappedBy = "user")
 	private List<Note> notes;
 
 	public User() {

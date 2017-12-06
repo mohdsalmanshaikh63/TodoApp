@@ -32,7 +32,7 @@ angular.module("noteslist").component("noteslist", {
       $scope.fullNote = false;
 
       // dateTime picker
-      $scope.displayDialog = function(note) {
+      $scope.displayDialog = function (note) {
         mdcDateTimeDialog
           .show({
             minDate: new Date(),
@@ -40,7 +40,7 @@ angular.module("noteslist").component("noteslist", {
             shortTime: true
           })
           .then(
-            function(date) {
+            function (date) {
               //   var temporaryDate = $filter('date')(date,'yyyy MM dd HH mm a');
               //   note.reminder = temporaryDate.split(" ");
               note.reminder = date;
@@ -49,7 +49,7 @@ angular.module("noteslist").component("noteslist", {
               console.log("New Date / Time selected:", note.reminder);
               updateNote(note);
             },
-            function() {
+            function () {
               console.log("Selection canceled");
             }
           );
@@ -76,7 +76,7 @@ angular.module("noteslist").component("noteslist", {
       ];
       $scope.color = "#FF8A80";
 
-      $scope.colorChanged = function(newColor, oldColor, note) {
+      $scope.colorChanged = function (newColor, oldColor, note) {
         console.log("from ", oldColor, " to ", newColor);
         note.color = newColor;
         updateNote(note);
@@ -87,12 +87,12 @@ angular.module("noteslist").component("noteslist", {
       // getAllNotes
       var getAllNotes = homepageService.getAllNotes();
       getAllNotes.then(
-        function(response) {
+        function (response) {
           console.log("notes loaded");
           $scope.notes = response.data;
 
           // toaster
-          $interval(function() {
+          $interval(function () {
             for (var i = 0; i < response.data.length; i++) {
               if (response.data[i].reminder) {
                 var date = new Date(response.data[i].reminder);
@@ -103,9 +103,9 @@ angular.module("noteslist").component("noteslist", {
                   console.log("Sanitize" + "Hello, <b>World</b>!");
                   console.log(
                     "Test--" +
-                      response.data[i].description +
-                      " " +
-                      response.data[i].title
+                    response.data[i].description +
+                    " " +
+                    response.data[i].title
                   );
                   toastr.success(
                     DOMPurify.sanitize(response.data[i].description),
@@ -116,25 +116,24 @@ angular.module("noteslist").component("noteslist", {
             }
           }, 60000);
         },
-        function(response) {
+        function (response) {
           console.log("error loading notes");
         }
       );
 
       // pin note
-      $scope.pin = function(note) {
+      $scope.pin = function (note) {
         if (note.pinned == false) {
           note.archive = false;
           note.pinned = true;
         } else {
           note.pinned = false;
         }
-
         updateNote(note);
       };
 
       // archive note
-      $scope.archive = function(note) {
+      $scope.archive = function (note) {
         if (note.archive == false) {
           note.archive = true;
           note.pinned = false;
@@ -146,7 +145,7 @@ angular.module("noteslist").component("noteslist", {
       };
 
       // trash note
-      $scope.trash = function(note) {
+      $scope.trash = function (note) {
         // toggle the boolean variables
 
         note.archive = false;
@@ -157,8 +156,23 @@ angular.module("noteslist").component("noteslist", {
         updateNote(note);
       };
 
+      // delete note
+      $scope.delete = function (noteId) {
+        homepageService.deleteNote(noteId)
+          .then(
+            function (response) {
+              $state.reload();
+
+              console.log("Note updated successfully");
+            },
+            function (error) {
+              console.log("Could not update note");
+            }
+          );
+      }
+
       // SOCIAL SHARE
-      $scope.socialShare = function(note) {
+      $scope.socialShare = function (note) {
         console.log(note.title);
         console.log("inside fbAsyncInit");
         FB.init({
@@ -169,8 +183,7 @@ angular.module("noteslist").component("noteslist", {
           version: "v2.4"
         });
 
-        FB.ui(
-          {
+        FB.ui({
             method: "share_open_graph",
             action_type: "og.likes",
             action_properties: JSON.stringify({
@@ -180,7 +193,7 @@ angular.module("noteslist").component("noteslist", {
               }
             })
           },
-          function(response) {
+          function (response) {
             if (response && !response.error_message) {
               toastr.success("Note shared successfully!");
             } else {
@@ -191,21 +204,21 @@ angular.module("noteslist").component("noteslist", {
       };
 
       //Image uploader
-      $scope.openImageUploader = function(type) {
+      $scope.openImageUploader = function (type) {
         $scope.type = type;
         $("#image").trigger("click");
         return false;
       };
 
       $scope.stepsModel = [];
-      $scope.imageUpload = function(element) {
+      $scope.imageUpload = function (element) {
         var reader = new FileReader();
         reader.onload = $scope.imageIsLoaded;
         reader.readAsDataURL(element.files[0]);
       };
 
-      $scope.imageIsLoaded = function(e) {
-        $scope.$apply(function() {
+      $scope.imageIsLoaded = function (e) {
+        $scope.$apply(function () {
           $scope.stepsModel.push(e.target.result);
 
           var imageSrc = e.target.result;
@@ -217,39 +230,61 @@ angular.module("noteslist").component("noteslist", {
       };
 
       // note edit dialog
-      $scope.editDialog = function(event, note) {
+      $scope.editDialog = function (event, note) {
         $mdDialog
           .show({
             locals: {
               dataToPass: note // Pass the note data into dialog box
             },
+            controllerAs: 'controller',
             controller: DialogController,
             templateUrl: "app/homepage/noteslist/tabDialog.tmpl.html",
             parent: angular.element(document.body),
             targetEvent: event,
-            clickOutsideToClose: true
-          });          
+            clickOutsideToClose: false
+          });
       };
 
-      function DialogController($scope, $mdDialog, dataToPass) {        
-        console.log("note is"+dataToPass);
-        $scope.colorP = $scope.$parent.colors;
-        console.log("got the colors as"+$scope.colorP);
-        $scope.hide = function() {
+      function DialogController($scope, $mdDialog, dataToPass) {
+        console.log("note is" + dataToPass);
+        $scope.hide = function () {
           $mdDialog.hide();
         };
 
-        $scope.cancel = function() {
+        $scope.cancel = function () {
           $mdDialog.cancel();
         };
 
         $scope.mdDialogData = dataToPass;
 
         // remove image from the note
-        $scope.removeImage = function(mdDialogData) {
+        $scope.removeImage = function (mdDialogData) {
           mdDialogData.image = null;
-          update(mdDialogData);
+          updateNote(mdDialogData);
         };
+
+        $scope.saveUpdatedNote = function () {
+          console.log("Inside edit update");
+          dataToPass.title = document.getElementById('editNoteTitle').innerHTML;
+          dataToPass.description = document.getElementById('editNoteDescription').innerHTML;
+          updateNote(dataToPass);
+          $scope.hide();
+        }
+
+        // generic update function
+        function updateNote(note) {
+          var update = homepageService.updateNote(note);
+          update.then(
+            function (response) {
+              $state.reload();
+
+              console.log("Note updated successfully");
+            },
+            function (error) {
+              console.log("Could not update note");
+            }
+          );
+        }
 
         /* dataToPass.title = document.getElementById(
           "updatedNoteTitle"
@@ -261,20 +296,6 @@ angular.module("noteslist").component("noteslist", {
         //$scope.hide();
       }
 
-      // generic update function
-      function updateNote(note) {
-        var update = homepageService.updateNote(note);
-        update.then(
-          function(response) {
-            $state.reload();
-
-            console.log("Note updated successfully");
-          },
-          function(error) {
-            console.log("Could not update note");
-          }
-        );
-      }
     }
   ]
 });

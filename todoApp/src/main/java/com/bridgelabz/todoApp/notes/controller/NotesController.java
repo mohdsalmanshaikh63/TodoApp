@@ -33,7 +33,7 @@ public class NotesController {
 	NoteService noteService;
 
 	// add backend spring validation later
-	@PutMapping(value = "/create")
+	@PostMapping(value = "/create")
 	public ResponseEntity<Note> createNote(@RequestBody Note note, HttpServletRequest request) {
 				
 
@@ -57,12 +57,12 @@ public class NotesController {
 	}
 
 	// add backend spring validation later
-	@PostMapping(value = "/update")
+	@PutMapping(value = "/update")
 	public ResponseEntity<Message> updateNote(@RequestBody Note note,HttpServletRequest request) {
 
 		try {
 			
-			//logger.info("********Got the note from front end as "+note);
+			logger.info("********Got the note from front end as "+note);
 			
 			int userId = (int) request.getAttribute("userId");			
 
@@ -117,14 +117,20 @@ public class NotesController {
 		
 
 	@DeleteMapping(value = "/delete/{noteId}")
-	public ResponseEntity<Message> deleteNote(@PathVariable("noteId") int noteId) {
+	public ResponseEntity<Message> deleteNote(@PathVariable("noteId") int noteId, HttpServletRequest request) {
 
 		logger.info("****Note Id is " + noteId);
 
 		try {
+			
+			int userId = (int) request.getAttribute("userId");
 
-			noteService.deleteNote(noteId);
+			boolean result = noteService.deleteNote(noteId, userId);
+			if(result) {
 			return new ResponseEntity<Message>(new Message("Note deleted successfully"), HttpStatus.OK);
+			} else {
+				return new ResponseEntity<Message>(HttpStatus.FORBIDDEN);	
+			}
 
 		} catch (Exception e) {
 

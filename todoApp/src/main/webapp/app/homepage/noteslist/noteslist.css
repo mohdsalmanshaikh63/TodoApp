@@ -35,3 +35,12 @@ md-card-footer {
 .linktext {
 	margin-left: 35px;
 }
+
+.pinholder {
+	position: absolute;
+}
+
+.mypin {
+	position: relative;
+	left: 250px;
+}

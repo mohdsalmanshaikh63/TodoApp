@@ -17,7 +17,7 @@ factory('homepageService', ['localStorageService', '$http',
                 homepageRequests.createNewNote = function (note) {
                         
                         return $http({
-                                method: 'PUT',
+                                method: 'POST',
                                 url: 'notes/create',
                                 data: note,
                                 headers: {
@@ -42,9 +42,21 @@ factory('homepageService', ['localStorageService', '$http',
 
                 homepageRequests.updateNote = function (note) {                        
                         return $http({
-                                method: 'POST',
+                                method: 'PUT',
                                 url: 'notes/update',
                                 data: note,
+                                headers: {
+                                        'Content-Type': 'application/json',
+                                        'accessToken': getAccessToken,
+                                        'refreshToken': getRefreshToken
+                                }
+                        });
+                }
+
+                homepageRequests.deleteNote = function (noteId) {                        
+                        return $http({
+                                method: 'DELETE',
+                                url: 'notes/delete/'+noteId,                                
                                 headers: {
                                         'Content-Type': 'application/json',
                                         'accessToken': getAccessToken,
