@@ -8,7 +8,7 @@ component('sidenav', {
     function NavbarController($rootScope, $scope, $mdSidenav) {
 
         console.log("Got the rootScope as"+$rootScope.toggled);
-        $scope.toggle = true;
+        $scope.toggle = false;
 
         $scope.$on('toggled', function(event, data) {
             console.log("Inside broadcast event"+data);
