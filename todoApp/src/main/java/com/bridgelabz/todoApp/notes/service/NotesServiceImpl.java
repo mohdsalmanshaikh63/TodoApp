@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bridgelabz.todoApp.logging.Service.NoteLoggingService;
+import com.bridgelabz.todoApp.logging.entity.Operation;
 import com.bridgelabz.todoApp.notes.dao.NotesDao;
 import com.bridgelabz.todoApp.notes.entity.Note;
 import com.bridgelabz.todoApp.notes.entity.NoteLink;
@@ -25,6 +27,9 @@ public class NotesServiceImpl implements NoteService {
 
 	@Autowired
 	NoteLinkService noteLinkService;
+	
+	@Autowired
+	NoteLoggingService noteLoggingService;
 
 	@Override
 	@Transactional
@@ -46,6 +51,8 @@ public class NotesServiceImpl implements NoteService {
 		 */
 
 		noteLinkService.createNoteLinks(createdNote);
+		
+		noteLoggingService.createLog(createdNote, Operation.CREATE);
 
 		return createdNote.getNoteId();
 
@@ -91,8 +98,10 @@ public class NotesServiceImpl implements NoteService {
 				});
 				note.setNoteLinks(oldNoteLinks);
 			}
-
+						
 			notesDao.updateNote(note);
+			
+			noteLoggingService.createLog(note, Operation.UPDATE);
 
 		}
 
@@ -107,6 +116,7 @@ public class NotesServiceImpl implements NoteService {
 		// Authorization only the owner can delete the note
 		if(userId == note.getUser().getUserId()) {
 		notesDao.deleteNote(noteId);
+		noteLoggingService.createLog(note, Operation.DELETE);		
 		return true;
 		}
 		
