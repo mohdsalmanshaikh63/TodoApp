@@ -1,6 +1,7 @@
 package com.bridgelabz.todoApp.logging.Service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -64,6 +65,13 @@ public class NoteLoggingServiceImpl implements NoteLoggingService {
 			break;
 		}
 
+	}
+
+	@Override
+	@Transactional
+	public List<NoteLog> getAllNoteLogs() {
+		
+		return noteLoggingDao.getAllNoteLog();
 	}
 
 }

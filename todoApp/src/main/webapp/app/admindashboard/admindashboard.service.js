@@ -26,21 +26,17 @@ factory('admindashboardService', ['localStorageService', '$http',
                                         'refreshToken': getRefreshToken,
                                 }
                         });
-                }
+                } */
 
-                adminpageRequests.getAllNotes= function () {
+                adminpageRequests.getAllNoteLogs = function () {
                         return $http({
                                 method: 'GET',
-                                url: 'notes/getAllNotes',
-                                headers: {
-                                        'Content-Type': 'application/json',
-                                        'accessToken': getAccessToken,
-                                        'refreshToken': getRefreshToken,
-                                }
+                                url: 'admin/getAllNoteLogs'
+                                
                         });
                 }
 
-                adminpageRequests.updateNote = function (note) {                        
+                /* adminpageRequests.updateNote = function (note) {                        
                         return $http({
                                 method: 'PUT',
                                 url: 'notes/update',
@@ -92,7 +88,7 @@ factory('admindashboardService', ['localStorageService', '$http',
                                 }
                         });
 
-                } */
+                } */ 
 
 
                 return adminpageRequests;
