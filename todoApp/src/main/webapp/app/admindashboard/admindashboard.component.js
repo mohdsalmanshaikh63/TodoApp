@@ -17,7 +17,7 @@ component('admindashboard', {
                 console.log("Did not get log");
             });
             
-            $scope.labels1 = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
+            $scope.labels1 = [new Date(), "In-Store Sales", "Mail-Order Sales"];
             $scope.data1 = [300, 500, 100];
 
             $scope.labels2 = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];

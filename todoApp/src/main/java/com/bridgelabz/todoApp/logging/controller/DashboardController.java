@@ -8,9 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bridgelabz.todoApp.logging.Service.NoteDetailsService;
-import com.bridgelabz.todoApp.logging.Service.NoteLoggingService;
 import com.bridgelabz.todoApp.logging.entity.NoteLog;
+import com.bridgelabz.todoApp.logging.service.NoteDetailsService;
+import com.bridgelabz.todoApp.logging.service.NoteLoggingService;
 
 @RestController
 @RequestMapping(value="/admin")
@@ -28,6 +28,7 @@ public class DashboardController {
 		try {
 			
 			List<NoteLog> noteLogList = noteLoggingService.getAllNoteLogs();
+			noteLoggingService.getNotesByOperationType();
 			
 			return new ResponseEntity<List<NoteLog>>(noteLogList, HttpStatus.OK);
 			

@@ -1,4 +1,4 @@
-package com.bridgelabz.todoApp.logging.Service;
+package com.bridgelabz.todoApp.logging.service;
 
 import org.springframework.stereotype.Service;
 

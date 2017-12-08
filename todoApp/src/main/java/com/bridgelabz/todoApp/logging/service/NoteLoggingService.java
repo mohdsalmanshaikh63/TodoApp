@@ -1,4 +1,4 @@
-package com.bridgelabz.todoApp.logging.Service;
+package com.bridgelabz.todoApp.logging.service;
 
 import java.util.List;
 
@@ -11,4 +11,6 @@ public interface NoteLoggingService {
 	public void createLog(Note note, Operation operation);
 	
 	public List<NoteLog> getAllNoteLogs();
+
+	List<Object> getNotesByOperationType();
 }

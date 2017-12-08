@@ -1,5 +1,6 @@
 package com.bridgelabz.todoApp.notes.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,7 +11,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-
 
 @Table(name = "note_link")
 @Entity
@@ -26,16 +26,16 @@ public class NoteLink {
 
 	@Column(name = "url")
 	private String url;
-	
+
 	@Column(name = "domain")
 	private String domain;
-	
+
 	@Column(name = "image_url")
 	private String imageUrl;
-	
+
 	@JsonBackReference
-	@JoinColumn(name="note_id")
-	@ManyToOne
+	@JoinColumn(name = "note_id")
+	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH })
 	private Note note;
 
 	public String getTitle() {
@@ -53,7 +53,7 @@ public class NoteLink {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-		
+
 	public Note getNote() {
 		return note;
 	}
@@ -126,6 +126,5 @@ public class NoteLink {
 			return false;
 		return true;
 	}
-		
 
 }
