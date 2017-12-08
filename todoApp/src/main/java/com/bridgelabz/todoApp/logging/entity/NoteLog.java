@@ -18,7 +18,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "notes_log")
-public class NotesLog {
+public class NoteLog {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +38,17 @@ public class NotesLog {
 	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH })
 	@JoinColumn(name = "note_id")
 	private NoteDetails noteDetails;
+	
+	public NoteLog() {
+		
+	}
+		
+	public NoteLog(int userId, Date date, Operation operation, NoteDetails noteDetails) {		
+		this.userId = userId;
+		this.date = date;
+		this.operation = operation;
+		this.noteDetails = noteDetails;
+	}
 
 	public int getNoteLogId() {
 		return noteLogId;

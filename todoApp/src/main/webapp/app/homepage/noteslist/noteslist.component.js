@@ -47,7 +47,7 @@ angular.module("noteslist").component("noteslist", {
 
               //note.reminder = [2017, 11, 28, 11, 12, 56];
               console.log("New Date / Time selected:", note.reminder);
-              updateNote(note);
+              $scope.updateNote(note);
             },
             function () {
               console.log("Selection canceled");
@@ -79,7 +79,7 @@ angular.module("noteslist").component("noteslist", {
       $scope.colorChanged = function (newColor, oldColor, note) {
         console.log("from ", oldColor, " to ", newColor);
         note.color = newColor;
-        updateNote(note);
+        $scope.updateNote(note);
       };
 
       // call the necessary services and make appropiate initializations
@@ -129,7 +129,7 @@ angular.module("noteslist").component("noteslist", {
         } else {
           note.pinned = false;
         }
-        updateNote(note);
+        $scope.updateNote(note);
       };
 
       // archive note
@@ -141,7 +141,7 @@ angular.module("noteslist").component("noteslist", {
           note.archive = false;
         }
 
-        updateNote(note);
+        $scope.updateNote(note);
       };
 
       // trash note
@@ -153,7 +153,7 @@ angular.module("noteslist").component("noteslist", {
         note.trash = true;
 
         // call upate service
-        updateNote(note);
+        $scope.updateNote(note);
       };
 
       // delete note
@@ -163,7 +163,7 @@ angular.module("noteslist").component("noteslist", {
             function (response) {
               $state.reload();
 
-              console.log("Note updated successfully");
+              console.log("Note deleted successfully");
             },
             function (error) {
               console.log("Could not update note");
@@ -225,7 +225,7 @@ angular.module("noteslist").component("noteslist", {
           $scope.type.image = imageSrc;
 
           // call upate service
-          updateNote($scope.type);
+          $scope.updateNote($scope.type);
         });
       };
 
@@ -260,31 +260,16 @@ angular.module("noteslist").component("noteslist", {
         // remove image from the note
         $scope.removeImage = function (mdDialogData) {
           mdDialogData.image = null;
-          updateNote(mdDialogData);
+          $scope.updateNote(mdDialogData);
         };
 
         $scope.saveUpdatedNote = function () {
           console.log("Inside edit update");
           dataToPass.title = document.getElementById('editNoteTitle').innerHTML;
           dataToPass.description = document.getElementById('editNoteDescription').innerHTML;
-          updateNote(dataToPass);
+          $scope.updateNote(dataToPass);
           $scope.hide();
-        }
-
-        // generic update function
-        function updateNote(note) {
-          var update = homepageService.updateNote(note);
-          update.then(
-            function (response) {
-              $state.reload();
-
-              console.log("Note updated successfully");
-            },
-            function (error) {
-              console.log("Could not update note");
-            }
-          );
-        }
+        }        
 
         /* dataToPass.title = document.getElementById(
           "updatedNoteTitle"
@@ -294,6 +279,21 @@ angular.module("noteslist").component("noteslist", {
 
         //updateNote(dataToPass);
         //$scope.hide();
+      }
+
+      // generic update function
+      $scope.updateNote = function(note) {
+        var update = homepageService.updateNote(note);
+        update.then(
+          function (response) {
+            $state.reload();
+
+            console.log("Note updated successfully");
+          },
+          function (error) {
+            console.log("Could not update note");
+          }
+        );
       }
 
     }

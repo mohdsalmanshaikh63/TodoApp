@@ -50,7 +50,9 @@ public class NotesServiceImpl implements NoteService {
 		 * if (noteLinks != null) { note.setNoteLinks(noteLinks); }
 		 */
 
-		noteLinkService.createNoteLinks(createdNote);
+		Set<NoteLink> noteLinks = noteLinkService.createNoteLinks(createdNote);
+		
+		createdNote.setNoteLinks(noteLinks);
 		
 		noteLoggingService.createLog(createdNote, Operation.CREATE);
 

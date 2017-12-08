@@ -1,15 +1,15 @@
 'use strict';
 
 angular.
-    module('maincard').
-    component('maincard', {
-        templateUrl: 'app/homepage/maincard/maincard.template.html',
-        controller: ['$scope', 'homepageService', '$state',
-         function mainCardController($scope, homepageService, $state) {
+module('maincard').
+component('maincard', {
+    templateUrl: 'app/homepage/maincard/maincard.template.html',
+    controller: ['$scope', 'homepageService', '$state',
+        function mainCardController($scope, homepageService, $state) {
 
             console.log("Inside maincardController");
 
-            var self = this;
+            
 
             // toggler for main card
             $scope.showFullNote = function () {
@@ -21,28 +21,56 @@ angular.
             $scope.createNote = function () {
 
                 // get the note data from form
-                self.newNote = {};
-                self.newNote.title = document.getElementById("mainNoteTitle").innerHTML;
-                self.newNote.description = document.getElementById("mainNoteDescription").innerHTML;
-
+                $scope.newNote = {};
+                $scope.newNote.title = document.getElementById("mainNoteTitle").innerHTML;
+                $scope.newNote.description = document.getElementById("mainNoteDescription").innerHTML;
+                $scope.newNote.image=$scope.addimage;
+                $scope.imageSrc="";
+                $scope.addimage="";
                 // call the service
-                var createNoteRequest = homepageService.createNewNote(self.newNote);
+                var createNoteRequest = homepageService.createNewNote($scope.newNote);
                 createNoteRequest.then(
-                    function (response) {
-                        console.log("Got the response data as " + JSON.stringify(response));
+                    function (response) {                        
                         document.getElementById("mainNoteTitle").innerHTML = "";
                         document.getElementById("mainNoteDescription").innerHTML = "";
-                        self.newNote.noteId = response.data.noteId;
-                        var note = angular.copy(self.newNote);
-                        $state.reload();                        
+                        $scope.newNote.noteId = response.data.noteId;
+                        var note = angular.copy($scope.newNote);
+                        $state.reload();
                     },
                     function (error) {
                         console.log("Got the response data as " + error);
                     });
 
-                console.log("Got the note as " + JSON.stringify(self.newNote));
+                
 
             }
 
-        }]
-    });
+            //Image uploader
+            $scope.openImageUploader = function (type) {
+                
+                $("#image").trigger("click");
+                return false;
+            };
+
+            $scope.stepsModel = [];
+            $scope.imageUpload = function (element) {
+                var reader = new FileReader();
+                reader.onload = $scope.imageIsLoaded;
+                reader.readAsDataURL(element.files[0]);
+            };
+
+            $scope.imageIsLoaded = function (e) {
+                $scope.$apply(function () {
+                    $scope.stepsModel.push(e.target.result);
+
+                    $scope.imageSrc = e.target.result;
+                    $scope.addimage = $scope.imageSrc;
+
+                    
+                    
+                });
+            };
+
+        }
+    ]
+});

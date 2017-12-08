@@ -18,3 +18,7 @@ md-card {
 	content: attr(placeholder);
 	display: block;
 }
+
+#mainImage {
+	width: 100%;
+}

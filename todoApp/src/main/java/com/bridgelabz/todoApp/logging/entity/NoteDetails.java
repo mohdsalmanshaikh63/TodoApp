@@ -22,8 +22,12 @@ public class NoteDetails {
 	@Column(name="contains_links")
 	private boolean containsLinks;
 	
-	public NoteDetails(boolean containsText, boolean containsImage, boolean containsLinks) {
-		super();
+	public NoteDetails() {
+		
+	}
+			
+	public NoteDetails(int noteId, boolean containsText, boolean containsImage, boolean containsLinks) {
+		this.noteId = noteId;
 		this.containsText = containsText;
 		this.containsImage = containsImage;
 		this.containsLinks = containsLinks;

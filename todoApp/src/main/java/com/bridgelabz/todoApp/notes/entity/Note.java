@@ -62,7 +62,7 @@ public class Note {
 	private String image;
 
 	@JsonManagedReference
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "note")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "note", cascade = CascadeType.ALL)
 	private Set<NoteLink> noteLinks;
 
 	// on deletion of notes a user should not be deleted

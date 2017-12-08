@@ -29,6 +29,7 @@
     "angular": "^1.6.7",
     "angular-base64-upload": "^0.1.23",
     "angular-base64": "^2.0.5",
-    "ng-material-datetimepicker": "^1.9.6"
+    "ng-material-datetimepicker": "^1.9.6",
+    "angular-chart.js": "^1.1.1"
   }
 }
