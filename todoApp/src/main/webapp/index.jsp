@@ -28,6 +28,7 @@
     <link rel="stylesheet" href="app/homepage/sidenav/sidenav.css">
     <link rel="stylesheet" href="app/homepage/maincard/maincard.css">
     <link rel="stylesheet" href="app/homepage/noteslist/noteslist.css">
+    <link rel="stylesheet" href="app/admindashboard/admindashboard.css">
 
     <!-- Google material icons font's -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -49,22 +50,12 @@
     <script src="app/bower_components/ng-material-datetimepicker/dist/angular-material-datetimepicker.min.js.map"></script>
     <link rel="stylesheet" href="app/bower_components/ng-material-datetimepicker/dist/material-datetimepicker.min.css">
 
-    <!-- Angular Sanitize -->
-    <%-- <script src="app/bower_components/angular-sanitize/angular-sanitize.js"></script> --%>
-
       <!-- Angular Material Library -->
-      <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
-      <%-- <script src="${pageContext.request.contextPath}/app/bower_components/angular/angular.js"></script>
-  <script src="app/bower_components/angular-animate/angular-animate.js"></script>
-  <script src="app/bower_components/angular-aria/angular-aria.js"></script>
-  <script src="app/bower_components/angular-messages/angular-messages.js"></script> --%>
+      <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>      
 
         <script src="app/bower_components/angular-resource/angular-resource.js"></script>
         <script src="app/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-
-        <!-- angular material dependcies -->
-        <%-- <script src="app/bower_components/angular-material/angular-material.js"></script> --%>
-
+       
           <!-- confirm password library -->
           <script src="app/bower_components/angular-password/angular-password.js"></script>
 
@@ -74,11 +65,13 @@
           <!-- Ng sanitizer for cleaning html -->
           <script src="app/bower_components/angular-sanitize/angular-sanitize.js"></script>
 
+          <!-- Toaster dependencies -->
           <link rel="stylesheet" href="app/bower_components/angular-toastr/dist/angular-toastr.css" />
           <script src="app/bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
 
-          <!-- <link rel="stylesheet" href="https://unpkg.com/angular-toastr/dist/angular-toastr.css" />
-  <script src="https://unpkg.com/angular-toastr/dist/angular-toastr.tpls.js"></script> -->
+          <!-- Chart dependencies -->
+          <script src="app/bower_components/chart.js/dist/Chart.min.js"></script>
+          <script src="app/bower_components/angular-chart.js/dist/angular-chart.min.js"></script>
 
 
           <!-- core dependencies -->
@@ -100,12 +93,12 @@
           <script src="app//forgotpassword/forgotpassword.component.js"></script>
           <script src="app/forgotpassword/forgotpassword.service.js"></script>
 
-          <!-- forgotpassword module and it's dependencies -->
+          <!-- resetpassword module and it's dependencies -->
           <script src="app/resetpassword/resetpassword.module.js"></script>
           <script src="app/resetpassword/resetpassword.component.js"></script>
           <script src="app/resetpassword/resetpassword.service.js"></script>
 
-          <!-- forgotpassword module and it's dependencies -->
+          <!-- dummypage module and it's dependencies -->
           <script src="app/dummypage/dummypage.module.js"></script>
           <script src="app/dummypage/dummypage.component.js"></script>
           <script src="app/dummypage/dummypage.service.js"></script>
@@ -131,6 +124,11 @@
           <!-- Load notesList and it's dependencies -->
           <script src="app/homepage/noteslist/noteslist.module.js"></script>
           <script src="app/homepage/noteslist/noteslist.component.js"></script>
+
+          <!-- admindashboard module and it's dependencies -->
+          <script src="app/admindashboard/admindashboard.module.js"></script>
+          <script src="app/admindashboard/admindashboard.component.js"></script>
+          <script src="app/admindashboard/admindashboard.service.js"></script>
 
           <!-- Facebook login -->
           <script src="https://connect.facebook.net/en_US/sdk.js"></script>

@@ -17,5 +17,7 @@ angular.module('todoApp', [
     'tb-color-picker',
     'ngMaterialDatePicker',
     'ngSanitize',
-    'toastr'      
+    'toastr',
+    'chart.js',
+    'admindashboard'      
 ]);

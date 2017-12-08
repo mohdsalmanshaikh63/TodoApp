@@ -5,8 +5,10 @@ angular.module('todoApp').config(
 		'$stateProvider',
 		'$urlRouterProvider',
 		'localStorageServiceProvider',
+		'ChartJsProvider',
 		function config($stateProvider, $urlRouterProvider,
-			localStorageServiceProvider) {
+			localStorageServiceProvider, ChartJsProvider) {
+			
 
 			localStorageServiceProvider.setPrefix('todoApp')
 				.setStorageType('localStorage');
@@ -32,6 +34,10 @@ angular.module('todoApp').config(
 					template: '<homepage></homepage>'
 					/* templateUrl: 'app/homepage/homepage.template.html',
 					controller: 'homepageController' */
+				})
+				.state('admindashboard', {
+					url: '/admindashboard',
+					template: '<admindashboard></admindashboard>'
 				});
 			$urlRouterProvider.otherwise('/login');
 		}
