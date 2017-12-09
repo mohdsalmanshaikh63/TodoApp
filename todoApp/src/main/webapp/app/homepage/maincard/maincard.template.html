@@ -1,9 +1,9 @@
 <md-card id="maincard">
 
-    <input ng-show="false" id="image" type='file' ng-model-instant ng-model="file" onchange="angular.element(this).scope().imageUpload(this)"
+    <input ng-show="false" id="newimage" type='file' ng-model-instant ng-model="file" onchange="angular.element(this).scope().imageUpload(this)"
     />
-    <div ng-if="imageSrc!=''">
-        <img ng-src="{{imageSrc}}" id="mainImage" />
+    <div ng-if="createImageSrc!=''">
+        <img ng-src="{{createImageSrc}}" id="mainImage" />
     </div>
     <md-card-header ng-show="fullNote">
 

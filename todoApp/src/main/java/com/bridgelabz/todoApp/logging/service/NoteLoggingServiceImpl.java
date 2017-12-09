@@ -8,13 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bridgelabz.todoApp.logging.DTO.NotesWithOperation;
 import com.bridgelabz.todoApp.logging.dao.NoteLoggingDao;
 import com.bridgelabz.todoApp.logging.entity.NoteDetails;
 import com.bridgelabz.todoApp.logging.entity.NoteLog;
 import com.bridgelabz.todoApp.logging.entity.Operation;
 import com.bridgelabz.todoApp.notes.entity.Note;
-
-import utilityPojos.NotesWithOperation;
 
 @Service
 public class NoteLoggingServiceImpl implements NoteLoggingService {
@@ -81,15 +80,15 @@ public class NoteLoggingServiceImpl implements NoteLoggingService {
 
 	@Override
 	@Transactional
-	public List<Object> getNotesByOperationType(){
+	public List<Object[]> getNotesByOperationType(){
 		
 		//List<Object[]> createdNoteByDate = noteLoggingDao.getNotesByOperationType(Operation.CREATE, 5);
 		
-		List<NotesWithOperation> notesWithOperations = noteLoggingDao.getNotesByOperationType(Operation.DELETE, 5);
+		List<Object[]> notesWithOperations = noteLoggingDao.getNotesByOperationType(Operation.DELETE, 5);
 		
 		logger.info("********NOtes with operation "+notesWithOperations);
 		
-		return null;
+		return notesWithOperations;
 	}
 
 }

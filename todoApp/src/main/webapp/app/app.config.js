@@ -9,6 +9,17 @@ angular.module('todoApp').config(
 		function config($stateProvider, $urlRouterProvider,
 			localStorageServiceProvider, ChartJsProvider) {
 			
+			// Configure all line charts
+			ChartJsProvider.setOptions('bar', {
+				scales: {
+					yAxes: [{
+						ticks: {
+							beginAtZero:true
+						}
+					}]
+				},
+				legend: { display: true }
+			  });
 
 			localStorageServiceProvider.setPrefix('todoApp')
 				.setStorageType('localStorage');

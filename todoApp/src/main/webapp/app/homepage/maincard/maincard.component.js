@@ -25,7 +25,7 @@ component('maincard', {
                 $scope.newNote.title = document.getElementById("mainNoteTitle").innerHTML;
                 $scope.newNote.description = document.getElementById("mainNoteDescription").innerHTML;
                 $scope.newNote.image=$scope.addimage;
-                $scope.imageSrc="";
+                $scope.createImageSrc="";
                 $scope.addimage="";
                 // call the service
                 var createNoteRequest = homepageService.createNewNote($scope.newNote);
@@ -48,7 +48,7 @@ component('maincard', {
             //Image uploader
             $scope.openImageUploader = function (type) {
                 
-                $("#image").trigger("click");
+                $("#newimage").trigger("click");
                 return false;
             };
 
@@ -63,8 +63,9 @@ component('maincard', {
                 $scope.$apply(function () {
                     $scope.stepsModel.push(e.target.result);
 
-                    $scope.imageSrc = e.target.result;
-                    $scope.addimage = $scope.imageSrc;
+                    $scope.createImageSrc = e.target.result;
+                    console.log($scope.createImageSrc);
+                    $scope.addimage = $scope.createImageSrc;
 
                     
                     

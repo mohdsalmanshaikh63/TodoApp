@@ -9,23 +9,59 @@ component('admindashboard', {
 
             console.log("Inside adminDashboardController");
 
+            
+
             $scope.notesLogs = [];
-            var getLog = admindashboardService.getAllNoteLogs();
+            $scope.notesWithOperations = [];
+            $scope.createCount = [];
+            $scope.deleteCount = [];
+            $scope.dates = [];
+
+            /* var getLog = admindashboardService.getAllNoteLogs();
             getLog.then(function(response) {
-                console.log(response.data);
+                console.log("Got the note logs");
+                $scope.notesLogs = response.data;
+            }, function(error) {
+                console.log("Did not get log");
+            }); */
+            
+            var getLog = admindashboardService.getNotesWithOperations();
+            getLog.then(function(response) {                
+                $scope.notesWithOperations = response.data;
+                console.log($scope.notesWithOperations);
+
+                for(var i= 0; i <$scope.notesWithOperations.length; i++) {
+
+                    // push into appropiate counter
+                    if($scope.notesWithOperations[i][1] == "CREATE") {
+                        console.log("create note found");
+                        $scope.createCount.push($scope.notesWithOperations[i][2]);
+                    } else {
+                        console.log("delete note found");
+                        $scope.deleteCount.push($scope.notesWithOperations[i][2]);
+                    }
+                    
+                    if(i % 2 == 0) {
+                        $scope.dates.push($scope.notesWithOperations[i][0]);
+                    }
+                }
             }, function(error) {
                 console.log("Did not get log");
             });
-            
+                        
+
             $scope.labels1 = [new Date(), "In-Store Sales", "Mail-Order Sales"];
             $scope.data1 = [300, 500, 100];
 
-            $scope.labels2 = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
-            $scope.series2 = ['Series A', 'Series B'];
+            $scope.labels2 = $scope.dates;
+            $scope.series2 = ['Created', 'Deleted'];
+
+            console.log($scope.createCount);
+            console.log($scope.deleteCount);
         
             $scope.data2 = [
-              [65, 59, 80, 81, 56, 55, 40],
-              [28, 48, 40, 19, 86, 27, 90]
+              $scope.createCount,
+              $scope.deleteCount
             ];
         }
     ]

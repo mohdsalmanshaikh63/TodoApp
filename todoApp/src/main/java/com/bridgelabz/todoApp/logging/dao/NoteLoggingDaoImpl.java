@@ -7,18 +7,14 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.bridgelabz.todoApp.logging.entity.NoteLog;
 import com.bridgelabz.todoApp.logging.entity.Operation;
 import com.bridgelabz.todoApp.utilities.DateUtility;
-
-import utilityPojos.NotesWithOperation;
 
 @SuppressWarnings("deprecation")
 @Repository
@@ -48,17 +44,28 @@ public class NoteLoggingDaoImpl implements NoteLoggingDao {
 	}
 
 	@Override
-	public List<NotesWithOperation> getNotesByOperationType(Operation operation, int lastNDays) {
+	public List<Object[]> getNotesByOperationType(Operation operation, int lastNDays) {
 
 		Session session = sessionFactory.getCurrentSession();
 
-		Date date = DateUtility.subtractDays(new java.util.Date(), lastNDays);
+		Date date = DateUtility.subtractDays(new Date(), lastNDays);
 
 		/*@SuppressWarnings({ "unchecked" })
 		Query<Object[]> noteLogQuery = session.createQuery("select count(n) from NoteLog n ");
 		// having date >" + date + " and operation=" + operation);
 
 		List<Object[]> noteLogList = noteLogQuery.getResultList();*/
+		
+		/*Criteria criteria = session.createCriteria(NoteLog.class)
+				//.add(Restrictions.ge("date", date))
+				.setProjection(Projections.projectionList()
+						.add(Projections.property("date"))
+						.add(Projections.property("operation"))
+						.add(Projections.count("noteLogId"), "total")
+						.add(Projections.groupProperty("date"))
+						.add(Projections.groupProperty("operation"))
+						)
+				.setResultTransformer(Transformers.aliasToBean(NotesWithOperation.class));*/
 		
 		Criteria criteria = session.createCriteria(NoteLog.class)
 				.add(Restrictions.ge("date", date))
@@ -67,12 +74,21 @@ public class NoteLoggingDaoImpl implements NoteLoggingDao {
 						.add(Projections.property("operation"))
 						.add(Projections.count("noteLogId"), "total")
 						.add(Projections.groupProperty("date"))
-						.add(Projections.groupProperty("operation")))
-				.setResultTransformer(Transformers.aliasToBean(NotesWithOperation.class));
-				
+						.add(Projections.groupProperty("operation"))
+						);
+		
 		@SuppressWarnings("unchecked")
-		List<NotesWithOperation> notesWithOperation = criteria.list();
-		return notesWithOperation;
+		List<Object[]> listNoteLog = criteria.list();
+		
+		for (Object[] objects : listNoteLog) {
+			System.out.println("******Objects at"+objects[2]);
+		}
+		
+		System.out.println("******Getting NoteLog list as"+listNoteLog);
+				
+		/*@SuppressWarnings("unchecked")
+		List<NotesWithOperation> notesWithOperation = criteria.list();*/
+		return listNoteLog;
 	}
 
 }
