@@ -90,6 +90,7 @@ angular.module("noteslist").component("noteslist", {
         function (response) {
           console.log("notes loaded");
           $scope.notes = response.data;
+          console.log($scope.notes);
 
           // toaster
           $interval(function () {

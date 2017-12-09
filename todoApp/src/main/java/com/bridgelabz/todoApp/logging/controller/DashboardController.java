@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bridgelabz.todoApp.logging.DTO.NotesWithOperation;
 import com.bridgelabz.todoApp.logging.entity.NoteLog;
 import com.bridgelabz.todoApp.logging.service.NoteDetailsService;
 import com.bridgelabz.todoApp.logging.service.NoteLoggingService;
@@ -52,11 +51,25 @@ public class DashboardController {
 			
 			logger.info("Success in getting notes with operations");
 			
+			noteDetailsService.getCount();
+			
 			return new ResponseEntity<List<Object[]>>(notesWithOperation, HttpStatus.OK);
 			
 		} catch (Exception e) {
-			
+			e.printStackTrace();
 			return new ResponseEntity<List<Object[]>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping(value="/getNoteDetailsCount")
+	public void getNoteDetailsCount() {
+		
+		try {
+			
+			
+		} catch (Exception e) {
+			
+			logger.info("******Error while getting noteDetailsCount");
 		}
 	}
 

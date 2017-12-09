@@ -10,4 +10,6 @@ public interface NoteDetailsDao {
 	public NoteDetails saveNoteDetails(NoteDetails noteDetails);
 
 	public NoteDetails getNoteDetails(int noteId);
+
+	Long getDetailsCount(boolean containsText, boolean containsLinks, boolean containsImage);
 }

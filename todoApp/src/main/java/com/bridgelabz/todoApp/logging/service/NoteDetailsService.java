@@ -11,6 +11,8 @@ public interface NoteDetailsService {
 	public NoteDetails createNoteDetails(Note note);
 	
 	public NoteDetails getNoteDetails(int noteId);
+
+	public Long getCount();
 	
 
 }

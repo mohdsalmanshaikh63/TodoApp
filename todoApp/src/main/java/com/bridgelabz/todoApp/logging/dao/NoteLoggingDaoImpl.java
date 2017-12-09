@@ -49,24 +49,28 @@ public class NoteLoggingDaoImpl implements NoteLoggingDao {
 		Session session = sessionFactory.getCurrentSession();
 
 		Date date = DateUtility.subtractDays(new Date(), lastNDays);
-
-		/*@SuppressWarnings({ "unchecked" })
-		Query<Object[]> noteLogQuery = session.createQuery("select count(n) from NoteLog n ");
-		// having date >" + date + " and operation=" + operation);
-
-		List<Object[]> noteLogList = noteLogQuery.getResultList();*/
 		
-		/*Criteria criteria = session.createCriteria(NoteLog.class)
-				//.add(Restrictions.ge("date", date))
+		// optimized code with DTO use this later and change front end accordingly
+/*		Criteria criteria = session.createCriteria(NoteLog.class)
+				.add(Restrictions.ge("date", date))
 				.setProjection(Projections.projectionList()
-						.add(Projections.property("date"))
-						.add(Projections.property("operation"))
-						.add(Projections.count("noteLogId"), "total")
-						.add(Projections.groupProperty("date"))
-						.add(Projections.groupProperty("operation"))
-						)
-				.setResultTransformer(Transformers.aliasToBean(NotesWithOperation.class));*/
+						.add(Projections.count("noteLogId"), "count")
+						.add(Projections.groupProperty("date"),"date")
+						.add(Projections.groupProperty("operation"), "operation")
+						
+				 )
+				.setResultTransformer(Transformers.aliasToBean(NotesWithOperation.class));
+			
+		@SuppressWarnings("unchecked")
+		List<NotesWithOperation> notesWithOperation = criteria.list();
+		System.out.println( notesWithOperation );
 		
+		notesWithOperation.forEach(noteList ->{ 
+			System.out.println("******Got list count as"+noteList.toString());
+		
+		});*/
+		
+		// raw object code
 		Criteria criteria = session.createCriteria(NoteLog.class)
 				.add(Restrictions.ge("date", date))
 				.setProjection(Projections.projectionList()
@@ -86,8 +90,7 @@ public class NoteLoggingDaoImpl implements NoteLoggingDao {
 		
 		System.out.println("******Getting NoteLog list as"+listNoteLog);
 				
-		/*@SuppressWarnings("unchecked")
-		List<NotesWithOperation> notesWithOperation = criteria.list();*/
+		
 		return listNoteLog;
 	}
 

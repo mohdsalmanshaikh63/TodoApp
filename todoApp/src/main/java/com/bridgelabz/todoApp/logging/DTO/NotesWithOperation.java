@@ -1,4 +1,4 @@
-package utilityPojos;
+package com.bridgelabz.todoApp.logging.DTO;
 
 import java.util.Date;
 
@@ -8,7 +8,7 @@ public class NotesWithOperation {
 
 	private Operation operation;
 
-	private int count;
+	private long count;
 
 	private Date date;
 
@@ -20,11 +20,11 @@ public class NotesWithOperation {
 		this.operation = operation;
 	}
 
-	public int getCount() {
+	public long getCount() {
 		return count;
 	}
 
-	public void setCount(int count) {
+	public void setCount(long count) {
 		this.count = count;
 	}
 

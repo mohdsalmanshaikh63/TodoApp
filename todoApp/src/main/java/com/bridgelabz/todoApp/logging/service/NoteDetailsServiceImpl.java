@@ -57,4 +57,23 @@ public class NoteDetailsServiceImpl implements NoteDetailsService {
 		return noteDetailsDao.getNoteDetails(noteId);
 	}
 
+	@Override
+	@Transactional(readOnly=true)
+	public Long getCount() {
+		
+		Long onlyText = noteDetailsDao.getDetailsCount(true, false, false);
+		
+		Long textAndLink = noteDetailsDao.getDetailsCount(true, true, false);
+		
+		Long onlyImage = noteDetailsDao.getDetailsCount(false, false, true);
+		
+		Long textAndImage = noteDetailsDao.getDetailsCount(true, false, true);
+		
+		Long textLinkAndImage = noteDetailsDao.getDetailsCount(true, true, true);
+		
+		return null;
+	}
+
+	
+
 }
