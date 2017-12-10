@@ -20,7 +20,7 @@
                 </md-button>
             </md-card-actions>
 
-            <img ng-src="{{note.image}}" class="md-card-image" ng-if("note.image") ng-click="editDialog($event, note)">
+            <img ng-src="{{note.image}}" class="md-card-image" ng-if( "note.image") ng-click="editDialog($event, note)">
 
 
 
@@ -45,7 +45,7 @@
                     <i class="material-icons" ng-show="mouse">person_add</i>
                 </md-button>
 
-                 <color-picker class="colorIcon mypalette" value="cardColor" color="color" options="colors" on-color-changed="colorChanged(newColor, oldColor,note)"></color-picker>
+                <color-picker class="colorIcon mypalette" value="cardColor" color="color" options="colors" on-color-changed="colorChanged(newColor, oldColor,note)"></color-picker>
                 <md-button class="md-icon-button" aria-label="Image Upload" ng-click="openImageUploader(note)">
                     <i class="material-icons" ng-show="mouse">image</i>
                 </md-button>
@@ -64,6 +64,19 @@
                                 Delete
                             </md-button>
                         </md-menu-item>
+
+                        <md-menu-item>
+                            <md-button class="md-button" ng-click="archive(note)" aria-label="Delete">
+                                Archive
+                            </md-button>
+                        </md-menu-item>
+
+                        <md-menu-item>
+                            <md-button class="md-button" ng-click="trash(note)" aria-label="Delete">
+                                Trash
+                            </md-button>
+                        </md-menu-item>
+
                         <md-menu-item>
                             <md-button class="md-button" ng-click="addLabel(note)" aria-label="Add Label">
                                 Add Label
@@ -119,7 +132,7 @@
     <div class="mynote" flex="30" layout="column" ng-repeat="note in notes | filter:{archive:false, pinned:false, trash:false} as others"
         ng-mouseenter="mouse=true" ng-mouseleave="mouse=false">
 
-        <md-card ng-style="{'background-color' : note.color}" >
+        <md-card ng-style="{'background-color' : note.color}">
 
             <md-card-actions layout="row" layout-align="end center" class="pinholder" flex>
                 <md-button class="md-icon-button mypin" aria-label="Pin" ng-click="pin(note)">
@@ -175,20 +188,35 @@
                             </md-button>
                         </md-menu-item>
                         <md-menu-item>
+                            <md-button class="md-button" ng-click="archive(note)" aria-label="Delete">
+                                Archive
+                            </md-button>
+                        </md-menu-item>
+
+                        <md-menu-item>
+                            <md-button class="md-button" ng-click="trash(note)" aria-label="Delete">
+                                Trash
+                            </md-button>
+                        </md-menu-item>
+
+                        <md-menu-item>
                             <md-button class="md-button" ng-click="addLabel(note)" aria-label="Add Label">
                                 Add Label
                             </md-button>
                         </md-menu-item>
+
                         <md-menu-item>
                             <md-button class="md-button" ng-click="copyNote(note)" aria-label="Make a Copy">
                                 Make a copy
                             </md-button>
                         </md-menu-item>
+
                         <md-menu-item>
                             <md-button class="md-button" ng-click="socialShare(note)" aria-label="Social Share">
                                 Social Share
                             </md-button>
                         </md-menu-item>
+
                     </md-menu-content>
                 </md-menu>
 

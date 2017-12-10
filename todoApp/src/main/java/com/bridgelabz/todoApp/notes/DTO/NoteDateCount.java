@@ -2,17 +2,17 @@ package com.bridgelabz.todoApp.notes.DTO;
 
 import java.util.Date;
 
-public class NoteCountTest {
+public class NoteDateCount {
 
-	private Long count;
+	private long count;
+	
+	private Date date;
 
-	private Date date;			
-
-	public Long getCount() {
+	public long getCount() {
 		return count;
 	}
 
-	public void setCount(Long count) {
+	public void setCount(long count) {
 		this.count = count;
 	}
 
@@ -26,8 +26,8 @@ public class NoteCountTest {
 
 	@Override
 	public String toString() {
-		return "NoteCountTest [count=" + count + ", date=" + date + "]";
+		return "NoteDateCount [count=" + count + ", date=" + date + "]";
 	}
-
+	
 	
 }

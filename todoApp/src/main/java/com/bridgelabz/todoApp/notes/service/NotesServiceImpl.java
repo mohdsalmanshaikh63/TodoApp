@@ -1,5 +1,6 @@
 package com.bridgelabz.todoApp.notes.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -10,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.bridgelabz.todoApp.logging.entity.Operation;
 import com.bridgelabz.todoApp.logging.service.NoteLoggingService;
-import com.bridgelabz.todoApp.notes.DTO.NoteCountTest;
+import com.bridgelabz.todoApp.notes.DTO.NoteActionCount;
 import com.bridgelabz.todoApp.notes.dao.NotesDao;
 import com.bridgelabz.todoApp.notes.entity.Note;
 import com.bridgelabz.todoApp.notes.entity.NoteLink;
@@ -28,7 +29,7 @@ public class NotesServiceImpl implements NoteService {
 
 	@Autowired
 	NoteLinkService noteLinkService;
-	
+
 	@Autowired
 	NoteLoggingService noteLoggingService;
 
@@ -52,9 +53,9 @@ public class NotesServiceImpl implements NoteService {
 		 */
 
 		Set<NoteLink> noteLinks = noteLinkService.createNoteLinks(createdNote);
-		
+
 		createdNote.setNoteLinks(noteLinks);
-		
+
 		noteLoggingService.createLog(createdNote, Operation.CREATE);
 
 		return createdNote.getNoteId();
@@ -87,7 +88,7 @@ public class NotesServiceImpl implements NoteService {
 
 			// if no links are present with the note simple add the links and update
 			if (oldNoteLinks.isEmpty()) {
-				
+
 				note.setNoteLinks(newNoteLinks);
 
 			} else {
@@ -101,9 +102,9 @@ public class NotesServiceImpl implements NoteService {
 				});
 				note.setNoteLinks(oldNoteLinks);
 			}
-						
+
 			notesDao.updateNote(note);
-			
+
 			noteLoggingService.createLog(note, Operation.UPDATE);
 
 		}
@@ -113,16 +114,16 @@ public class NotesServiceImpl implements NoteService {
 	@Override
 	@Transactional
 	public boolean deleteNote(int noteId, int userId) {
-		
+
 		Note note = getNote(noteId);
-		
+
 		// Authorization only the owner can delete the note
-		if(userId == note.getUser().getUserId()) {
-		notesDao.deleteNote(noteId);
-		noteLoggingService.createLog(note, Operation.DELETE);		
-		return true;
+		if (userId == note.getUser().getUserId()) {
+			notesDao.deleteNote(noteId);
+			noteLoggingService.createLog(note, Operation.DELETE);
+			return true;
 		}
-		
+
 		return false;
 
 	}
@@ -145,13 +146,24 @@ public class NotesServiceImpl implements NoteService {
 	public int deleteTrash() {
 		return notesDao.deleteTrash();
 	}
-	
+
 	@Override
 	@Transactional
-	public  List<NoteCountTest> getNotesCountByDate() {
-		return notesDao.getNotesCountByDate();
+	public List<NoteActionCount> getNotesCountByActionAndDate() {
+
+		List<NoteActionCount> noteActionCountList = new ArrayList<>();
+
+		// get count of each category
+		NoteActionCount archiveCount = notesDao.getNotesCountByDate("archive");
+		noteActionCountList.add(archiveCount);
+		
+		NoteActionCount pinCount = notesDao.getNotesCountByDate("pinned");
+		noteActionCountList.add(pinCount);
+		
+		NoteActionCount trashCount = notesDao.getNotesCountByDate("trash");
+		noteActionCountList.add(trashCount);
+
+		return noteActionCountList;
 	}
-	
-	
 
 }

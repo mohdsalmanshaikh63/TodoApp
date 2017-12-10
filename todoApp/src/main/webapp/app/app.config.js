@@ -23,8 +23,9 @@ angular.module('todoApp').config(
 			
 			// Configure all pie charts
 			ChartJsProvider.setOptions('pie', {				
-				legend: { display: true }
-			  });
+				legend: { display: true },
+				xAxes:[]
+			  });			  
 
 			localStorageServiceProvider.setPrefix('todoApp')
 				.setStorageType('localStorage');

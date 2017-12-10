@@ -22,6 +22,14 @@ factory('admindashboardService', ['localStorageService', '$http',
                         });
                 }
 
+                adminpageRequests.getNotesCountByActionAndDate = function () {
+                        return $http({
+                                method: 'GET',
+                                url: 'admin/getNotesCountByActionAndDate'
+                                
+                        });
+                }
+
                 return adminpageRequests;
         }
 ]);

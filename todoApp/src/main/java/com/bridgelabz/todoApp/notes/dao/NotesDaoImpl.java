@@ -8,6 +8,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
 import org.hibernate.transform.Transformers;
 import org.hibernate.type.StandardBasicTypes;
@@ -15,7 +16,8 @@ import org.hibernate.type.Type;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.bridgelabz.todoApp.notes.DTO.NoteCountTest;
+import com.bridgelabz.todoApp.notes.DTO.NoteActionCount;
+import com.bridgelabz.todoApp.notes.DTO.NoteDateCount;
 import com.bridgelabz.todoApp.notes.entity.Note;
 import com.bridgelabz.todoApp.user.entity.User;
 import com.bridgelabz.todoApp.user.service.UserService;
@@ -81,7 +83,7 @@ public class NotesDaoImpl implements NotesDao {
 
 		session.detach(note);
 
-		//note.setUser(null);
+		// note.setUser(null);
 
 		return note;
 	}
@@ -115,7 +117,7 @@ public class NotesDaoImpl implements NotesDao {
 		 * @SuppressWarnings("unchecked") List<Note> notesList = criteria.list();
 		 */
 
-		//logger.info("*****Getting Notes List:" + notesList);
+		// logger.info("*****Getting Notes List:" + notesList);
 
 		return notesList;
 	}
@@ -130,8 +132,7 @@ public class NotesDaoImpl implements NotesDao {
 		boolean trash = true;
 
 		@SuppressWarnings("rawtypes")
-		Query deleteNote = session
-				.createQuery("delete from Note where modifyTime < :deleteTime and trash=:trash");
+		Query deleteNote = session.createQuery("delete from Note where modifyTime < :deleteTime and trash=:trash");
 		deleteNote.setParameter("deleteTime", deleteTime);
 		deleteNote.setParameter("trash", trash);
 
@@ -139,28 +140,29 @@ public class NotesDaoImpl implements NotesDao {
 
 		return count;
 	}
-	
+
 	@Override
-	public List<NoteCountTest> getNotesCountByDate() {
+	public NoteActionCount getNotesCountByDate(String category) {
 
 		Session session = sessionFactory.getCurrentSession();
-							
+
 		@SuppressWarnings("deprecation")
-		Criteria criteria = session.createCriteria(Note.class)
+		Criteria criteria = session.createCriteria(Note.class).add(Restrictions.eq(category, true))
+				.add(Restrictions.eq(category, true))
 				.setProjection(Projections.projectionList()
-						//.add(Projections.groupProperty("createTime"),"date")
-						.add(Projections.sqlGroupProjection("date(create_time) as date", "date", new String[] { "date" }, new Type[] { StandardBasicTypes.DATE }))
+						.add(Projections.sqlGroupProjection("date(create_time) as date", "date",
+								new String[] { "date" }, new Type[] { StandardBasicTypes.DATE }))
 						.add(Projections.rowCount(), "count"))
-				.setResultTransformer(Transformers.aliasToBean(NoteCountTest.class));				
+				.setResultTransformer(Transformers.aliasToBean(NoteDateCount.class));
 
 		@SuppressWarnings("unchecked")
-		List<NoteCountTest> noteCountList = criteria.list();
+		List<NoteDateCount> noteCountList = criteria.list();
+
+		logger.info("Got the notecount list as " + noteCountList);
 		
-		logger.info("Got the notecount list as "+noteCountList);
-		
-		return noteCountList;
+		NoteActionCount noteActionCount = new NoteActionCount(category, noteCountList);
+
+		return noteActionCount;
 	}
-	
-	
 
 }

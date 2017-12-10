@@ -14,7 +14,7 @@ import com.bridgelabz.todoApp.logging.DTO.NoteCount;
 import com.bridgelabz.todoApp.logging.entity.NoteLog;
 import com.bridgelabz.todoApp.logging.service.NoteDetailsService;
 import com.bridgelabz.todoApp.logging.service.NoteLoggingService;
-import com.bridgelabz.todoApp.notes.DTO.NoteCountTest;
+import com.bridgelabz.todoApp.notes.DTO.NoteActionCount;
 import com.bridgelabz.todoApp.notes.service.NoteService;
 
 @RestController
@@ -84,14 +84,14 @@ public class DashboardController {
 		}
 	}
 	
-	@GetMapping(value="/getNotesCountByDate")
-	public ResponseEntity<List<NoteCountTest>> getNotesCountByDate() {
+	@GetMapping(value="/getNotesCountByActionAndDate")
+	public ResponseEntity<List<NoteActionCount>> getNotesCountByActionAndDate() {
 		
 		try {
 			
-			List<NoteCountTest> noteCountList = noteService.getNotesCountByDate();
+			List<NoteActionCount> noteCountList = noteService.getNotesCountByActionAndDate();
 			
-			return new ResponseEntity<List<NoteCountTest>>(noteCountList, HttpStatus.OK);
+			return new ResponseEntity<List<NoteActionCount>>(noteCountList, HttpStatus.OK);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
