@@ -13,5 +13,5 @@ public interface NoteLoggingService {
 	
 	public List<NoteLog> getAllNoteLogs();
 
-	List<Object[]> getNotesByOperationType();
+	public List<Object[]> getNotesByOperationType();
 }

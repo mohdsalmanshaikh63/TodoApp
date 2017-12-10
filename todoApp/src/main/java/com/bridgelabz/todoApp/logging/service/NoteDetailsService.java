@@ -1,7 +1,10 @@
 package com.bridgelabz.todoApp.logging.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
+import com.bridgelabz.todoApp.logging.DTO.NoteCount;
 import com.bridgelabz.todoApp.logging.entity.NoteDetails;
 import com.bridgelabz.todoApp.notes.entity.Note;
 
@@ -12,7 +15,7 @@ public interface NoteDetailsService {
 	
 	public NoteDetails getNoteDetails(int noteId);
 
-	public Long getCount();
+	public List<NoteCount> getCount();
 	
 
 }

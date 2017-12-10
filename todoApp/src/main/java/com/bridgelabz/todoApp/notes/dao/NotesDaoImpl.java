@@ -4,12 +4,18 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.hibernate.query.Query;
+import org.hibernate.transform.Transformers;
+import org.hibernate.type.StandardBasicTypes;
+import org.hibernate.type.Type;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.bridgelabz.todoApp.notes.DTO.NoteCountTest;
 import com.bridgelabz.todoApp.notes.entity.Note;
 import com.bridgelabz.todoApp.user.entity.User;
 import com.bridgelabz.todoApp.user.service.UserService;
@@ -133,5 +139,28 @@ public class NotesDaoImpl implements NotesDao {
 
 		return count;
 	}
+	
+	@Override
+	public List<NoteCountTest> getNotesCountByDate() {
+
+		Session session = sessionFactory.getCurrentSession();
+							
+		@SuppressWarnings("deprecation")
+		Criteria criteria = session.createCriteria(Note.class)
+				.setProjection(Projections.projectionList()
+						//.add(Projections.groupProperty("createTime"),"date")
+						.add(Projections.sqlGroupProjection("date(create_time) as date", "date", new String[] { "date" }, new Type[] { StandardBasicTypes.DATE }))
+						.add(Projections.rowCount(), "count"))
+				.setResultTransformer(Transformers.aliasToBean(NoteCountTest.class));				
+
+		@SuppressWarnings("unchecked")
+		List<NoteCountTest> noteCountList = criteria.list();
+		
+		logger.info("Got the notecount list as "+noteCountList);
+		
+		return noteCountList;
+	}
+	
+	
 
 }

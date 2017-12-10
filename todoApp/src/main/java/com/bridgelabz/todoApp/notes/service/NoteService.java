@@ -2,6 +2,7 @@ package com.bridgelabz.todoApp.notes.service;
 
 import java.util.List;
 
+import com.bridgelabz.todoApp.notes.DTO.NoteCountTest;
 import com.bridgelabz.todoApp.notes.entity.Note;
 
 public interface NoteService {
@@ -17,5 +18,7 @@ public interface NoteService {
 	public List<Note> getAllNotes(int uId);
 
 	public int deleteTrash();
+
+	List<NoteCountTest> getNotesCountByDate();
 
 }

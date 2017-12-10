@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.bridgelabz.todoApp.logging.entity.Operation;
 import com.bridgelabz.todoApp.logging.service.NoteLoggingService;
+import com.bridgelabz.todoApp.notes.DTO.NoteCountTest;
 import com.bridgelabz.todoApp.notes.dao.NotesDao;
 import com.bridgelabz.todoApp.notes.entity.Note;
 import com.bridgelabz.todoApp.notes.entity.NoteLink;
@@ -142,8 +143,15 @@ public class NotesServiceImpl implements NoteService {
 	@Override
 	@Transactional
 	public int deleteTrash() {
-
 		return notesDao.deleteTrash();
 	}
+	
+	@Override
+	@Transactional
+	public  List<NoteCountTest> getNotesCountByDate() {
+		return notesDao.getNotesCountByDate();
+	}
+	
+	
 
 }

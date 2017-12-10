@@ -1,11 +1,14 @@
 package com.bridgelabz.todoApp.logging.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bridgelabz.todoApp.logging.DTO.NoteCount;
 import com.bridgelabz.todoApp.logging.dao.NoteDetailsDao;
 import com.bridgelabz.todoApp.logging.entity.NoteDetails;
 import com.bridgelabz.todoApp.notes.entity.Note;
@@ -59,19 +62,31 @@ public class NoteDetailsServiceImpl implements NoteDetailsService {
 
 	@Override
 	@Transactional(readOnly=true)
-	public Long getCount() {
+	public List<NoteCount> getCount() {
 		
-		Long onlyText = noteDetailsDao.getDetailsCount(true, false, false);
+		List<NoteCount> noteCountList = new ArrayList<>();
 		
-		Long textAndLink = noteDetailsDao.getDetailsCount(true, true, false);
+		Long onlyTextCount = noteDetailsDao.getDetailsCount(true, false, false);
+		NoteCount onlyText = new NoteCount(onlyTextCount, "Text Only");
+		noteCountList.add(onlyText);
 		
-		Long onlyImage = noteDetailsDao.getDetailsCount(false, false, true);
+		Long textAndLinkCount = noteDetailsDao.getDetailsCount(true, true, false);
+		NoteCount textAndLink = new NoteCount(textAndLinkCount, "Text and Link");
+		noteCountList.add(textAndLink);
 		
-		Long textAndImage = noteDetailsDao.getDetailsCount(true, false, true);
+		Long onlyImageCount = noteDetailsDao.getDetailsCount(false, false, true);
+		NoteCount onlyImage = new NoteCount(onlyImageCount, "Only Image");
+		noteCountList.add(onlyImage);
 		
-		Long textLinkAndImage = noteDetailsDao.getDetailsCount(true, true, true);
+		Long textAndImageCount = noteDetailsDao.getDetailsCount(true, false, true);
+		NoteCount textAndImage = new NoteCount(textAndImageCount, "Text and Image");
+		noteCountList.add(textAndImage);
 		
-		return null;
+		Long textLinkAndImageCount = noteDetailsDao.getDetailsCount(true, true, true);
+		NoteCount textLinkAndImage = new NoteCount(textLinkAndImageCount, "Text, Link and Images");
+		noteCountList.add(textLinkAndImage);
+				
+		return noteCountList;
 	}
 
 	

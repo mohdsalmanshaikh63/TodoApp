@@ -2,6 +2,8 @@ package com.bridgelabz.todoApp.notes.dao;
 
 import java.util.List;
 
+import com.bridgelabz.todoApp.logging.DTO.NoteCount;
+import com.bridgelabz.todoApp.notes.DTO.NoteCountTest;
 import com.bridgelabz.todoApp.notes.entity.Note;
 
 public interface NotesDao {
@@ -17,4 +19,6 @@ public Note createNote(Note note, int uId);
 	public List<Note> getAllNotes(int uId);
 
 	public int deleteTrash();
+
+	public List<NoteCountTest> getNotesCountByDate();
 }

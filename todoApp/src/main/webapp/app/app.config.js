@@ -9,7 +9,7 @@ angular.module('todoApp').config(
 		function config($stateProvider, $urlRouterProvider,
 			localStorageServiceProvider, ChartJsProvider) {
 			
-			// Configure all line charts
+			// Configure all bar charts
 			ChartJsProvider.setOptions('bar', {
 				scales: {
 					yAxes: [{
@@ -18,6 +18,11 @@ angular.module('todoApp').config(
 						}
 					}]
 				},
+				legend: { display: true }
+			  });
+			
+			// Configure all pie charts
+			ChartJsProvider.setOptions('pie', {				
 				legend: { display: true }
 			  });
 

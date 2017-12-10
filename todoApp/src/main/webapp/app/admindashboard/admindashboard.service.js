@@ -5,20 +5,19 @@ factory('admindashboardService', ['localStorageService', '$http',
                 console.log("Tokens are " + localStorageService.get('accessToken') + localStorageService.get('refreshToken'));
 
                 var adminpageRequests = {}
-
-                
-                adminpageRequests.getAllNoteLogs = function () {
-                        return $http({
-                                method: 'GET',
-                                url: 'admin/getAllNoteLogs'
                                 
-                        });
-                }
-
                 adminpageRequests.getNotesWithOperations = function () {
                         return $http({
                                 method: 'GET',
                                 url: 'admin/getNotesWithOperations'
+                                
+                        });
+                }
+
+                adminpageRequests.getNoteDetailsCount = function () {
+                        return $http({
+                                method: 'GET',
+                                url: 'admin/getNoteDetailsCount'
                                 
                         });
                 }

@@ -3,7 +3,7 @@ package com.bridgelabz.todoApp.logging.DTO;
 public class NoteCount {
 
 	private Long count;
-	
+
 	private String noteType;
 
 	public Long getCount() {
@@ -22,9 +22,15 @@ public class NoteCount {
 		this.noteType = noteType;
 	}
 
+	public NoteCount(Long count, String noteType) {
+
+		this.count = count;
+		this.noteType = noteType;
+	}
+
 	@Override
 	public String toString() {
 		return "NoteCount [count=" + count + ", noteType=" + noteType + "]";
 	}
-	
+
 }

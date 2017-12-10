@@ -10,9 +10,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bridgelabz.todoApp.logging.DTO.NoteCount;
 import com.bridgelabz.todoApp.logging.entity.NoteLog;
 import com.bridgelabz.todoApp.logging.service.NoteDetailsService;
 import com.bridgelabz.todoApp.logging.service.NoteLoggingService;
+import com.bridgelabz.todoApp.notes.DTO.NoteCountTest;
+import com.bridgelabz.todoApp.notes.service.NoteService;
 
 @RestController
 @RequestMapping(value="/admin")
@@ -23,6 +26,9 @@ public class DashboardController {
 	
 	@Autowired
 	NoteDetailsService noteDetailsService;
+	
+	@Autowired
+	NoteService noteService;
 	
 	Logger logger = Logger.getLogger(DashboardController.class);
 	
@@ -37,6 +43,7 @@ public class DashboardController {
 			
 		} catch (Exception e) {
 
+			e.printStackTrace();
 			return new ResponseEntity<List<NoteLog>>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
@@ -62,14 +69,34 @@ public class DashboardController {
 	}
 	
 	@GetMapping(value="/getNoteDetailsCount")
-	public void getNoteDetailsCount() {
+	public ResponseEntity<List<NoteCount>> getNoteDetailsCount() {
 		
 		try {
 			
+			List<NoteCount> noteCountList = noteDetailsService.getCount();
+			
+			return new ResponseEntity<List<NoteCount>>(noteCountList, HttpStatus.OK);
 			
 		} catch (Exception e) {
-			
+			e.printStackTrace();
 			logger.info("******Error while getting noteDetailsCount");
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping(value="/getNotesCountByDate")
+	public ResponseEntity<List<NoteCountTest>> getNotesCountByDate() {
+		
+		try {
+			
+			List<NoteCountTest> noteCountList = noteService.getNotesCountByDate();
+			
+			return new ResponseEntity<List<NoteCountTest>>(noteCountList, HttpStatus.OK);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.info("******Error while getting noteDetailsCount");
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
