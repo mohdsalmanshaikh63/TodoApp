@@ -15,7 +15,7 @@
   <!-- Font awesome -->
   <link rel="stylesheet" href="app/bower_components/font-awesome/css/font-awesome.min.css">
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
 
   <!-- Css dependencies -->
   <%-- <link rel="stylesheet" href="app/bower_components/angular-material/angular-material.css" > --%>
@@ -140,7 +140,7 @@
 
 </head>
 
-<body>
+<body style="overflow:scroll">
 
   <!-- router view -->
   <div class="view-container" ng-cloak>

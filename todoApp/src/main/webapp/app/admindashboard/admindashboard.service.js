@@ -7,6 +7,7 @@ factory('admindashboardService', ['localStorageService', '$http',
                 var adminpageRequests = {}
                                 
                 adminpageRequests.getNotesWithOperations = function () {
+                        
                         return $http({
                                 method: 'GET',
                                 url: 'admin/getNotesWithOperations'

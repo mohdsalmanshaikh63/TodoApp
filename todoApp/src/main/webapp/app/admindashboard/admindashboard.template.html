@@ -1,19 +1,260 @@
-<div layout="row" layout-align="start start" layout-padding>
+<div layout="column" ng-init="pageload()">
 
-    <div flex="90">
-        <canvas id="bar" class="chart chart-bar" chart-data="data2" chart-series="series2" chart-labels="labels2">
-        </canvas>
+    <md-toolbar layout="row" id="adminnavbar" layout-align="start center">
+        <div layout="row" flex="30" layout-align="start center">
+            <md-button class="menu" ng-click="toggleNav()" aria-label="Menu">
+                <i class="material-icons">menu</i>
+            </md-button>
+            <div layout="row" layout-align="start center">
+                <h3>Fundoo Notes</h3>
+            </div>
+
+        </div>
+
+        <div layout="row" flex layout-align="start center">
+            <md-autocomplete flex class="autoSearch" ng-disabled="" md-selected-item="" md-search-text-change="" md-items="" md-item-text=""
+                md-min-length="0" placeholder="Search">
+            </md-autocomplete>
+        </div>
+
+        <div flex="10"></div>
+
+        <div layout="row" flex="10" layout-align="end center">
+            <md-menu>
+                <md-button id="profileMenu" class="md-fab md-icon my-icon-button" aria-label="User" ng-click="$mdOpenMenu()">
+                    <md-tooltip md-direction="bottom">{{user.email}}</md-tooltip>
+                    <img ng-src="{{user.profilePic}}" alt="{{user.name.charAt(0)}}" style=" height: 100%;width: 100%;">
+                </md-button>
+
+                <md-menu-content width="4">
+
+                    <div flex="33">
+
+                        <span class="md-avatar">
+                            <md-button class="md-fab md-icon my-icon-button" aria-label="User">
+                                <img ng-src="{{user.profilePic}}" alt="{{user.firstName.charAt(0)}}" style="height: 100%;width: 100%;">
+                            </md-button>
+                            <b>{{user.firstName}}</b>
+                            <p>{{user.email}}</p>
+                        </span>
+                        <br>
+                        <md-divider></md-divider>
+
+                        <md-button class="md-raised">Update Profile</md-button>
+                        <md-button class="md-raised md-primary" ng-click="logout()">Logout</md-button>
+
+                    </div>
+
+                </md-menu-content>
+
+            </md-menu>
+
+        </div>
+    </md-toolbar>
+
+    <div flex layout="row">
+
+        <!-- Sidenav -->
+        <md-sidenav id="adminsidenav" md-component-id="left" md-is-locked-open="true">
+            <md-list>
+
+                <md-list-item>
+                    <md-button>
+                        <i class="material-icons">lightbulb_outline</i>Note </md-button>
+                </md-list-item>
+                <md-list-item>
+                    <md-button>
+                        <i class="material-icons">touch_app</i>Reminder
+                    </md-button>
+                </md-list-item>
+        </md-sidenav>
+
+        <!-- Charts in cards -->
+        <md-content class="notespane" flex layout="row" layout-wrap>
+
+            <md-card flex="45" layout="column">
+
+                <div layout="row">
+                    <md-card-header class="chartTitle" layout="row" flex="90">
+                        <md-card-header-text layout-align="center center">
+                            Note Summary
+                        </md-card-header-text>
+                    </md-card-header>
+
+                    <md-menu class="md-icon-button align-right" aria-label="More" flex="10">
+                        <md-button class="md-icon-button" aria-label="Open menu with custom trigger" ng-click="$mdOpenMenu()">
+                            <i class="material-icons">more_vert</i>
+                        </md-button>
+
+                        <md-menu-content>
+                            <md-menu-item>
+                                <md-button class="md-button" ng-click="refreshBar()" aria-label="Refresh">
+                                    Refresh
+                                </md-button>
+                            </md-menu-item>
+                            <md-menu-item>
+                                <md-button class="md-button" ng-click="doNothing()" aria-label="From Date">
+                                    Select from Date
+                                </md-button>
+                            </md-menu-item>
+
+                            <md-menu-item>
+                                <md-button class="md-button" ng-click="doNothing()" aria-label="To Date">
+                                    Select to Date
+                                </md-button>
+                            </md-menu-item>
+
+
+                        </md-menu-content>
+                    </md-menu>
+
+                </div>
+                <md-divider></md-divider>
+
+                <md-card-content layout-align="space around">
+                    <md-progress-circular md-mode="indeterminate" ng-if="isBarLoading" md-diameter="20px"></md-progress-circular>
+                    <canvas id="bar" class="chart chart-bar" ng-if="!isLoading" chart-data="data2" chart-series="series2" chart-labels="labels2">
+                    </canvas>
+
+                </md-card-content>
+
+                <md-card-footer layout-align="space around">
+                    <md-card-footer-text>Displaying daily Created/Deleted Notes.</md-card-footer-text>
+                </md-card-footer>
+
+            </md-card>
+
+            <md-card flex="45">
+
+                <div layout="row">
+
+                    <md-card-header class="chartTitle" layout="row" flex="90">
+                        <md-card-header-text layout-align="center center">
+                            Note Classification
+                        </md-card-header-text>
+                    </md-card-header>
+                    <md-menu class="md-icon-button align-right" aria-label="More" flex="10">
+                        <md-button class="md-icon-button" aria-label="Open menu with custom trigger" ng-click="$mdOpenMenu()">
+                            <i class="material-icons">more_vert</i>
+                        </md-button>
+
+                        <md-menu-content>
+                            <md-menu-item>
+                                <md-button class="md-button" ng-click="refreshPieChart()" aria-label="Refresh">
+                                    Refresh
+                                </md-button>
+                            </md-menu-item>
+                            <md-menu-item>
+                                <md-button class="md-button" ng-click="doNothing()" aria-label="From Date">
+                                    Select from Date
+                                </md-button>
+                            </md-menu-item>
+
+                            <md-menu-item>
+                                <md-button class="md-button" ng-click="doNothing()" aria-label="To Date">
+                                    Select to Date
+                                </md-button>
+                            </md-menu-item>
+
+
+                        </md-menu-content>
+                    </md-menu>
+                </div>
+
+
+                <md-divider></md-divider>
+
+                <md-card-content>
+
+                    <canvas id="pie" class="chart chart-pie" chart-data="data" chart-labels="label" chart-options="options">
+                    </canvas>
+
+                </md-card-content>
+
+                <md-card-footer layout-align="space around">
+                    <md-card-footer-text>Displaying Note composition.</md-card-footer-text>
+                </md-card-footer>
+
+            </md-card>
+            <md-card flex="90" layout="column">
+
+                <div layout="row">
+
+                    <md-card-header class="chartTitle" layout="row" flex="90">
+                        <md-card-header-text layout-align="center center">
+                            Note Activities
+                        </md-card-header-text>
+                    </md-card-header>
+                    <md-menu class="md-icon-button align-right" aria-label="More" flex="10">
+                        <md-button class="md-icon-button" aria-label="Open menu with custom trigger" ng-click="$mdOpenMenu()">
+                            <i class="material-icons">more_vert</i>
+                        </md-button>
+
+                        <md-menu-content>
+                            <md-menu-item>
+                                <md-button class="md-button" ng-click="refreshLineChart()" aria-label="Refresh">
+                                    Refresh
+                                </md-button>
+                            </md-menu-item>
+                            <md-menu-item>
+                                <md-button class="md-button" ng-click="doNothing()" aria-label="From Date">
+                                    Select from Date
+                                </md-button>
+                            </md-menu-item>
+
+                            <md-menu-item>
+                                <md-button class="md-button" ng-click="doNothing()" aria-label="To Date">
+                                    Select to Date
+                                </md-button>
+                            </md-menu-item>
+
+
+                        </md-menu-content>
+                    </md-menu>
+                </div>
+
+
+                <md-divider></md-divider>
+
+                <md-card-content>
+                    <canvas id="line" class="chart chart-line" chart-data="lineData" chart-labels="lineLabels" chart-series="lineSeries" chart-options="lineOptions"
+                        chart-dataset-override="datasetOverride" chart-click="onClick">
+                    </canvas>
+                </md-card-content>
+
+                <md-card-footer layout-align="space around">
+                    <md-card-footer-text>Displaying Daily Note Action Count.</md-card-footer-text>
+                </md-card-footer>
+
+            </md-card>
+            
+
+            <!-- <div layout="row" layout-align="start center" layout-wrap flex>
+
+                <div flex="90">
+                    <canvas id="bar" class="chart chart-bar" chart-data="data2" chart-series="series2" chart-labels="labels2">
+                    </canvas>
+                </div>
+
+                <div flex="100" layout="column">
+                    <canvas id="pie" class="chart chart-pie" chart-data="data" chart-labels="label" chart-options="options">
+                    </canvas>
+                </div>
+
+                <div flex="90">
+                    <canvas id="line" class="chart chart-line" chart-data="lineData" chart-labels="lineLabels" chart-series="lineSeries" chart-options="lineOptions"
+                        chart-dataset-override="datasetOverride" chart-click="onClick">
+                    </canvas>
+                </div>
+
+
+            </div> -->
+        </md-content>
     </div>
-
-    <div flex="100" layout="column">
-        <canvas id="pie" class="chart chart-pie" chart-data="data" chart-labels="label" chart-options="options">
-        </canvas>
-    </div>
-
-    <div flex="90">
-        <canvas id="line" class="chart chart-line" chart-data="lineData" chart-labels="lineLabels" chart-series="lineSeries" chart-options="lineOptions"
-            chart-dataset-override="datasetOverride" chart-click="onClick">
-        </canvas>
-    </div>
-
 </div>
+
+
+<!-- <div layout="row" layout-align="start start" layout-padding>
+
+    
+</div> -->

@@ -1,0 +1,15 @@
+#adminnavbar {
+    background-color:#34302D !important;
+}
+
+md-sidenav {
+	height: -webkit-fill-available;
+}
+
+#adminsidenav {
+    margin-top: 80px !important;
+    z-index: 1;        
+}
+/* .chartTitle {
+    height: 20px;
+} */

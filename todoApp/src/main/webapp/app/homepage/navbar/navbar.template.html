@@ -8,7 +8,7 @@
         </div>
 
     </div>
-    
+
     <div layout="row" flex layout-align="start center">
         <md-autocomplete flex class="autoSearch" ng-disabled="" md-selected-item="" md-search-text-change="" md-items="" md-item-text=""
             md-min-length="0" placeholder="Search">
@@ -18,75 +18,34 @@
     <div flex="10"></div>
 
     <div layout="row" flex="10" layout-align="end center">
-            <md-menu>
-                    <md-button id="profileMenu" class="md-fab md-icon my-icon-button" aria-label="User" ng-click="$mdOpenMenu()">
-                             <md-tooltip md-direction="bottom">{{user.email}}</md-tooltip>
-                     <img ng-src="{{user.profilePic}}" alt="{{user.name.charAt(0)}}" style=" height: 100%;width: 100%;">
-                 </md-button>
-                      
-                 <md-menu-content width="4">
-                     
-                     <div flex="33">
-                         
-                         <span class="md-avatar">
-                                 <md-button class="md-fab md-icon my-icon-button" aria-label="User">
-                                     <img ng-src="{{user.profilePic}}" alt="{{user.firstName.charAt(0)}}" style="height: 100%;width: 100%;">
-                             </md-button>
-                             <b>{{user.firstName}}</b>
-                               <p>{{user.email}}</p>
-                           </span><br>
-                            <md-divider></md-divider>
-                            
-                             <md-button class="md-raised">Update Profile</md-button>
-                               <md-button class="md-raised md-primary" ng-click="logout()">Logout</md-button>
-                           
-                       </div>
-                       
-               </md-menu-content>
-               
-     </md-menu>
-            <!-- <md-menu-content width="4">
+        <md-menu>
+            <md-button id="profileMenu" class="md-fab md-icon my-icon-button" aria-label="User" ng-click="$mdOpenMenu()">
+                <md-tooltip md-direction="bottom">{{user.email}}</md-tooltip>
+                <img ng-src="{{user.profilePic}}" alt="{{user.name.charAt(0)}}" style=" height: 100%;width: 100%;">
+            </md-button>
 
-                <md-menu-item layout="column">
-                    <div layout="column">
-                            <img ng-src="{{user.profilePic}}" id="profilePic2" alt="{{user.firstName.charAt(0)}}">  
-                    </div>
+            <md-menu-content width="4">
+
+                <div flex="33">
+
+                    <span class="md-avatar">
+                        <md-button class="md-fab md-icon my-icon-button" aria-label="User">
+                            <img ng-src="{{user.profilePic}}" alt="{{user.firstName.charAt(0)}}" style="height: 100%;width: 100%;">
+                        </md-button>
+                        <b>{{user.firstName}}</b>
+                        <p>{{user.email}}</p>
+                    </span>
+                    <br>
                     <md-divider></md-divider>
-                    <md-button class="md-button" ng-click="copyNote(note)" aria-label="Logout">
-                            Logout
-                        </md-button> -->
-                    <!-- <div layout="column" layout="center start">
 
-                        <div layout="row">
-                            <img ng-src="{{user.profilePic}}" id="profilePic2" alt="{{user.firstName.charAt(0)}}">
-                        </div>
+                    <md-button class="md-raised">Update Profile</md-button>
+                    <md-button class="md-raised md-primary" ng-click="logout()">Logout</md-button>
 
-                        <div layout="row">
-                            {{user.email}}
-                        </div>
-
-                        <div layout="row">
-                            <md-button class="md-button" ng-click="copyNote(note)" aria-label="Logout">
-                                Logout
-                            </md-button>
-                        </div> -->
-                        <!-- <div>
-                        <img ng-src="{{user.profilePic}}" id="profilePic2" alt="{{user.firstName.charAt(0)}}">
-                    </div>
-                </md-menu-item>
-
-                <md-menu-item>
-                    {{user.email}}
-                </md-menu-item>
-
-                <md-menu-item>
-                    <md-button class="md-button" ng-click="copyNote(note)" aria-label="Logout">
-                        Logout
-                    </md-button> -->
-                <!-- </md-menu-item>
+                </div>
 
             </md-menu-content>
-        </md-menu> -->
 
-        </div>
+        </md-menu>
+
+    </div>
 </md-toolbar>
