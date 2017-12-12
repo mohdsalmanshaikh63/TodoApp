@@ -20,8 +20,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Component
 public class GoogleConnection {
 
-	public static final String CLIENT_Id = "291258605754-hs46dcpr1ba5l59ae5urqbqlvbofl5jg.apps.googleusercontent.com";
-	public static final String Secret_Id = "4OkN-4HHzx6LyCmuTcLkb9Ay";
+	public static final String CLIENT_Id = "your client id here";
+	public static final String Secret_Id = "your secret";
 	public static final String Redirect_URI = "http://localhost:8080/todoApp/connectGoogle";
 
 	// Access token in header

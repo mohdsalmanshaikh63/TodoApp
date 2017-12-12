@@ -20,8 +20,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Component
 public class FacebookConnection {
 
-	private final String App_Id = "876789189147877";
-	private final String Secret_Id = "541fede0105b637db41c560b3548e7b9";
+	private final String App_Id = "your client id";
+	private final String Secret_Id = "your secre";
 	private final String Redirect_URI = "http://localhost:8080/todoApp/connectFB";
 	private final String BINDING = "&fields=id,name,email,first_name,last_name,picture";
 
